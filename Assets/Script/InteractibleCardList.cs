@@ -12,7 +12,17 @@ public class InteractibleCardList : MonoBehaviour, ICardInteractionHandler
     {
         cardList.Add(card);
         card.GetComponent<Card>().interactionHandler = this;
-        DisplayCards();
+        MoveCardsToDefaultPosition();
+    }
+
+    public bool IsCardInList(GameObject card)
+    {
+        for (int i = 0; i < cardList.Count; i++)
+        {
+            if (card == cardList[i])
+                return true;
+        }
+        return false;
     }
 
     public GameObject RemoveCardFromList(uint cardID)
@@ -56,10 +66,10 @@ public class InteractibleCardList : MonoBehaviour, ICardInteractionHandler
             newCardList.Add(card);
         }
         cardList = newCardList;
-        DisplayCards();
+        MoveCardsToDefaultPosition();
     }
 
-    public void DisplayCards()
+    public void MoveCardsToDefaultPosition()
     {
         int intervalCount = cardList.Count - 1;
         float interval = 0;

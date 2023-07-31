@@ -76,7 +76,11 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     public int holdCardPlaneHeight = 5;
     public float holdCardScaleMultiplier = 0.8f;
     public float cardListScaleMultiplier = 0.5f;
-    private Plane holdCardPlane; 
+    private Plane holdCardPlane;
+
+    private GameObject selectedCard;
+    public Vector3 selectedCardTranslation;
+
 
     //gameState
     bool canRevealNextCard = true;
@@ -163,31 +167,34 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     {
         if (isActivable && currentGameState == GameState.MAIN)
         {
-            scryStone.GetComponent<MetaPowerStone>().Activate();
-
             switch(powerType)
             {
                 case MetaPower.REROLL:
                     break;
 
                 case MetaPower.DISCARD:
+                    if (!StartMetaPowerDiscard(cardsSeenInDiscard))
+                        return;
                     currentGameState = GameState.METAPOWER;
                     sceneVFX.GetComponent<SceneVFX>().SwitchMode(SceneVFX.Mode.SCRY);
-                    StartMetaPowerDiscard(cardsSeenInDiscard);
                     currentlyUsedPower = MetaPower.DISCARD;
                     break;
 
                 case MetaPower.SCRY:
+                    if (!StartMetaPowerScry(cardsSeenInScry))
+                        return;
                     currentGameState = GameState.METAPOWER;
                     sceneVFX.GetComponent<SceneVFX>().SwitchMode(SceneVFX.Mode.SCRY);
-                    StartMetaPowerScry(cardsSeenInScry);
                     currentlyUsedPower = MetaPower.SCRY;
                     break;
 
                 case MetaPower.SKIP:
+                    if (!ExecuteMetaPowerSkip())
+                        return;
                     break;
-
             }
+
+            scryStone.GetComponent<MetaPowerStone>().Activate();
         }
         else if (currentGameState == GameState.METAPOWER && powerType == currentlyUsedPower)
         {
@@ -205,18 +212,55 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         }
     }
 
-    public void StartMetaPowerScry(uint cardsSeen)
+    public bool StartMetaPowerDiscard(uint cardsSeen)
     {
-        metaPowerCardList = Instantiate(cardListPrefab);
-        InteractibleCardList cardListComponent = metaPowerCardList.GetComponent<InteractibleCardList>();
-        List<CardInstance> topCards = deck.GetComponent<Deck>().GetTopCards(cardsSeen);
-        foreach (CardInstance card in topCards)
+        if (deck.GetComponent<Deck>().deck.Count > 0)
         {
-            GameObject cardObject = CreateCardObject(card);
-            Vector3 prefabScale = cardPrefab.transform.localScale;
-            cardObject.transform.localScale = new Vector3(prefabScale.x * cardListScaleMultiplier, prefabScale.y, prefabScale.z * cardListScaleMultiplier);
-            cardListComponent.AddCardToList(cardObject);
+            metaPowerCardList = Instantiate(cardListPrefab);
+            InteractibleCardList cardListComponent = metaPowerCardList.GetComponent<InteractibleCardList>();
+            List<CardInstance> topCards = deck.GetComponent<Deck>().GetTopCards(cardsSeen);
+            foreach (CardInstance card in topCards)
+            {
+                GameObject cardObject = CreateCardObject(card);
+                Vector3 prefabScale = cardPrefab.transform.localScale;
+                cardObject.transform.localScale = new Vector3(prefabScale.x * cardListScaleMultiplier, prefabScale.y, prefabScale.z * cardListScaleMultiplier);
+                cardListComponent.AddCardToList(cardObject);
+            }
+            selectedCard = cardListComponent.cardList[0];
+            return true;
         }
+        return false;
+    }
+
+    public void StopMetaPowerDiscard()
+    {
+        foreach (GameObject card in metaPowerCardList.GetComponent<InteractibleCardList>().cardList)
+        {
+            if (card == selectedCard)
+                deck.GetComponent<Deck>().ShuffleCardInDeck(card.GetComponent<Card>().data, 0, 0);
+            Destroy(card);
+        }
+
+        Destroy(metaPowerCardList);
+    }
+
+    public bool StartMetaPowerScry(uint cardsSeen)
+    {
+        if (deck.GetComponent<Deck>().deck.Count > 0)
+        {
+            metaPowerCardList = Instantiate(cardListPrefab);
+            InteractibleCardList cardListComponent = metaPowerCardList.GetComponent<InteractibleCardList>();
+            List<CardInstance> topCards = deck.GetComponent<Deck>().GetTopCards(cardsSeen);
+            foreach (CardInstance card in topCards)
+            {
+                GameObject cardObject = CreateCardObject(card);
+                Vector3 prefabScale = cardPrefab.transform.localScale;
+                cardObject.transform.localScale = new Vector3(prefabScale.x * cardListScaleMultiplier, prefabScale.y, prefabScale.z * cardListScaleMultiplier);
+                cardListComponent.AddCardToList(cardObject);
+            }
+            return true;
+        }
+        return false;
     }
 
     public void StopMetaPowerScry()
@@ -231,14 +275,17 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         Destroy(metaPowerCardList);
     }
 
-    public void StartMetaPowerDiscard(uint cardsSeen)
+    public bool ExecuteMetaPowerSkip()
     {
-
-    }
-
-    public void StopMetaPowerDiscard()
-    {
-
+        if(currentCard)
+        {
+            deck.GetComponent<Deck>().ShuffleCardInDeck(currentCard.GetComponent<Card>().data);
+            Destroy(currentCard);
+            canRevealNextCard = true;
+            OnDeckClicked(deck.GetComponent<Deck>().deck.Count);
+            return true;
+        }
+        return false;
     }
 
     public void OnDeckRightClicked()
@@ -315,6 +362,16 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         metaPowerCardList.GetComponent<InteractibleCardList>().ReleaseCardAtPos(targetPosition, card);
     }
 
+    private void SelectCardInList(GameObject card)
+    {
+        if(card != selectedCard)
+        {
+            metaPowerCardList.GetComponent<InteractibleCardList>().MoveCardsToDefaultPosition();
+            selectedCard = card;
+            selectedCard.transform.position = selectedCard.transform.position + selectedCardTranslation;
+        }
+    }
+
     public void StartBattleAgainstMonster()
     {
         currentGameState = GameState.NOINTERACTION;
@@ -387,14 +444,16 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     {
         if(currentGameState == GameState.METAPOWER && currentlyUsedPower == MetaPower.SCRY)
         {
-            OnCartHoldStart(card);
+            if(metaPowerCardList.GetComponent<InteractibleCardList>().IsCardInList(card))
+                OnCartHoldStart(card);
         }
     }
     public void OnCardReleased(GameObject card)
     {
         if (currentGameState == GameState.METAPOWER && currentlyUsedPower == MetaPower.SCRY)
         {
-            OnCartHoldStop(card);
+            if(card == holdedCard)
+                OnCartHoldStop(card);
         }
     }
     public void OnCardClicked(GameObject card)
@@ -406,7 +465,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         }
         else if (currentGameState == GameState.METAPOWER && currentlyUsedPower == MetaPower.DISCARD)
         {
-            //do discard select stuff;
+            SelectCardInList(card);
         }
     }
     public void OnCardEntered(GameObject card)

@@ -299,6 +299,7 @@ MonoBehaviour:
   holdCardPlaneHeight: 5
   holdCardScaleMultiplier: 0.6
   cardListScaleMultiplier: 0.5
+  selectedCardTranslation: {x: 0, y: 0.1, z: 0.5}
   lifeText: {fileID: 1377688863}
   strengthText: {fileID: 1440537805}
   coinText: {fileID: 1682795622}

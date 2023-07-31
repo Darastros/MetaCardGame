@@ -97,9 +97,10 @@ public class Deck : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
         {
             endRange = endRange == -1 ? deck.Count : endRange;
             int randomIndex = Random.Range(beginRange, endRange + 1);
-            if(randomIndex == deck.Count + 1)
+            if(randomIndex == deck.Count)
             {
                 deck.Add(card);
+                UpdateDeckScale();
                 return;
             }
 
