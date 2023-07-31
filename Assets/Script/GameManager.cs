@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     {
         MAIN,
         NOINTERACTION,
-        SCRY
+        METAPOWER
     }
 
     private GameState currentGameState = GameState.MAIN;
@@ -36,7 +36,26 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     public GameObject sceneVFX;
 
     public GameObject deck;
+
+    /////////Meta Powers/////
+    public enum MetaPower
+    {
+        NONE,
+        REROLL,
+        DISCARD,
+        SCRY,
+        SKIP
+    }
+    private MetaPower currentlyUsedPower;
+
+    public GameObject rerollStone;
+    public GameObject discardStone;
     public GameObject scryStone;
+    public GameObject skipStone;
+
+    public uint cardsSeenInScry = 5;
+    public uint cardsSeenInDiscard = 3;
+    ///////////////////////
 
     public GameObject cardPrefab;
     public GameObject objectCardPrefab;
@@ -51,7 +70,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     private int redDiceResult = -1;
 
     public GameObject cardListPrefab;
-    public GameObject scryCardList;
+    public GameObject metaPowerCardList;
 
     public GameObject holdedCard;
     public int holdCardPlaneHeight = 5;
@@ -82,10 +101,14 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
 
     private void InitGame()
     {
-        playerLife = playerStartingLife;
-        playerStrength = playerStartingStrength;
-        playerCoin = playerStartingCoin;
-        playerMagic = playerStartingMagic;
+        playerLife = 0 ;
+        playerStrength = 0;
+        playerCoin = 0;
+        playerMagic = 0;
+        AddLife(playerStartingLife);
+        AddStrength(playerStartingStrength);
+        AddCoin(playerStartingCoin);
+        AddMagic(playerStartingMagic);
         lifeText.GetComponent<TMP_Text>().text = playerLife.ToString();
         strengthText.GetComponent<TMP_Text>().text = playerStrength.ToString();
         canRevealNextCard = true;
@@ -97,7 +120,6 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         if (currentCard)
             Destroy(currentCard);
         deck.GetComponent<Deck>().ReShuffle();
-        scryStone.GetComponent<ScryStone>().Refill(100);
         InitGame();
     }
 
@@ -137,39 +159,86 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         }
     }
 
-    public void OnScryStoneClicked(bool isActivable)
+    public void OnMetaPowerStoneClicked(bool isActivable, MetaPower powerType)
     {
-        if(isActivable && currentGameState == GameState.MAIN)
+        if (isActivable && currentGameState == GameState.MAIN)
         {
-            scryStone.GetComponent<ScryStone>().Activate();
-            sceneVFX.GetComponent<SceneVFX>().SwitchMode(SceneVFX.Mode.SCRY);
+            scryStone.GetComponent<MetaPowerStone>().Activate();
 
-            currentGameState = GameState.SCRY;
-            scryCardList = Instantiate(cardListPrefab);
-            InteractibleCardList cardListComponent = scryCardList.GetComponent<InteractibleCardList>();
-            List<CardInstance> topCards = deck.GetComponent<Deck>().GetTopCards(scryStone.GetComponent<ScryStone>().cardsSeen);
-            foreach(CardInstance card in topCards)
+            switch(powerType)
             {
-                GameObject cardObject = CreateCardObject(card);
-                Vector3 prefabScale = cardPrefab.transform.localScale;
-                cardObject.transform.localScale = new Vector3(prefabScale.x * cardListScaleMultiplier, prefabScale.y, prefabScale.z * cardListScaleMultiplier);
-                cardListComponent.AddCardToList(cardObject);
+                case MetaPower.REROLL:
+                    break;
+
+                case MetaPower.DISCARD:
+                    currentGameState = GameState.METAPOWER;
+                    sceneVFX.GetComponent<SceneVFX>().SwitchMode(SceneVFX.Mode.SCRY);
+                    StartMetaPowerDiscard(cardsSeenInDiscard);
+                    currentlyUsedPower = MetaPower.DISCARD;
+                    break;
+
+                case MetaPower.SCRY:
+                    currentGameState = GameState.METAPOWER;
+                    sceneVFX.GetComponent<SceneVFX>().SwitchMode(SceneVFX.Mode.SCRY);
+                    StartMetaPowerScry(cardsSeenInScry);
+                    currentlyUsedPower = MetaPower.SCRY;
+                    break;
+
+                case MetaPower.SKIP:
+                    break;
+
             }
         }
-        else if(currentGameState == GameState.SCRY)
+        else if (currentGameState == GameState.METAPOWER && powerType == currentlyUsedPower)
         {
             currentGameState = GameState.MAIN;
             sceneVFX.GetComponent<SceneVFX>().SwitchMode(SceneVFX.Mode.CANDLE);
 
-            for(int i = scryCardList.GetComponent<InteractibleCardList>().cardList.Count - 1; i >= 0; i--)
+            if(powerType == MetaPower.SCRY)
             {
-                GameObject card = scryCardList.GetComponent<InteractibleCardList>().cardList[i];
-                deck.GetComponent<Deck>().ShuffleCardInDeck(card.GetComponent<Card>().data, 0, 0);
-                Destroy(card);
+                StopMetaPowerScry();
             }
-
-            Destroy(scryCardList);
+            else if (powerType == MetaPower.DISCARD)
+            {
+                StopMetaPowerDiscard();
+            }
         }
+    }
+
+    public void StartMetaPowerScry(uint cardsSeen)
+    {
+        metaPowerCardList = Instantiate(cardListPrefab);
+        InteractibleCardList cardListComponent = metaPowerCardList.GetComponent<InteractibleCardList>();
+        List<CardInstance> topCards = deck.GetComponent<Deck>().GetTopCards(cardsSeen);
+        foreach (CardInstance card in topCards)
+        {
+            GameObject cardObject = CreateCardObject(card);
+            Vector3 prefabScale = cardPrefab.transform.localScale;
+            cardObject.transform.localScale = new Vector3(prefabScale.x * cardListScaleMultiplier, prefabScale.y, prefabScale.z * cardListScaleMultiplier);
+            cardListComponent.AddCardToList(cardObject);
+        }
+    }
+
+    public void StopMetaPowerScry()
+    {
+        for (int i = metaPowerCardList.GetComponent<InteractibleCardList>().cardList.Count - 1; i >= 0; i--)
+        {
+            GameObject card = metaPowerCardList.GetComponent<InteractibleCardList>().cardList[i];
+            deck.GetComponent<Deck>().ShuffleCardInDeck(card.GetComponent<Card>().data, 0, 0);
+            Destroy(card);
+        }
+
+        Destroy(metaPowerCardList);
+    }
+
+    public void StartMetaPowerDiscard(uint cardsSeen)
+    {
+
+    }
+
+    public void StopMetaPowerDiscard()
+    {
+
     }
 
     public void OnDeckRightClicked()
@@ -215,6 +284,11 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         playerMagic += amount;
         if (playerMagic < 0) playerMagic = 0;
         magicText.GetComponent<TMP_Text>().text = playerMagic.ToString();
+
+        rerollStone.GetComponent<MetaPowerStone>().NotifyMagicAmountChanged(playerMagic);
+        discardStone.GetComponent<MetaPowerStone>().NotifyMagicAmountChanged(playerMagic);
+        scryStone.GetComponent<MetaPowerStone>().NotifyMagicAmountChanged(playerMagic);
+        skipStone.GetComponent<MetaPowerStone>().NotifyMagicAmountChanged(playerMagic);
     }
 
     public void OnCartHoldStart(GameObject card)
@@ -231,14 +305,14 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         card.transform.localScale = new Vector3(prefabScale.x * cardListScaleMultiplier, prefabScale.y, prefabScale.z * cardListScaleMultiplier);
 
         Vector3 targetPosition = new Vector3();
-        Plane cardListPlane = new Plane(Vector3.up, -scryCardList.transform.position.y);
+        Plane cardListPlane = new Plane(Vector3.up, -metaPowerCardList.transform.position.y);
         float distance;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (cardListPlane.Raycast(ray, out distance))
         {
             targetPosition = ray.GetPoint(distance);
         }
-        scryCardList.GetComponent<InteractibleCardList>().ReleaseCardAtPos(targetPosition, card);
+        metaPowerCardList.GetComponent<InteractibleCardList>().ReleaseCardAtPos(targetPosition, card);
     }
 
     public void StartBattleAgainstMonster()
@@ -256,6 +330,8 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
             AddLife(-1);
         }
         Destroy(currentCard);
+        Destroy(whiteDice);
+        Destroy(redDice);
         currentGameState = GameState.MAIN;
     }
 
@@ -309,11 +385,17 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     //////////////////// HANDLE CARD INTERACTION///////////////////////
     public void OnCardPressed(GameObject card)
     {
-
+        if(currentGameState == GameState.METAPOWER && currentlyUsedPower == MetaPower.SCRY)
+        {
+            OnCartHoldStart(card);
+        }
     }
     public void OnCardReleased(GameObject card)
     {
-
+        if (currentGameState == GameState.METAPOWER && currentlyUsedPower == MetaPower.SCRY)
+        {
+            OnCartHoldStop(card);
+        }
     }
     public void OnCardClicked(GameObject card)
     {
@@ -321,8 +403,10 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         {
             currentCard.GetComponent<Card>().Resolve();
             canRevealNextCard = true;
-            if (!scryStone.GetComponent<ScryStone>().isActivable)
-                scryStone.GetComponent<ScryStone>().Refill(1);
+        }
+        else if (currentGameState == GameState.METAPOWER && currentlyUsedPower == MetaPower.DISCARD)
+        {
+            //do discard select stuff;
         }
     }
     public void OnCardEntered(GameObject card)

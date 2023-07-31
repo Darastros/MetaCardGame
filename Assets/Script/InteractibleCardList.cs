@@ -78,15 +78,15 @@ public class InteractibleCardList : MonoBehaviour, ICardInteractionHandler
     //////////////////// HANDLE CARD INTERACTION///////////////////////
     public void OnCardPressed(GameObject card)
     {
-        GameManager.Instance.OnCartHoldStart(card);
+        GameManager.Instance.OnCardPressed(card);
     }
     public void OnCardReleased(GameObject card)
     {
-        GameManager.Instance.OnCartHoldStop(card);
+        GameManager.Instance.OnCardReleased(card);
     }
     public void OnCardClicked(GameObject card)
     {
-        
+        GameManager.Instance.OnCardClicked(card); 
     }
     public void OnCardEntered(GameObject card)
     {
