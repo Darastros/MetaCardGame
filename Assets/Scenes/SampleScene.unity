@@ -21185,15 +21185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5593661bae050a94fadad0748f0dc484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deckData:
-  - {fileID: 11400000, guid: 8a143f9e85f92084fae70cc0a7b0c57e, type: 2}
-  - {fileID: 11400000, guid: 71804b7d68c381c4d84dda9f2216bd82, type: 2}
-  - {fileID: 11400000, guid: 71804b7d68c381c4d84dda9f2216bd82, type: 2}
-  - {fileID: 11400000, guid: 958720592ed33f943bff7cf291bcf14e, type: 2}
-  - {fileID: 11400000, guid: 958720592ed33f943bff7cf291bcf14e, type: 2}
-  - {fileID: 11400000, guid: 8be4b529a3c431c409c7d57d63660432, type: 2}
-  - {fileID: 11400000, guid: 08130542670075d4a925c80296688b19, type: 2}
-  deck: []
+  deckData: {fileID: 11400000, guid: a35072731b85f7f4282b0214bebac19b, type: 2}
 --- !u!1 &1043971938
 GameObject:
   m_ObjectHideFlags: 0

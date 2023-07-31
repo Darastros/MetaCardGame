@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardInstance : Object
+public class CardInstance
 {
     static private uint nextCardID = 0;
 

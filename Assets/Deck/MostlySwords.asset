@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fde4c599bba71224c841ef71c66ba9c2, type: 3}
+  m_Name: MostlySwords
+  m_EditorClassIdentifier: 
+  cards:
+  - {fileID: 11400000, guid: 8a143f9e85f92084fae70cc0a7b0c57e, type: 2}
+  - {fileID: 11400000, guid: 71804b7d68c381c4d84dda9f2216bd82, type: 2}
+  - {fileID: 11400000, guid: 958720592ed33f943bff7cf291bcf14e, type: 2}
+  amountOfCardsfromPool: 5
+  minimumOfEachCard: 0
+  maximumOfEachCard: 4
+  weightList:
+  - 1
+  - 10
+  - 100

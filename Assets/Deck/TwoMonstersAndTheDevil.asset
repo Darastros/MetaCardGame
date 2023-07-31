@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca75a83a6db7b8e4eb0530d05351c230, type: 3}
+  m_Name: TwoMonstersAndTheDevil
+  m_EditorClassIdentifier: 
+  cards:
+  - {fileID: 11400000, guid: dae701ef480ddb6438d0003172bb1d42, type: 2}
+  - {fileID: 11400000, guid: dae701ef480ddb6438d0003172bb1d42, type: 2}
+  - {fileID: 11400000, guid: d1711dcc43d9219478c5899401c3cc20, type: 2}

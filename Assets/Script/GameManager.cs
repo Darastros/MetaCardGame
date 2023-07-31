@@ -156,9 +156,12 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
             if(deckSize > 0)
             {
                 CardInstance revealedCard = deck.GetComponent<Deck>().GetTopCard();
-                currentCard = CreateCardObject(revealedCard);
-                currentCard.GetComponent<Card>().interactionHandler = this;
-                canRevealNextCard = false;
+                if(revealedCard != null)
+                {
+                    currentCard = CreateCardObject(revealedCard);
+                    currentCard.GetComponent<Card>().interactionHandler = this;
+                    canRevealNextCard = false;
+                }
             }
         }
     }
@@ -170,7 +173,10 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
             switch(powerType)
             {
                 case MetaPower.REROLL:
-                    break;
+                    //temp call Debug Draw deck
+                    deck.GetComponent<Deck>().DebugDraw();
+                    return;
+                    //break;
 
                 case MetaPower.DISCARD:
                     if (!StartMetaPowerDiscard(cardsSeenInDiscard))
@@ -237,7 +243,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         foreach (GameObject card in metaPowerCardList.GetComponent<InteractibleCardList>().cardList)
         {
             if (card == selectedCard)
-                deck.GetComponent<Deck>().ShuffleCardInDeck(card.GetComponent<Card>().data, 0, 0);
+                deck.GetComponent<Deck>().PutCardOnTopOfDeck(card.GetComponent<Card>().data);
             Destroy(card);
         }
 
@@ -265,13 +271,15 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
 
     public void StopMetaPowerScry()
     {
-        for (int i = metaPowerCardList.GetComponent<InteractibleCardList>().cardList.Count - 1; i >= 0; i--)
+        List<CardInstance> cardsToPutBackOnTop = new List<CardInstance>();
+        InteractibleCardList cardListComponent = metaPowerCardList.GetComponent<InteractibleCardList>();
+        for (int i = 0; i < cardListComponent.cardList.Count; i++)
         {
-            GameObject card = metaPowerCardList.GetComponent<InteractibleCardList>().cardList[i];
-            deck.GetComponent<Deck>().ShuffleCardInDeck(card.GetComponent<Card>().data, 0, 0);
+            GameObject card = cardListComponent.cardList[i];
+            cardsToPutBackOnTop.Add(card.GetComponent<Card>().data);
             Destroy(card);
         }
-
+        deck.GetComponent<Deck>().PutCardsOnTopOfDeck(cardsToPutBackOnTop);
         Destroy(metaPowerCardList);
     }
 
@@ -279,7 +287,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     {
         if(currentCard)
         {
-            deck.GetComponent<Deck>().ShuffleCardInDeck(currentCard.GetComponent<Card>().data);
+            deck.GetComponent<Deck>().ShuffleCardInGroup(currentCard.GetComponent<Card>().data, 0);
             Destroy(currentCard);
             canRevealNextCard = true;
             OnDeckClicked(deck.GetComponent<Deck>().deck.Count);
@@ -383,7 +391,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         MonsterCardData monsterData = (MonsterCardData)currentCard.GetComponent<Card>().data.dataInstance;
         if(monsterData.strength + redDiceResult > playerStrength + whiteDiceResult)
         {
-            deck.GetComponent<Deck>().ShuffleCardInDeck(currentCard.GetComponent<Card>().data);
+            deck.GetComponent<Deck>().ShuffleCardInGroup(currentCard.GetComponent<Card>().data, 0);
             AddLife(-1);
         }
         Destroy(currentCard);
