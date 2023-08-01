@@ -6,4 +6,5 @@ using UnityEngine;
 public class MonsterCardData : CardData
 {
     public int strength = 0;
+    public int damage = 0;
 }
