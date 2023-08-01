@@ -78,6 +78,11 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     public float cardListScaleMultiplier = 0.5f;
     private Plane holdCardPlane;
 
+    public GameObject notePadInteractionText;
+    public GameObject discardInteractionText;
+    public GameObject notePadHighlight;
+    public GameObject discardHighlight;
+
     private GameObject selectedCard;
     public Vector3 selectedCardTranslation;
 
@@ -349,25 +354,69 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     public void OnCartHoldStart(GameObject card)
     {
         holdedCard = card;
-        Vector3 prefabScale = cardPrefab.transform.localScale;
-        card.transform.localScale = new Vector3(prefabScale.x * holdCardScaleMultiplier, prefabScale.y, prefabScale.z * holdCardScaleMultiplier);
+        if (currentGameState == GameState.METAPOWER)
+        {
+            Vector3 prefabScale = cardPrefab.transform.localScale;
+            card.transform.localScale = new Vector3(prefabScale.x * holdCardScaleMultiplier, prefabScale.y, prefabScale.z * holdCardScaleMultiplier);
+        }
+        else if(currentGameState == GameState.MAIN)
+        {
+            notePadInteractionText.SetActive(true);
+            discardInteractionText.SetActive(true);
+            notePadHighlight.SetActive(true);
+            discardHighlight.SetActive(true);
+        }
     }
 
     public void OnCartHoldStop(GameObject card)
     {
         holdedCard = null;
-        Vector3 prefabScale = cardPrefab.transform.localScale;
-        card.transform.localScale = new Vector3(prefabScale.x * cardListScaleMultiplier, prefabScale.y, prefabScale.z * cardListScaleMultiplier);
 
-        Vector3 targetPosition = new Vector3();
-        Plane cardListPlane = new Plane(Vector3.up, -metaPowerCardList.transform.position.y);
-        float distance;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (cardListPlane.Raycast(ray, out distance))
+        if (currentGameState == GameState.METAPOWER)
         {
-            targetPosition = ray.GetPoint(distance);
+            Vector3 prefabScale = cardPrefab.transform.localScale;
+            card.transform.localScale = new Vector3(prefabScale.x * cardListScaleMultiplier, prefabScale.y, prefabScale.z * cardListScaleMultiplier);
+            Vector3 targetPosition = new Vector3();
+            Plane cardListPlane = new Plane(Vector3.up, -metaPowerCardList.transform.position.y);
+            float distance;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (cardListPlane.Raycast(ray, out distance))
+            {
+                targetPosition = ray.GetPoint(distance);
+            }
+            metaPowerCardList.GetComponent<InteractibleCardList>().ReleaseCardAtPos(targetPosition, card);
         }
-        metaPowerCardList.GetComponent<InteractibleCardList>().ReleaseCardAtPos(targetPosition, card);
+        else if(currentGameState == GameState.MAIN)
+        {
+            Vector3 targetPosition = new Vector3();
+            Plane tablePlane = new Plane(Vector3.up, 0);
+            float distance;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (tablePlane.Raycast(ray, out distance))
+            {
+                targetPosition = ray.GetPoint(distance);
+            }
+
+            if(targetPosition.x > 5.5f)
+            {
+                Destroy(currentCard);
+                canRevealNextCard = true;
+            }
+            else if(targetPosition.x < -5.7f)
+            {
+                currentCard.GetComponent<Card>().Resolve();
+                canRevealNextCard = true;
+            }
+            else
+            {
+                currentCard.transform.position = cardPrefab.transform.position;
+            }
+
+            notePadInteractionText.SetActive(false);
+            discardInteractionText.SetActive(false);
+            notePadHighlight.SetActive(false);
+            discardHighlight.SetActive(false);
+        }
     }
 
     private void SelectCardInList(GameObject card)
@@ -433,31 +482,65 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
 
     private void Update()
     {
+        Plane planeUsed = new Plane(Vector3.up, -2.5f);
+        if (currentGameState == GameState.METAPOWER)
+            planeUsed = holdCardPlane;
         if(holdedCard)
         {
             Vector3 targetPosition = new Vector3();
    
             float distance;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (holdCardPlane.Raycast(ray, out distance))
+            if (planeUsed.Raycast(ray, out distance))
             {
                 targetPosition = ray.GetPoint(distance);
             }
             holdedCard.transform.position = targetPosition;
+
+            //TEMP TRESSS MOCHE
+            if (targetPosition.x > 5.5f)
+            {
+                notePadInteractionText.transform.localScale = new Vector3(1.6f, 2.1f, 1);
+                discardInteractionText.transform.localScale = new Vector3(3.5f, 4.5f, 1);
+
+            }
+            else if (targetPosition.x < -5.7f)
+            {
+                notePadInteractionText.transform.localScale = new Vector3(2.8f, 3.7f, 1);
+                discardInteractionText.transform.localScale = new Vector3(2, 2.5f, 1);
+            }
+            else
+            {
+                notePadInteractionText.transform.localScale = new Vector3(1.6f, 2.1f, 1);
+                discardInteractionText.transform.localScale = new Vector3(2, 2.5f, 1);
+            }
+            //
         }
     }
 
     //////////////////// HANDLE CARD INTERACTION///////////////////////
     public void OnCardPressed(GameObject card)
     {
-        if(currentGameState == GameState.METAPOWER && currentlyUsedPower == MetaPower.SCRY)
+        if (currentGameState == GameState.MAIN)
         {
-            if(metaPowerCardList.GetComponent<InteractibleCardList>().IsCardInList(card))
+            if (currentCard.GetComponent<Card>() is ObjectCard)
+            {
+                OnCartHoldStart(card);
+            }
+        }
+        if (currentGameState == GameState.METAPOWER && currentlyUsedPower == MetaPower.SCRY)
+        {
+            if (metaPowerCardList.GetComponent<InteractibleCardList>().IsCardInList(card))
                 OnCartHoldStart(card);
         }
     }
     public void OnCardReleased(GameObject card)
     {
+        if (currentGameState == GameState.MAIN)
+        {
+            if (card == holdedCard)
+                OnCartHoldStop(card);
+        }
         if (currentGameState == GameState.METAPOWER && currentlyUsedPower == MetaPower.SCRY)
         {
             if(card == holdedCard)
@@ -468,8 +551,11 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     {
         if (currentGameState == GameState.MAIN)
         {
-            currentCard.GetComponent<Card>().Resolve();
-            canRevealNextCard = true;
+            if(!(currentCard.GetComponent<Card>() is ObjectCard))
+            {
+                currentCard.GetComponent<Card>().Resolve();
+                canRevealNextCard = true;
+            }
         }
         else if (currentGameState == GameState.METAPOWER && currentlyUsedPower == MetaPower.DISCARD)
         {
