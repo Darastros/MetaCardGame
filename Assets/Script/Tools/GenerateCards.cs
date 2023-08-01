@@ -11,6 +11,11 @@ public class GenerateCards : Editor
     static readonly string deckPath = "Assets/Deck/";
     static readonly string csvPath = deckPath + "CSV/";
     static readonly string cardPath = deckPath + "Cards/";
+    
+    static readonly string plainPath = deckPath + "Plain/";
+    static readonly string forestPath = deckPath + "Forest/";
+    static readonly string mountainPath = deckPath + "Mountain/";
+    
     static readonly string creaturesPath = cardPath + "Creatures/";
     static readonly string objectsPath = cardPath + "Objects/";
     static readonly string eventsPath = cardPath + "Events/";
