@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: EasyForest
   m_EditorClassIdentifier: 
   cardPools:
-  - {fileID: 11400000, guid: d8d810492342657489b51eed2dbbcaa3, type: 2}
   - {fileID: 11400000, guid: c286bcba99d8f6145974cb53d435882b, type: 2}
+  - {fileID: 11400000, guid: d8d810492342657489b51eed2dbbcaa3, type: 2}
   - {fileID: 11400000, guid: af07428aa475d4742898270b87acdbcb, type: 2}
