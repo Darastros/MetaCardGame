@@ -158,10 +158,10 @@ public class GenerateCards : Editor
                 }
             }
             
-            int damageIndex = _pattern.FindIndex( x => x == "Duration");
-            if (damageIndex < _cardData.Count)
+            int durationIndex = _pattern.FindIndex( x => x == "Duration");
+            if (durationIndex < _cardData.Count)
             {
-                if (int.TryParse(_cardData[damageIndex], out var duration)) objectCard.duration = duration;
+                if (int.TryParse(_cardData[durationIndex], out var duration)) objectCard.duration = duration;
                 else objectCard.duration = -1;
             }
 
@@ -172,17 +172,55 @@ public class GenerateCards : Editor
 
     private static void CreateEvent(List<string> _pattern, List<string> _cardData)
     {
-        /*
         int nameIndex = _pattern.FindIndex( x => x == "Name");
         if (nameIndex < _cardData.Count)
         {
             EventCardData eventCard;
             bool exist = FindOrCreateCard(_pattern, _cardData, out eventCard);
             
-            if(!exist) AssetDatabase.CreateAsset(eventCard, eventPath + eventCard.cardName + ".asset");
+            int value = 0;
+            int strengthIndex = _pattern.FindIndex( x => x == "Value");
+            if (strengthIndex < _cardData.Count) int.TryParse(_cardData[strengthIndex], out value);
+            
+            int effectIndex = _pattern.FindIndex( x => x == "Effect");
+            if (effectIndex < _cardData.Count)
+            {
+                switch (_cardData[effectIndex])
+                {
+                    case "Add strength" :
+                        eventCard.strengthAdd = value;
+                        break;
+                    case "Remove strength" :
+                        eventCard.strengthAdd = -value;
+                        break;
+                    case "Heal" :
+                        eventCard.lifeAdd = value;
+                        break;
+                    case "Inflict damage" :
+                        eventCard.lifeAdd = -value;
+                        break;
+                    case "Give gold" :
+                        eventCard.coinAdd = value;
+                        break;
+                    case "Steal gold" :
+                        eventCard.coinAdd = -value;
+                        break;
+                    case "Set strength" :
+                        eventCard.strengthSet = value;
+                        break;
+                }
+            }
+            
+            int durationIndex = _pattern.FindIndex( x => x == "Duration");
+            if (durationIndex < _cardData.Count)
+            {
+                if (int.TryParse(_cardData[durationIndex], out var duration)) eventCard.duration = duration;
+                else eventCard.duration = -1;
+            }
+
+            if(!exist) AssetDatabase.CreateAsset(eventCard, eventsPath + eventCard.cardName + ".asset");
             else EditorUtility.SetDirty(eventCard);
         }
-        */
     }
     
     private static void FillGenericCardData(CardData _card, List<string> _pattern, List<string> _itemData)
