@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Card/Object")]
-public class ObjectCardData : CardData
+[CreateAssetMenu(menuName = "Card/Event")]
+public class EventCardData : CardData
 {
     public int lifeAdd = 0;
     public int strengthAdd = 0;
