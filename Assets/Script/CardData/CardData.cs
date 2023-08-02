@@ -6,6 +6,6 @@ using UnityEngine;
 public class CardData : ScriptableObject
 {
     public string cardName;
-    public Texture2D cardImage;
+    public Material cardImage;
     public string cardText;
 }
