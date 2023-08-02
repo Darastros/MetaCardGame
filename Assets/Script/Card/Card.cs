@@ -9,7 +9,6 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
 {
     public GameObject nameText;
     public GameObject descriptionText;
-    public GameObject cardImage;
     public CardInstance data;
 
     public ICardInteractionHandler interactionHandler;
@@ -20,7 +19,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
         nameText.GetComponent<TMP_Text>().text = data.dataInstance.cardName;
         descriptionText.GetComponent<TMP_Text>().text = data.dataInstance.cardText;
         if (data.dataInstance.cardImage)
-            cardImage.GetComponent<RawImage>().texture = data.dataInstance.cardImage;
+            GetComponent<MeshRenderer>().material = data.dataInstance.cardImage;
     }
 
     public virtual void Resolve()
