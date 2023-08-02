@@ -9,8 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22e98f5e8d27d394298b09be541707dc, type: 3}
-  m_Name: DeadlyMountain
+  m_Script: {fileID: 11500000, guid: 530c1a8d8f72cc842b51c02c55ccc67d, type: 3}
+  m_Name: Grimoire
   m_EditorClassIdentifier: 
-  cardPools:
-  - {fileID: 11400000, guid: c976fbda57ddcb3498130a874f1435b0, type: 2}
+  cardName: Grimoire
+  cardImage: {fileID: 0}
+  cardText: 
+  lifeAdd: 0
+  strengthAdd: 0
+  strengthSet: 0
+  coinAdd: 0
+  duration: -1

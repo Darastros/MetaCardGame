@@ -9,9 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49eae93ffc3f3874a819d985eb58d50a, type: 3}
-  m_Name: DeckTest
+  m_Script: {fileID: 11500000, guid: fde4c599bba71224c841ef71c66ba9c2, type: 3}
+  m_Name: Mountain_CardPool_3
   m_EditorClassIdentifier: 
-  groups:
-  - {fileID: 11400000, guid: ad3aa88949aedce498f467dfdd9d6e44, type: 2}
-  - {fileID: 11400000, guid: 53e1ab54a32ac4a47be5b8b98f032230, type: 2}
+  cards:
+  - {fileID: 11400000, guid: b51079cc47c17f046b6eeaee3177ed91, type: 2}
+  amountOfCardsfromPool: 20
+  minimumOfEachCard: 1
+  maximumOfEachCard: 3
+  weightList:
+  - 1

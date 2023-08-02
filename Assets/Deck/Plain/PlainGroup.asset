@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22e98f5e8d27d394298b09be541707dc, type: 3}
   m_Name: PlainGroup
   m_EditorClassIdentifier: 
-  cardPools: []
+  cardPools:
+  - {fileID: 11400000, guid: a936cfd2177b88443abd2d869960891e, type: 2}
+  - {fileID: 11400000, guid: 7b57130922f1f1a4392ab7eb7261dd1d, type: 2}
+  - {fileID: 11400000, guid: 3295c60aee16ff345ba5edfd5d78cb03, type: 2}
