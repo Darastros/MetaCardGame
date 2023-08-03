@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fde4c599bba71224c841ef71c66ba9c2, type: 3}
-  m_Name: MostlySwords
+  m_Name: Plain_CardPool_3
   m_EditorClassIdentifier: 
   cards:
   - {fileID: 11400000, guid: 7d96b81fa328f6643bb24783e5b68563, type: 2}

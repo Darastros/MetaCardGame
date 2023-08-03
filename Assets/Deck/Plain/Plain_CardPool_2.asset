@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fde4c599bba71224c841ef71c66ba9c2, type: 3}
+  m_Name: Plain_CardPool_2
+  m_EditorClassIdentifier: 
+  cards:
+  - {fileID: 11400000, guid: 5970f86e72be6b14d964ca4e852c200b, type: 2}
+  - {fileID: 11400000, guid: 2fd71b0ddd82b8b48831fe980afb9245, type: 2}
+  - {fileID: 11400000, guid: 83b1f352890f84143bbc5fd0a43eed8c, type: 2}
+  - {fileID: 11400000, guid: a7af32cf053aa2944b0915f1fc945612, type: 2}
+  - {fileID: 11400000, guid: 1c05971884d01ff489be5b79ccec146e, type: 2}
+  - {fileID: 11400000, guid: 4de264a656c7ef04bb7faf2b98d0c83b, type: 2}
+  amountOfCardsfromPool: 20
+  minimumOfEachCard: 1
+  maximumOfEachCard: 3
+  weightList:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1

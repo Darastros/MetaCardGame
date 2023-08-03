@@ -12,13 +12,12 @@ public class GenerateCards : Editor
     static readonly string csvPath = deckPath + "CSV/";
     static readonly string cardPath = deckPath + "Cards/";
     
-    static readonly string plainPath = deckPath + "Plain/";
-    static readonly string forestPath = deckPath + "Forest/";
-    static readonly string mountainPath = deckPath + "Mountain/";
-    
     static readonly string creaturesPath = cardPath + "Creatures/";
     static readonly string objectsPath = cardPath + "Objects/";
     static readonly string eventsPath = cardPath + "Events/";
+    
+    static readonly string deckDataPath = deckPath + "official.asset";
+    static readonly List<string> regionsName = new (){"Plain", "Forest", "Mountain", "Volcano"};
     
     [MenuItem("Editor/GenerateCards", false, -1)]
     public static void Generate()
@@ -26,6 +25,23 @@ public class GenerateCards : Editor
         var info = new DirectoryInfo(csvPath);
         var filesInfo = info.GetFiles();
 
+        DeckData deck = (DeckData)AssetDatabase.LoadAssetAtPath(deckDataPath, typeof(DeckData));
+        List<CardGroup> regions = deck.groups;
+        
+        foreach (var regionName in regionsName)
+        {
+            var region = regions.Find(x => x.name == regionName + "Group");
+            foreach (var cardPool in region.cardPools)
+            {
+                var path = AssetDatabase.GetAssetPath(cardPool);
+                AssetDatabase.DeleteAsset(path);
+            }
+
+            region.cardPools = new List<CardPool>();
+            EditorUtility.SetDirty(region);
+        }
+
+        int nbPool = 0;
         foreach (var file in filesInfo)
         {
             if (file.Extension != ".csv") continue;
@@ -43,14 +59,14 @@ public class GenerateCards : Editor
                 {
                     string[] lineElements = lines[y].Trim().Split(",");
                     
-                    if (lineElements[0] == "IGNORE") break;
+                    if (lineElements[0] == "IGNORE" || lineElements[0] == "END") break;
+                    if (lineElements[0] == "CUT") return;
                     cardsData.Add(new List<string>());
                     
                     for (int x = 0; x < lineElements.Length; ++x)
                     {
                         cardsData[i].Add(lineElements[x]);
                     }
-
                     ++i;
                 }
                 if(cardsData.Count == 0)
@@ -58,52 +74,82 @@ public class GenerateCards : Editor
                     ++Y;
                     continue;
                 }
+
+                ++nbPool;
+
+                var pools = new List<WeightedCardPoolWithRules>();
+                for(int regionId = 0; regionId < regionsName.Count; regionId++)
+                {
+                    var pool = CreateInstance<WeightedCardPoolWithRules>();
+                    pool.cards = new List<CardData>();
+                    pool.weightList = new List<float>();
+                    pool.amountOfCardsfromPool = 20;
+                    pool.minimumOfEachCard = 1;
+                    pool.maximumOfEachCard = 3;
+                    pools.Add(pool);
+                }
+
                 foreach (List<string> cardData in cardsData.Skip(1))
                 {
-                    CreateCard(cardsData[0], cardData);
+                    var card = CreateCard(cardsData[0], cardData);
+                    if (card)
+                    {
+                        for(int regionId = 0; regionId < regionsName.Count; regionId++)
+                        {
+                            int regionIndex = cardsData[0].FindIndex( x => x == regionsName[regionId]);
+                            if (regionIndex < cardData.Count && regionIndex >= 0)
+                            {
+                                if (float.TryParse(cardData[regionIndex], out var value) && value > 0.0f)
+                                {
+                                    pools[regionId].cards.Add(card);
+                                    pools[regionId].weightList.Add(value);
+                                }
+                            }
+                        }
+                    }
                 }
-                
+
+                for(int regionId = 0; regionId < regionsName.Count; regionId++)
+                {
+                    if (pools[regionId].cards.Count == 0) continue;
+                    regions[regionId].cardPools.Add(pools[regionId]);
+                    AssetDatabase.CreateAsset(pools[regionId], deckPath + regionsName[regionId]  + "/" + regionsName[regionId] + "_CardPool_" + nbPool + ".asset");
+                    EditorUtility.SetDirty(regions[regionId]);
+                }
+
                 Y += cardsData.Count + 1;
                 
             }
         }
     }
 
-    private static void CreateCard(List<string> _pattern, List<string> _cardData)
+    private static CardData CreateCard(List<string> _pattern, List<string> _cardData)
     {
-        string mergedPattern = "";
         string mergedData = "";
-        
-        foreach (string data in _pattern)
-        {
-            mergedPattern += data + " ";
-        }
         
         foreach (string data in _cardData)
         {
             mergedData += data + " ";
         }
         
-        Debug.Log(mergedPattern);
         Debug.Log(mergedData);
         
         int typeIndex = _pattern.FindIndex( x => x == "Type");
-        if (typeIndex >= _cardData.Count || typeIndex < 0) return;
+        if (typeIndex >= _cardData.Count || typeIndex < 0) return null;
         switch (_cardData[typeIndex])
         {
             case "Creature" :
-                CreateCreature(_pattern, _cardData);
-                break;
+                return CreateCreature(_pattern, _cardData);
             case "Object" :
-                CreateObject(_pattern, _cardData);
-                break;
+                return CreateObject(_pattern, _cardData);
             case "Event" :
-                CreateEvent(_pattern, _cardData);
-                break;
+                return CreateEvent(_pattern, _cardData);
         }
+
+        return null;
     }
     
-    private static void CreateCreature(List<string> _pattern, List<string> _cardData)
+    private static CardData CreateCreature(List<string> _pattern, List<string> _cardData)
     {
         int nameIndex = _pattern.FindIndex( x => x == "Name");
         if (nameIndex < _cardData.Count)
@@ -119,10 +165,14 @@ public class GenerateCards : Editor
             
             if(!exist) AssetDatabase.CreateAsset(monsterCard, creaturesPath + monsterCard.cardName + ".asset");
             else EditorUtility.SetDirty(monsterCard);
+
+            return monsterCard;
         }
+
+        return null;
     }
     
-    private static void CreateObject(List<string> _pattern, List<string> _cardData)
+    private static CardData CreateObject(List<string> _pattern, List<string> _cardData)
     {
         int nameIndex = _pattern.FindIndex( x => x == "Name");
         if (nameIndex < _cardData.Count)
@@ -172,10 +222,13 @@ public class GenerateCards : Editor
 
             if(!exist) AssetDatabase.CreateAsset(objectCard, objectsPath + objectCard.cardName + ".asset");
             else EditorUtility.SetDirty(objectCard);
+            return objectCard;
         }
+
+        return null;
     }
 
-    private static void CreateEvent(List<string> _pattern, List<string> _cardData)
+    private static CardData CreateEvent(List<string> _pattern, List<string> _cardData)
     {
         int nameIndex = _pattern.FindIndex( x => x == "Name");
         if (nameIndex < _cardData.Count)
@@ -225,7 +278,10 @@ public class GenerateCards : Editor
 
             if(!exist) AssetDatabase.CreateAsset(eventCard, eventsPath + eventCard.cardName + ".asset");
             else EditorUtility.SetDirty(eventCard);
+            return eventCard;
         }
+
+        return null;
     }
     
     private static void FillGenericCardData(CardData _card, List<string> _pattern, List<string> _itemData)

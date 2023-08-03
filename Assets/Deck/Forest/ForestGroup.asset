@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22e98f5e8d27d394298b09be541707dc, type: 3}
   m_Name: ForestGroup
   m_EditorClassIdentifier: 
-  cardPools: []
+  cardPools:
+  - {fileID: 11400000, guid: e0765ddca1464954aa88de24b6d95630, type: 2}
+  - {fileID: 11400000, guid: 8d62f86a07b4d814cb58952c94cea7c7, type: 2}
+  - {fileID: 11400000, guid: 5c1610cf8106bf14894f0fd6a9bb5c31, type: 2}

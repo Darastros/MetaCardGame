@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fde4c599bba71224c841ef71c66ba9c2, type: 3}
+  m_Name: Mountain_CardPool_1
+  m_EditorClassIdentifier: 
+  cards:
+  - {fileID: 11400000, guid: 9764646817cdcc04da163acb0ca91c46, type: 2}
+  - {fileID: 11400000, guid: 922e29cb9b8a87e46bb12682080b687c, type: 2}
+  - {fileID: 11400000, guid: b128338090825a1488d2863419085e3a, type: 2}
+  - {fileID: 11400000, guid: fcc660eccb346464b9c537af9125e5ad, type: 2}
+  amountOfCardsfromPool: 20
+  minimumOfEachCard: 1
+  maximumOfEachCard: 3
+  weightList:
+  - 1
+  - 1
+  - 1
+  - 1

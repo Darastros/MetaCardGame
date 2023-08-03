@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 22e98f5e8d27d394298b09be541707dc, type: 3}
-  m_Name: EasyForest
+  m_Name: VolcanoGroup
   m_EditorClassIdentifier: 
   cardPools:
   - {fileID: 11400000, guid: c286bcba99d8f6145974cb53d435882b, type: 2}

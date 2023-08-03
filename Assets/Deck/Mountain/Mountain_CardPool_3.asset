@@ -9,8 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22e98f5e8d27d394298b09be541707dc, type: 3}
-  m_Name: DeadlyMountain
+  m_Script: {fileID: 11500000, guid: fde4c599bba71224c841ef71c66ba9c2, type: 3}
+  m_Name: Mountain_CardPool_3
   m_EditorClassIdentifier: 
-  cardPools:
-  - {fileID: 11400000, guid: c976fbda57ddcb3498130a874f1435b0, type: 2}
+  cards:
+  - {fileID: 11400000, guid: b51079cc47c17f046b6eeaee3177ed91, type: 2}
+  amountOfCardsfromPool: 20
+  minimumOfEachCard: 1
+  maximumOfEachCard: 3
+  weightList:
+  - 1
