@@ -16,6 +16,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8a143f9e85f92084fae70cc0a7b0c57e, type: 2}
   - {fileID: 11400000, guid: 71804b7d68c381c4d84dda9f2216bd82, type: 2}
   - {fileID: 11400000, guid: 958720592ed33f943bff7cf291bcf14e, type: 2}
+  - {fileID: 11400000, guid: 08130542670075d4a925c80296688b19, type: 2}
   amountOfCardsfromPool: 7
   minimumOfEachCard: 1
   maximumOfEachCard: 3

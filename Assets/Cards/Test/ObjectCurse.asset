@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 530c1a8d8f72cc842b51c02c55ccc67d, type: 3}
+  m_Name: ObjectCurse
+  m_EditorClassIdentifier: 
+  cardName: '! Curse of Power !'
+  cardImage: {fileID: 0}
+  cardText: '"Ho noooooooooooooo!" \n(go to one life and go to one strength for five
+    turn. \nGain 9 strength afterward)'
+  objectEffects:
+  - {fileID: 11400000, guid: 128edadf95d30824ea149ba72a4b88b8, type: 2}
+  - {fileID: 11400000, guid: 49b713e01b7d2a0408aedba5eb0a090f, type: 2}
+  - {fileID: 11400000, guid: 127f1abed065fc341a9bf0f34c4fa9fe, type: 2}
+  - {fileID: 11400000, guid: 127f1abed065fc341a9bf0f34c4fa9fe, type: 2}
+  - {fileID: 11400000, guid: 127f1abed065fc341a9bf0f34c4fa9fe, type: 2}

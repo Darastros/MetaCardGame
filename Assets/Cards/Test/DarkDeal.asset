@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 530c1a8d8f72cc842b51c02c55ccc67d, type: 3}
+  m_Name: DarkDeal
+  m_EditorClassIdentifier: 
+  cardName: The Dark Deal
+  cardImage: {fileID: 0}
+  cardText: '"will you take it"\n(+5 coin but -3 life)'
+  objectEffects:
+  - {fileID: 11400000, guid: 51e67b99b7cf4dc4382b26f8b2c3eca2, type: 2}
+  - {fileID: 11400000, guid: df67468c5076cca449383a1d18bea7b0, type: 2}

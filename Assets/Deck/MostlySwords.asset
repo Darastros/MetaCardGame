@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: MostlySwords
   m_EditorClassIdentifier: 
   cards:
+  - {fileID: 11400000, guid: 7d96b81fa328f6643bb24783e5b68563, type: 2}
   - {fileID: 11400000, guid: 8a143f9e85f92084fae70cc0a7b0c57e, type: 2}
-  - {fileID: 11400000, guid: 71804b7d68c381c4d84dda9f2216bd82, type: 2}
   - {fileID: 11400000, guid: 958720592ed33f943bff7cf291bcf14e, type: 2}
   amountOfCardsfromPool: 5
   minimumOfEachCard: 0
   maximumOfEachCard: 4
   weightList:
-  - 1
   - 10
-  - 100
+  - 20
+  - 70

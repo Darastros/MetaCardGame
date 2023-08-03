@@ -8,4 +8,6 @@ public class CardData : ScriptableObject
     public string cardName;
     public Material cardImage;
     public string cardText;
+
+    public virtual void Resolve() {}
 }

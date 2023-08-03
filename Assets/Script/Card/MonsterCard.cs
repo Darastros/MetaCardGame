@@ -17,4 +17,19 @@ public class MonsterCard : Card
     {
         GameManager.Instance.StartBattleAgainstMonster();
     }
+
+    public void OnRevealed()
+    {
+        ((MonsterCardData)data.dataInstance).OnRevealed();
+    }
+
+    public void OnWinBattle()
+    {
+        ((MonsterCardData)data.dataInstance).OnWinBattle();
+    }
+
+    public void OnDefeated()
+    {
+        ((MonsterCardData)data.dataInstance).OnDefeated();
+    }
 }

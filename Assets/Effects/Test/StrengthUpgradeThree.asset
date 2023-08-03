@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03402d845702df24f8d1c1d623890e46, type: 3}
-  m_Name: BigMonster
+  m_Script: {fileID: 11500000, guid: 7c114b1ca2ee7454286db02d9040e66e, type: 3}
+  m_Name: StrengthUpgradeThree
   m_EditorClassIdentifier: 
-  cardName: EL DIABLO !!!!
-  cardImage: {fileID: 0}
-  cardText: HaAhHAhaAAHAAHA
-  strength: 15
+  affectedStat: 1
+  value: 3
+  duration: -1

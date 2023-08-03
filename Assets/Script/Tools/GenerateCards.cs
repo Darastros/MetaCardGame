@@ -114,8 +114,8 @@ public class GenerateCards : Editor
             int strengthIndex = _pattern.FindIndex( x => x == "Strength");
             if (strengthIndex < _cardData.Count) monsterCard.strength = int.Parse(_cardData[strengthIndex]);
             
-            int damageIndex = _pattern.FindIndex( x => x == "Damage");
-            if (damageIndex < _cardData.Count) monsterCard.damage = int.Parse(_cardData[damageIndex]);
+            //int damageIndex = _pattern.FindIndex( x => x == "Damage");
+            //if (damageIndex < _cardData.Count) monsterCard.damage = int.Parse(_cardData[damageIndex]);
             
             if(!exist) AssetDatabase.CreateAsset(monsterCard, creaturesPath + monsterCard.cardName + ".asset");
             else EditorUtility.SetDirty(monsterCard);
@@ -137,37 +137,37 @@ public class GenerateCards : Editor
             int effectIndex = _pattern.FindIndex( x => x == "Effect");
             if (effectIndex < _cardData.Count)
             {
-                switch (_cardData[effectIndex])
-                {
-                    case "Add strength" :
-                        objectCard.strengthAdd = value;
-                        break;
-                    case "Remove strength" :
-                        objectCard.strengthAdd = -value;
-                        break;
-                    case "Heal" :
-                        objectCard.lifeAdd = value;
-                        break;
-                    case "Inflict damage" :
-                        objectCard.lifeAdd = -value;
-                        break;
-                    case "Give gold" :
-                        objectCard.coinAdd = value;
-                        break;
-                    case "Steal gold" :
-                        objectCard.coinAdd = -value;
-                        break;
-                    case "Set strength" :
-                        objectCard.strengthSet = value;
-                        break;
-                }
+                //switch (_cardData[effectIndex])
+                //{
+                //    case "Add strength":
+                //        objectCard.strengthAdd = value;
+                //        break;
+                //    case "Remove strength":
+                //        objectCard.strengthAdd = -value;
+                //        break;
+                //    case "Heal":
+                //        objectCard.lifeAdd = value;
+                //        break;
+                //    case "Inflict damage":
+                //        objectCard.lifeAdd = -value;
+                //        break;
+                //    case "Give gold":
+                //        objectCard.coinAdd = value;
+                //        break;
+                //    case "Steal gold":
+                //        objectCard.coinAdd = -value;
+                //        break;
+                //    case "Set strength":
+                //        objectCard.strengthSet = value;
+                //        break;
+                //}
             }
             
             int durationIndex = _pattern.FindIndex( x => x == "Duration");
             if (durationIndex < _cardData.Count)
             {
-                if (int.TryParse(_cardData[durationIndex], out var duration)) objectCard.duration = duration;
-                else objectCard.duration = -1;
+                //if (int.TryParse(_cardData[durationIndex], out var duration)) objectCard.duration = duration;
+                //else objectCard.duration = -1;
             }
 
             if(!exist) AssetDatabase.CreateAsset(objectCard, objectsPath + objectCard.cardName + ".asset");
@@ -190,37 +190,37 @@ public class GenerateCards : Editor
             int effectIndex = _pattern.FindIndex( x => x == "Effect");
             if (effectIndex < _cardData.Count)
             {
-                switch (_cardData[effectIndex])
-                {
-                    case "Add strength" :
-                        eventCard.strengthAdd = value;
-                        break;
-                    case "Remove strength" :
-                        eventCard.strengthAdd = -value;
-                        break;
-                    case "Heal" :
-                        eventCard.lifeAdd = value;
-                        break;
-                    case "Inflict damage" :
-                        eventCard.lifeAdd = -value;
-                        break;
-                    case "Give gold" :
-                        eventCard.coinAdd = value;
-                        break;
-                    case "Steal gold" :
-                        eventCard.coinAdd = -value;
-                        break;
-                    case "Set strength" :
-                        eventCard.strengthSet = value;
-                        break;
-                }
+                //switch (_cardData[effectIndex])
+                //{
+                //    case "Add strength":
+                //        eventCard.strengthAdd = value;
+                //        break;
+                //    case "Remove strength":
+                //        eventCard.strengthAdd = -value;
+                //        break;
+                //    case "Heal":
+                //        eventCard.lifeAdd = value;
+                //        break;
+                //    case "Inflict damage":
+                //        eventCard.lifeAdd = -value;
+                //        break;
+                //    case "Give gold":
+                //        eventCard.coinAdd = value;
+                //        break;
+                //    case "Steal gold":
+                //        eventCard.coinAdd = -value;
+                //        break;
+                //    case "Set strength":
+                //        eventCard.strengthSet = value;
+                //        break;
+                //}
             }
             
             int durationIndex = _pattern.FindIndex( x => x == "Duration");
             if (durationIndex < _cardData.Count)
             {
-                if (int.TryParse(_cardData[durationIndex], out var duration)) eventCard.duration = duration;
-                else eventCard.duration = -1;
+                //if (int.TryParse(_cardData[durationIndex], out var duration)) eventCard.duration = duration;
+                //else eventCard.duration = -1;
             }
 
             if(!exist) AssetDatabase.CreateAsset(eventCard, eventsPath + eventCard.cardName + ".asset");

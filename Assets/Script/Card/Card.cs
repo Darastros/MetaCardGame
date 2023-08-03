@@ -24,6 +24,7 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
 
     public virtual void Resolve()
     {
+        data.dataInstance.Resolve();
         Destroy(gameObject);
     }
 

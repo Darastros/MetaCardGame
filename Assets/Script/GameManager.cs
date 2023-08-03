@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     public GameObject cardPrefab;
     public GameObject objectCardPrefab;
     public GameObject monsterCardPrefab;
+    public GameObject eventCardPrefab;
     public GameObject currentCard;
 
     public GameObject whiteDicePrefab;
@@ -97,15 +98,33 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     public GameObject magicText;
     public GameObject deathIcon;
 
+    public enum PlayerStat
+    {
+        LIFE,
+        STRENGTH,
+        COIN,
+        MAGIC
+    }
+
     public int playerStartingLife = 3;
     public int playerStartingStrength = 0;
     public int playerStartingCoin = 5;
+    public int playerStartingMagic = 3;
+
+    //setModifiers
+    private class ActiveStatModifier
+    {
+        public bool isSet = false;
+        public int value = 0;
+        public int remaningDuration = 0;
+    }
+
+    private ActiveStatModifier lifeModifier;
+    private ActiveStatModifier strengthModifier;
 
     public int playerLife { get; private set; }
     public int playerStrength { get; private set; }
     public int playerCoin { get; private set; }
-
-    public int playerStartingMagic = 3;
     public int playerMagic { get; private set; }
 
     private void InitGame()
@@ -118,8 +137,9 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         AddStrength(playerStartingStrength);
         AddCoin(playerStartingCoin);
         AddMagic(playerStartingMagic);
-        lifeText.GetComponent<TMP_Text>().text = playerLife.ToString();
-        strengthText.GetComponent<TMP_Text>().text = playerStrength.ToString();
+        lifeModifier = null;
+        strengthModifier = null;
+        UpdateStatUI();
         canRevealNextCard = true;
         currentGameState = GameState.MAIN;
         holdCardPlane = new Plane(Vector3.up, -holdCardPlaneHeight);
@@ -145,6 +165,10 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         {
             cardObject = Instantiate(monsterCardPrefab);
         }
+        else if (data is EventCardData)
+        {
+            cardObject = Instantiate(eventCardPrefab);
+        }
         else
         {
             cardObject = Instantiate(cardPrefab);
@@ -165,6 +189,8 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
                 {
                     currentCard = CreateCardObject(revealedCard);
                     currentCard.GetComponent<Card>().interactionHandler = this;
+                    if (revealedCard.dataInstance is MonsterCardData)
+                        currentCard.GetComponent<MonsterCard>().OnRevealed();
                     canRevealNextCard = false;
                 }
             }
@@ -306,15 +332,104 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         RestartGame();
     }
 
-    public void AddCardToDeck(CardInstance card)
+    public int GetStatCurrentValue(PlayerStat stat)
     {
-        deck.GetComponent<Deck>().ShuffleCardInDeck(card);
+        int statValue = 0;
+        switch (stat)
+        {
+            case PlayerStat.LIFE:
+                if (lifeModifier != null)
+                {
+                    if (lifeModifier.isSet)
+                        statValue = lifeModifier.value;
+                    else
+                        statValue = playerLife + lifeModifier.value;
+                }
+                else
+                    statValue = playerLife;
+                break;
+            case PlayerStat.STRENGTH:
+                if (strengthModifier != null)
+                {
+                    if (strengthModifier.isSet)
+                        statValue = strengthModifier.value;
+                    else
+                        statValue = playerStrength + strengthModifier.value;
+                }
+                else
+                    statValue = playerStrength;
+                break;
+            case PlayerStat.COIN:
+                statValue = playerCoin;
+                break;
+            case PlayerStat.MAGIC:
+                statValue = playerMagic;
+                break;
+        }
+        return statValue;
     }
 
-    public void AddLife(int amount)
+    public void AddToStat(PlayerStat stat, int value)
     {
-        playerLife += amount;
-        lifeText.GetComponent<TMP_Text>().text = playerLife.ToString();
+        switch(stat)
+        {
+            case PlayerStat.LIFE:
+                AddLife(value);
+                break;
+            case PlayerStat.STRENGTH:
+                AddStrength(value);
+                break;
+            case PlayerStat.COIN:
+                AddCoin(value);
+                break;
+            case PlayerStat.MAGIC:
+                AddMagic(value);
+                break;
+        }
+        UpdateStatUI();
+    }
+
+    public void SetStatToValue(PlayerStat stat, int value)
+    {
+        switch (stat)
+        {
+            case PlayerStat.LIFE:
+                AddLife(value - playerLife);
+                break;
+            case PlayerStat.STRENGTH:
+                AddStrength(value - playerStrength);
+                break;
+            case PlayerStat.COIN:
+                AddCoin(value - playerCoin);
+                break;
+            case PlayerStat.MAGIC:
+                AddMagic(value - playerMagic);
+                break;
+        }
+        UpdateStatUI();
+    }
+
+    public void ApplyStatModifier(PlayerStat stat, bool isSet, int value, int duration)
+    {
+        switch (stat)
+        {
+            case PlayerStat.LIFE:
+                ApplyLifeModifier(isSet, value, duration + 1); //hack to compensate for immediate loss of one turn
+                break;
+            case PlayerStat.STRENGTH:
+                ApplyStrengthModifier(isSet, value, duration + 1); //same
+                break;
+            case PlayerStat.COIN:
+                break;
+            case PlayerStat.MAGIC:
+                break;
+        }
+        UpdateStatUI();
+    }
+
+    public void AddLife(int value)
+    {
+        playerLife += value;
         if (playerLife <= 0)
         {
             playerLife = 0;
@@ -325,30 +440,45 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         }
     }
 
-    public void AddStrength(int amount)
+    public void AddStrength(int value)
     {
-        playerStrength += amount;
+        playerStrength += value;
         if (playerStrength < 0) playerStrength = 0;
-        strengthText.GetComponent<TMP_Text>().text = playerStrength.ToString();
     }
 
-    public void AddCoin(int amount)
+    public void AddCoin(int value)
     {
-        playerCoin += amount;
+        playerCoin += value;
         if (playerCoin < 0) playerCoin = 0;
-        coinText.GetComponent<TMP_Text>().text = playerCoin.ToString();
     }
 
-    public void AddMagic(int amount)
+    public void AddMagic(int value)
     {
-        playerMagic += amount;
+        playerMagic += value;
         if (playerMagic < 0) playerMagic = 0;
-        magicText.GetComponent<TMP_Text>().text = playerMagic.ToString();
 
         rerollStone.GetComponent<MetaPowerStone>().NotifyMagicAmountChanged(playerMagic);
         discardStone.GetComponent<MetaPowerStone>().NotifyMagicAmountChanged(playerMagic);
         scryStone.GetComponent<MetaPowerStone>().NotifyMagicAmountChanged(playerMagic);
         skipStone.GetComponent<MetaPowerStone>().NotifyMagicAmountChanged(playerMagic);
+    }
+
+    public void ApplyLifeModifier(bool isSet, int value, int duration)
+    {
+        ActiveStatModifier statModifier = new ActiveStatModifier();
+        statModifier.isSet = isSet;
+        statModifier.value = value;
+        statModifier.remaningDuration = duration;
+        lifeModifier = statModifier;
+    }
+
+    public void ApplyStrengthModifier(bool isSet, int value, int duration)
+    {
+        ActiveStatModifier statModifier = new ActiveStatModifier();
+        statModifier.isSet = isSet;
+        statModifier.value = value;
+        statModifier.remaningDuration = duration;
+        strengthModifier = statModifier;
     }
 
     public void OnCartHoldStart(GameObject card)
@@ -400,11 +530,13 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
             if(targetPosition.x > 5.5f)
             {
                 Destroy(currentCard);
+                DecreaseStatModifiersDuration();
                 canRevealNextCard = true;
             }
             else if(targetPosition.x < -5.7f)
             {
                 currentCard.GetComponent<Card>().Resolve();
+                DecreaseStatModifiersDuration();
                 canRevealNextCard = true;
             }
             else
@@ -440,8 +572,12 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         MonsterCardData monsterData = (MonsterCardData)currentCard.GetComponent<Card>().data.dataInstance;
         if(monsterData.strength + redDiceResult > playerStrength + whiteDiceResult)
         {
+            monsterData.OnWinBattle();
             deck.GetComponent<Deck>().ShuffleCardInGroup(currentCard.GetComponent<Card>().data, 0);
-            AddLife(-1);
+        }
+        else
+        {
+            monsterData.OnDefeated();
         }
         Destroy(currentCard);
         Destroy(whiteDice);
@@ -518,6 +654,31 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         }
     }
 
+    private void UpdateStatUI()
+    {
+        lifeText.GetComponent<TMP_Text>().text = GetStatCurrentValue(PlayerStat.LIFE).ToString();
+        strengthText.GetComponent<TMP_Text>().text = GetStatCurrentValue(PlayerStat.STRENGTH).ToString();
+        coinText.GetComponent<TMP_Text>().text = GetStatCurrentValue(PlayerStat.COIN).ToString();
+        magicText.GetComponent<TMP_Text>().text = GetStatCurrentValue(PlayerStat.MAGIC).ToString();
+    }
+
+    private void DecreaseStatModifiersDuration()
+    {
+        if(lifeModifier != null)
+        {
+            lifeModifier.remaningDuration -= 1;
+            if (lifeModifier.remaningDuration <= 0)
+                lifeModifier = null;
+        }
+        if (strengthModifier != null)
+        {
+            strengthModifier.remaningDuration -= 1;
+            if (strengthModifier.remaningDuration <= 0)
+                strengthModifier = null;
+        }
+        UpdateStatUI();
+    }
+
     //////////////////// HANDLE CARD INTERACTION///////////////////////
     public void OnCardPressed(GameObject card)
     {
@@ -554,6 +715,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
             if(!(currentCard.GetComponent<Card>() is ObjectCard))
             {
                 currentCard.GetComponent<Card>().Resolve();
+                DecreaseStatModifiersDuration();
                 canRevealNextCard = true;
             }
         }

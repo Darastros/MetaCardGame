@@ -5,9 +5,13 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Card/Object")]
 public class ObjectCardData : CardData
 {
-    public int lifeAdd = 0;
-    public int strengthAdd = 0;
-    public int strengthSet = 0;
-    public int coinAdd = 0;
-    public int duration = -1;
+    public List<EffectData> objectEffects;
+
+    public override void Resolve()
+    {
+        foreach (EffectData effect in objectEffects)
+        {
+            effect.ApplyEffect();
+        }
+    }
 }

@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: nom de lobj
+  m_text: nom de levent
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 9.25
+  m_fontSize: 7.65
   m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -146,9 +146,9 @@ GameObject:
   - component: {fileID: 6012599144342508886}
   - component: {fileID: 642578857030036899}
   - component: {fileID: 6263477589473736327}
-  - component: {fileID: 5573405149549660017}
+  - component: {fileID: -5684928020203782057}
   m_Layer: 0
-  m_Name: ObjectCard
+  m_Name: EventCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -241,7 +241,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5573405149549660017
+--- !u!114 &-5684928020203782057
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6130042529618441140}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9be811df6699a544285de3915653d5f1, type: 3}
+  m_Script: {fileID: 11500000, guid: 778bf9ca3732d1b41ad312c51fbd5c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   nameText: {fileID: 3018825338238003326}
@@ -320,9 +320,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '???
-
-    (it''s a mistery)'
+  m_text: do stuff !
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

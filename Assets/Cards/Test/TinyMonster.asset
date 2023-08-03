@@ -14,5 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Bebou
   cardImage: {fileID: 0}
-  cardText: don't hurt me pweeease
-  strength: 1
+  cardText: '"don''t hurt me pweeease" \n(lose 1 strength on reveal)'
+  strength: 2
+  effectsOnRevealed:
+  - {fileID: 11400000, guid: d28c5ae5069603b43b0e4a87122621c0, type: 2}
+  effectsOnWinBattle:
+  - {fileID: 11400000, guid: 4a2f3b0959c456247be3bb5c9152023c, type: 2}
+  effectsOnDeafeated:
+  - {fileID: 11400000, guid: 1320b0923917e124b9191cf0846642e3, type: 2}

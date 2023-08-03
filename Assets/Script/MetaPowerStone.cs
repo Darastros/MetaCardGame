@@ -14,7 +14,7 @@ public class MetaPowerStone : MonoBehaviour, IPointerClickHandler
 
     public void Activate()
     {
-        GameManager.Instance.AddMagic(-magicNeededToActivate);
+        GameManager.Instance.AddToStat(GameManager.PlayerStat.MAGIC, -magicNeededToActivate);
     }
 
     public void NotifyMagicAmountChanged(int currentMagic)

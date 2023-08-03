@@ -288,6 +288,7 @@ MonoBehaviour:
   cardPrefab: {fileID: 6130042529618441140, guid: c358615e2bb612c489a3e399721c23fa, type: 3}
   objectCardPrefab: {fileID: 6130042529618441140, guid: 0bce555f58c537247a904a7a21beebd0, type: 3}
   monsterCardPrefab: {fileID: 6130042529618441140, guid: b38c69e2ecc1ed04d92d278a5c18252b, type: 3}
+  eventCardPrefab: {fileID: 6130042529618441140, guid: 38e3d754c248e2741b2722e6eab62cae, type: 3}
   currentCard: {fileID: 0}
   whiteDicePrefab: {fileID: 594864404253669910, guid: 2d0240fa862f0b84686690cdf9f1c03e, type: 3}
   redDicePrefab: {fileID: 4306860812499734474, guid: 244a89e2bce5c7542a6d3c984367d40a, type: 3}
@@ -310,9 +311,9 @@ MonoBehaviour:
   magicText: {fileID: 1015728588}
   deathIcon: {fileID: 792482651}
   playerStartingLife: 3
-  playerStartingStrength: 0
+  playerStartingStrength: 3
   playerStartingCoin: 5
-  playerStartingMagic: 12
+  playerStartingMagic: 3
 --- !u!4 &61052541
 Transform:
   m_ObjectHideFlags: 0
@@ -21079,7 +21080,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 11.469971, y: -1.6000366}
+  m_AnchoredPosition: {x: 11.470032, y: -1.6000366}
   m_SizeDelta: {x: 280, y: 100}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1015728590
