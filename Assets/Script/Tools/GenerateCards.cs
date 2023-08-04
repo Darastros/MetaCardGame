@@ -191,12 +191,14 @@ public class GenerateCards : Editor
             int strengthIndex = _pattern.FindIndex( x => x == "Strength");
             if (strengthIndex < _cardData.Count) monsterCard.strength = int.Parse(_cardData[strengthIndex]);
 
-            monsterCard.effectsOnWinBattle.Add(CreateEffect(monsterCard.cardName, "Win Effect", "Win Value", 
-                                                                _pattern, _cardData, -1, 0));
-            monsterCard.effectsOnDeafeated.Add(CreateEffect(monsterCard.cardName, "Defeat Effect", "Defeat Value",
-                                                                _pattern, _cardData, -1, 1));
-            monsterCard.effectsOnRevealed.Add(CreateEffect(monsterCard.cardName, "Reveal Effect", "Reveal Value",
-                                                                _pattern, _cardData, 1, 2));
+            var effectOnWin = CreateEffect(monsterCard.cardName, "Win Effect", "Win Value", _pattern, _cardData, -1, 0);
+            if(effectOnWin) monsterCard.effectsOnWinBattle.Add(effectOnWin);
+
+            var effectOnDefeat = CreateEffect(monsterCard.cardName, "Defeat Effect", "Defeat Value", _pattern, _cardData, -1, 1);
+            if(effectOnDefeat) monsterCard.effectsOnDeafeated.Add(effectOnDefeat);
+            
+            var effectOnRevealed = CreateEffect(monsterCard.cardName, "Reveal Effect", "Reveal Value",_pattern, _cardData, 1, 2);
+            if(effectOnRevealed) monsterCard.effectsOnRevealed.Add(effectOnRevealed);
             
             if(!exist) AssetDatabase.CreateAsset(monsterCard, creaturesPath + monsterCard.cardName.Replace(' ', '_') + ".asset");
             else EditorUtility.SetDirty(monsterCard);
@@ -219,7 +221,8 @@ public class GenerateCards : Editor
             int effectIndex = _pattern.FindIndex( x => x == "Effect");
             if (effectIndex < _cardData.Count)
             {
-                objectCard.objectEffects.Add(CreateEffect(_cardData[effectIndex], _pattern, _cardData, 0));
+                var effect = CreateEffect(_cardData[effectIndex], _pattern, _cardData, 0);
+                if(effect) objectCard.objectEffects.Add(effect);
             }
 
             objectCard.isPotion = objectCard.cardName.ToLower().Contains("potion");
