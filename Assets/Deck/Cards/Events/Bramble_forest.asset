@@ -16,4 +16,4 @@ MonoBehaviour:
   cardImage: {fileID: 0}
   cardText: Inflict 1 damage.
   eventEffects:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 7e8b0e0ed69b530408633be8d4ef81ff, type: 2}

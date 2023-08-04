@@ -323,7 +323,7 @@ public class GenerateCards : Editor
     private static EffectData CreateEffect(string _cardName, List<string> _pattern, List<string> _cardData, int _numberOfEffect)
     {
         string effectType = "";
-        int effectIndex = _pattern.FindIndex( x => x == "Value");
+        int effectIndex = _pattern.FindIndex( x => x == "Effect");
         if (effectIndex < _cardData.Count) effectType = _cardData[effectIndex];
         
         int value = 0;

@@ -18,4 +18,4 @@ MonoBehaviour:
   isPotion: 0
   objectEffects:
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 85f7b6e535349c84ab8a6cf69e21b515, type: 2}

@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 530c1a8d8f72cc842b51c02c55ccc67d, type: 3}
-  m_Name: Pink_potion
+  m_Script: {fileID: 11500000, guid: 30cf966642b872c41be831b27b639c2c, type: 3}
+  m_Name: Full_mana_Effect0
   m_EditorClassIdentifier: 
-  cardName: Pink potion
-  cardImage: {fileID: 0}
-  cardText: Fill mana.
-  isPotion: 1
-  objectEffects:
-  - {fileID: 11400000, guid: 598b56acde06df04a920e754d06a5745, type: 2}
+  affectedStat: 3
+  value: 10
+  duration: -1
