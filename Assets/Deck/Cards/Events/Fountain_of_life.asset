@@ -16,4 +16,4 @@ MonoBehaviour:
   cardImage: {fileID: 0}
   cardText: Heal 1 point.
   eventEffects:
-  - {fileID: 11400000, guid: 035cab82b2f6eb94188b42646a27ac07, type: 2}
+  - {fileID: 11400000, guid: eb7380b37ffd86d4398538a4e17f4c20, type: 2}

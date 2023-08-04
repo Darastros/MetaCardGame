@@ -221,7 +221,7 @@ public class GenerateCards : Editor
             int effectIndex = _pattern.FindIndex( x => x == "Effect");
             if (effectIndex < _cardData.Count)
             {
-                var effect = CreateEffect(_cardData[effectIndex], _pattern, _cardData, 0);
+                var effect = CreateEffect(objectCard.cardName, _pattern, _cardData, 0);
                 if(effect) objectCard.objectEffects.Add(effect);
             }
 
@@ -251,7 +251,7 @@ public class GenerateCards : Editor
             int effectIndex = _pattern.FindIndex( x => x == "Effect");
             if (effectIndex < _cardData.Count)
             {
-                eventCard.eventEffects.Add(CreateEffect(_cardData[effectIndex], _pattern, _cardData, 0));
+                eventCard.eventEffects.Add(CreateEffect(eventCard.cardName, _pattern, _cardData, 0));
             }
 
             if(!exist) AssetDatabase.CreateAsset(eventCard, eventsPath + eventCard.cardName.Replace(' ', '_') + ".asset");

@@ -16,4 +16,4 @@ MonoBehaviour:
   cardImage: {fileID: 0}
   cardText: Remove 1 strength.
   eventEffects:
-  - {fileID: 11400000, guid: 38ff6e75cfd9ad5419228ab1a8293f58, type: 2}
+  - {fileID: 11400000, guid: 686d4d9f07066e74aba5b1a26fda8a83, type: 2}

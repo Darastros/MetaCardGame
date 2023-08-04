@@ -17,4 +17,4 @@ MonoBehaviour:
   cardText: Fill mana.
   isPotion: 1
   objectEffects:
-  - {fileID: 11400000, guid: 598b56acde06df04a920e754d06a5745, type: 2}
+  - {fileID: 11400000, guid: 74b5e4967fb51354dbe04c8fed81daa5, type: 2}

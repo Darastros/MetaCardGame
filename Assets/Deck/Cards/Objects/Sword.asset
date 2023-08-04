@@ -17,4 +17,4 @@ MonoBehaviour:
   cardText: Add 1 strength.
   isPotion: 0
   objectEffects:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 9c81903278cf4dd4a85fc24ed6df4ecc, type: 2}

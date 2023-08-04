@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 530c1a8d8f72cc842b51c02c55ccc67d, type: 3}
-  m_Name: Strange_amulet
+  m_Script: {fileID: 11500000, guid: 7c114b1ca2ee7454286db02d9040e66e, type: 3}
+  m_Name: Grimoire_Effect0
   m_EditorClassIdentifier: 
-  cardName: Strange amulet
-  cardImage: {fileID: 0}
-  cardText: Add 3 strength.
-  isPotion: 0
-  objectEffects:
-  - {fileID: 11400000, guid: 02edf39b0ea15294e81073559b2ebd9c, type: 2}
+  affectedStat: 0
+  value: -5
+  duration: -1

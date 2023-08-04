@@ -17,5 +17,5 @@ MonoBehaviour:
   cardText: Set strength to 1 for 5 turn, Add 3 strength.
   isPotion: 0
   objectEffects:
-  - {fileID: 11400000, guid: 59828c4823f0fb94589c8cc8a6831c46, type: 2}
+  - {fileID: 11400000, guid: b87640e6baf7b4f4f88df3b9145be6cb, type: 2}
   - {fileID: 11400000, guid: f65e63e862c49eb4bae189f7d701191e, type: 2}

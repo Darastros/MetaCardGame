@@ -17,4 +17,4 @@ MonoBehaviour:
   cardText: Heal 3 point.
   isPotion: 1
   objectEffects:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 0d997111a5142da49ab1609157344e74, type: 2}
