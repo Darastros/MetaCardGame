@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Wolf
   cardImage: {fileID: 0}
-  cardText: 
+  cardText: 4 strength, -1 life, +1 mana
   strength: 4
-  effectsOnRevealed: []
+  effectsOnRevealed:
+  - {fileID: 0}
   effectsOnWinBattle:
-  - {fileID: 11400000, guid: 4860c3d429f1a0e418c63dc1ac6c6b19, type: 2}
+  - {fileID: 11400000, guid: 267bf94947c50b444a64e079e99a5878, type: 2}
   effectsOnDeafeated:
-  - {fileID: 11400000, guid: 8827dd046739fcc46b2e145dfac78fed, type: 2}
+  - {fileID: 11400000, guid: c43c5e80070e23e40aaa579a348a048c, type: 2}

@@ -13,9 +13,19 @@ MonoBehaviour:
   m_Name: Volcano_CardPool_3
   m_EditorClassIdentifier: 
   cards:
-  - {fileID: 11400000, guid: 58ef420d5b9f8d549b530bb6354d092d, type: 2}
-  amountOfCardsfromPool: 20
-  minimumOfEachCard: 1
-  maximumOfEachCard: 3
+  - {fileID: 11400000, guid: 175d24d1a8976954bb3c8ad1aedad607, type: 2}
+  - {fileID: 11400000, guid: 1a43b47ce382e6f4fa289449b76de97b, type: 2}
+  - {fileID: 11400000, guid: 1da557455aaa9dd478bd0a1b4f00a908, type: 2}
+  - {fileID: 11400000, guid: ebcd34818f9d3204db613b894ece3d6a, type: 2}
+  - {fileID: 11400000, guid: a82bd59d6fd801e46b4321988c5367af, type: 2}
+  - {fileID: 11400000, guid: 4043e9b96fd0042408b7ab04bc353f37, type: 2}
+  amountOfCardsfromPool: 3
+  minimumOfEachCard: 0
+  maximumOfEachCard: 1
   weightList:
   - 1
+  - 1
+  - 3
+  - 1
+  - 3
+  - 5

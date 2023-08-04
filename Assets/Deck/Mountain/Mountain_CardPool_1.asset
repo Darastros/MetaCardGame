@@ -14,14 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cards:
   - {fileID: 11400000, guid: 9764646817cdcc04da163acb0ca91c46, type: 2}
-  - {fileID: 11400000, guid: cfd6f2a8638025142b8fea3019de4e2d, type: 2}
   - {fileID: 11400000, guid: b128338090825a1488d2863419085e3a, type: 2}
-  - {fileID: 11400000, guid: fcc660eccb346464b9c537af9125e5ad, type: 2}
-  amountOfCardsfromPool: 20
-  minimumOfEachCard: 1
-  maximumOfEachCard: 3
+  amountOfCardsfromPool: 0
+  minimumOfEachCard: 0
+  maximumOfEachCard: 0
   weightList:
-  - 1
-  - 1
-  - 1
-  - 1
+  - 5
+  - 3

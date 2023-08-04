@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Slime
   cardImage: {fileID: 0}
-  cardText: 
+  cardText: 2 strength, -1 life, +1 mana
   strength: 2
-  effectsOnRevealed: []
+  effectsOnRevealed:
+  - {fileID: 0}
   effectsOnWinBattle:
-  - {fileID: 11400000, guid: aaa92489fda30f641b1cbf188045ff53, type: 2}
+  - {fileID: 11400000, guid: 79d2b952962bd894998e4031a47d1917, type: 2}
   effectsOnDeafeated:
-  - {fileID: 11400000, guid: cc9ad08b7efd26846909ba4768d74e44, type: 2}
+  - {fileID: 11400000, guid: 482de768cf3f8144e92b4b9679c4b473, type: 2}

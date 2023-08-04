@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Stray dog
   cardImage: {fileID: 0}
-  cardText: 
+  cardText: 2 strength, -1 life, +1 mana
   strength: 2
-  effectsOnRevealed: []
+  effectsOnRevealed:
+  - {fileID: 0}
   effectsOnWinBattle:
-  - {fileID: 11400000, guid: 737b5da5f35bd0d49bab821f49661142, type: 2}
+  - {fileID: 11400000, guid: aa452b595f57d0e4a8bcd5fe94f528d8, type: 2}
   effectsOnDeafeated:
-  - {fileID: 11400000, guid: 92e9c351fa60bd345a0210e2d121f6eb, type: 2}
+  - {fileID: 11400000, guid: b4b6d712ee223194a9f5092a767f4049, type: 2}

@@ -13,21 +13,9 @@ MonoBehaviour:
   m_Name: Forest_CardPool_2
   m_EditorClassIdentifier: 
   cards:
-  - {fileID: 11400000, guid: 007b3c6e18b17fe4f931752b523ce751, type: 2}
-  - {fileID: 11400000, guid: cf5392c908137ca49a648ef7a8b675ed, type: 2}
-  - {fileID: 11400000, guid: 79b3051f8b4dd4f418737e26bc6460a7, type: 2}
-  - {fileID: 11400000, guid: 1c05971884d01ff489be5b79ccec146e, type: 2}
-  - {fileID: 11400000, guid: 4de264a656c7ef04bb7faf2b98d0c83b, type: 2}
-  - {fileID: 11400000, guid: f95efdae77694454785cbddb2f3fd0dc, type: 2}
-  - {fileID: 11400000, guid: 1a43b47ce382e6f4fa289449b76de97b, type: 2}
-  amountOfCardsfromPool: 20
+  - {fileID: 11400000, guid: cfd6f2a8638025142b8fea3019de4e2d, type: 2}
+  amountOfCardsfromPool: 1
   minimumOfEachCard: 1
-  maximumOfEachCard: 3
+  maximumOfEachCard: 1
   weightList:
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
+  - 5

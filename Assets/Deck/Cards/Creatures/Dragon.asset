@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Dragon
   cardImage: {fileID: 0}
-  cardText: 
+  cardText: 20 strength, -999 life, +10 mana
   strength: 20
-  effectsOnRevealed: []
+  effectsOnRevealed:
+  - {fileID: 0}
   effectsOnWinBattle:
-  - {fileID: 11400000, guid: 76cd78d43532f404db2b483ac2adfc57, type: 2}
+  - {fileID: 11400000, guid: cedeec7a3c99f1e47bed51b7157e3789, type: 2}
   effectsOnDeafeated:
-  - {fileID: 11400000, guid: 6269088d3461b654c9d3ed55f4d843e2, type: 2}
+  - {fileID: 11400000, guid: 730e313d025a3bb48b1a27082bdf641e, type: 2}

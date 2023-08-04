@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Skeleton
   cardImage: {fileID: 0}
-  cardText: 
+  cardText: 6 strength, -1 life, +1 mana
   strength: 6
-  effectsOnRevealed: []
+  effectsOnRevealed:
+  - {fileID: 0}
   effectsOnWinBattle:
-  - {fileID: 11400000, guid: cf654777cd66e4d49bb3ea892ca96b07, type: 2}
+  - {fileID: 11400000, guid: f881e3ab1e6a45c4fb4d8e754b6b3b17, type: 2}
   effectsOnDeafeated:
-  - {fileID: 11400000, guid: c4a0a6adb7799d84ab8954227225d5ce, type: 2}
+  - {fileID: 11400000, guid: d0614e9494befd7439478247a9028fee, type: 2}

@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Giant snake
   cardImage: {fileID: 0}
-  cardText: 
+  cardText: 10 strength, -2 life, +5 mana
   strength: 10
-  effectsOnRevealed: []
+  effectsOnRevealed:
+  - {fileID: 0}
   effectsOnWinBattle:
-  - {fileID: 11400000, guid: 54dd603213001d54c954535ac881e45d, type: 2}
+  - {fileID: 11400000, guid: f603d2913fd63a74a9e79366c66d6a7b, type: 2}
   effectsOnDeafeated:
-  - {fileID: 11400000, guid: 6134f0ad9444d8741836e031ea5b58ad, type: 2}
+  - {fileID: 11400000, guid: ff434a686558341479ecf6d29b42bda0, type: 2}

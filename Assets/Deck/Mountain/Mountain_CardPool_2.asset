@@ -13,19 +13,9 @@ MonoBehaviour:
   m_Name: Mountain_CardPool_2
   m_EditorClassIdentifier: 
   cards:
-  - {fileID: 11400000, guid: cf5392c908137ca49a648ef7a8b675ed, type: 2}
-  - {fileID: 11400000, guid: 1a43b47ce382e6f4fa289449b76de97b, type: 2}
-  - {fileID: 11400000, guid: 1da557455aaa9dd478bd0a1b4f00a908, type: 2}
-  - {fileID: 11400000, guid: ebcd34818f9d3204db613b894ece3d6a, type: 2}
-  - {fileID: 11400000, guid: a82bd59d6fd801e46b4321988c5367af, type: 2}
-  - {fileID: 11400000, guid: 4043e9b96fd0042408b7ab04bc353f37, type: 2}
-  amountOfCardsfromPool: 20
-  minimumOfEachCard: 1
-  maximumOfEachCard: 3
+  - {fileID: 11400000, guid: fcc660eccb346464b9c537af9125e5ad, type: 2}
+  amountOfCardsfromPool: 2
+  minimumOfEachCard: 2
+  maximumOfEachCard: 2
   weightList:
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
+  - 5

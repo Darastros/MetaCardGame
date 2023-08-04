@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Bear
   cardImage: {fileID: 0}
-  cardText: 
+  cardText: 8 strength, -2 life, +5 mana
   strength: 8
-  effectsOnRevealed: []
+  effectsOnRevealed:
+  - {fileID: 0}
   effectsOnWinBattle:
-  - {fileID: 11400000, guid: 37530bb87bdf8fe46ad45d1cff57eda9, type: 2}
+  - {fileID: 11400000, guid: bbcdcd3197066cf4abb4566c5d0a4a34, type: 2}
   effectsOnDeafeated:
-  - {fileID: 11400000, guid: 1462409a180a9e74384916e8108c3d61, type: 2}
+  - {fileID: 11400000, guid: cc781b027e993c149adcb788bef08fec, type: 2}
