@@ -1,5 +1,5 @@
 IGNORE	Creatures										Areas				
-											(8 0 2)	(0 0 0)	(8 0 2)	(4 0 2)	(4 0 2)
+REPARTITION											(8 0 2)		(8 0 2)	(4 0 2)	(4 0 2)
 STRUCTURE	Name	Type	Description	Strength	Reveal Effect	Reveal Value	Defeat Effect	Defeat Value	Win Effect	Win Value	Plain	PlainToForest	Forest	Mountain	Volcano
 1	Slime	Creature	2 strength, -1 life, +1 mana	2	Nothing	---	Inflict damage	1	Add mana	1	5	0	0	0	0
 2	Stray dog	Creature	2 strength, -1 life, +1 mana	2	Nothing	---	Inflict damage	1	Add mana	1	2	0	0	0	0
@@ -33,9 +33,9 @@ STRUCTURE	Name	Type	Description	Effect	Value	Duration	Plain	PlainToForest	Forest
 11	Strange amulet	Object	Add 3 strength.	Add strength	3	---	0	0	0	3	3				
 12	Big red potion	Object	Heal 3 point.	Heal	3	---	0	0	0	2	5				
 IGNORE	Event						Areas								
-REPARTITION							(2 1 1)	(0 0 0)	(2 1 1)	(1 1 1)					
+REPARTITION							(2 1 1)		(2 1 1)	(1 1 1)					
 STRUCTURE	Name	Type	Description	Effect	Value	Duration	Plain	PlainToForest	Forest	Mountain	Volcano				
-1	Fountain of strength	Event	Add 2 strength.	Add strength	2	---	5	0	0	0	0				
+1	Fountain of strength	Event	Add 2 strength.	Add strength	1	---	5	0	0	0	0				
 2	Bramble forest	Event	Inflict 1 damage.	Inflict damage	1	---	5	0	0	0	0				
 3	Curse of spriggan	Event	Remove 1 strength.	Remove strength	1	---	0	0	5	0	0				
 4	Fountain of life	Event	Heal 1 point.	Heal	1	---	0	0	5	0	0				

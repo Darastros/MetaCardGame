@@ -134,7 +134,6 @@ public class GenerateCards : Editor
                     {
                         string poolDataStr = cardsData[0][dataIndex];
                         string[] poolData = poolDataStr.Trim('(').Trim(')').Split(' ');
-                        
                         pools[regionId].amountOfCardsfromPool = int.Parse(poolData[0]);
                         pools[regionId].minimumOfEachCard = int.Parse(poolData[1]);
                         pools[regionId].maximumOfEachCard = int.Parse(poolData[2]);

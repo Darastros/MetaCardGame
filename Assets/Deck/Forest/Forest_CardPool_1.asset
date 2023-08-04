@@ -17,9 +17,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a091865cd032e5e46a43252866239d00, type: 2}
   - {fileID: 11400000, guid: 0759e27848742a7418f5fd837aa797f0, type: 2}
   - {fileID: 11400000, guid: 9764646817cdcc04da163acb0ca91c46, type: 2}
-  amountOfCardsfromPool: 0
+  amountOfCardsfromPool: 8
   minimumOfEachCard: 0
-  maximumOfEachCard: 0
+  maximumOfEachCard: 2
   weightList:
   - 5
   - 2
