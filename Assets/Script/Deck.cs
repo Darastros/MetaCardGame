@@ -113,6 +113,15 @@ public class Deck : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
         deck = new List<CardGroupInstance>();
         CreateDeckFromData();
         Shuffle();
+        
+        foreach(CardGroupInstance cardGroup in deck)
+        {
+            Debug.Log("----New region----");
+            foreach (var card in cardGroup.cards)
+            {
+                Debug.Log(card.dataInstance.cardName);
+            }
+        }
         initScale = transform.localScale;
         initPos = transform.position;
         int cardCount = 0;
@@ -190,6 +199,15 @@ public class Deck : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
         CreateDeckFromData();
         Shuffle();
         UpdateDeckScale();
+        
+        foreach(CardGroupInstance cardGroup in deck)
+        {
+            Debug.Log("----New region----");
+            foreach (var card in cardGroup.cards)
+            {
+                Debug.Log(card.dataInstance.cardName);
+            }
+        }
     }
 
     public void PutCardOnTopOfDeck(CardInstance card)
