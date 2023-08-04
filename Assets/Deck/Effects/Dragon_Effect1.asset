@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c114b1ca2ee7454286db02d9040e66e, type: 3}
   m_Name: Dragon_Effect1
   m_EditorClassIdentifier: 
-  affectedStat: 0
-  value: -9999
+  affectedStat: 3
+  value: 1
   duration: -1
