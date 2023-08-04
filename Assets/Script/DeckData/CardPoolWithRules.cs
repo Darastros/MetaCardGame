@@ -33,6 +33,7 @@ public class CardPoolWithRules : CardPool
             if (selectedIndex < 0)
                 break; 
             cardInstances.Add(new CardInstance(cards[selectedIndex]));
+            amountSelectedPerCard[selectedIndex]++;
             amountOfSelectedCards++;
         }
         
