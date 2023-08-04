@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: VolcanoGroup
   m_EditorClassIdentifier: 
   cardPools:
-  - {fileID: 11400000, guid: c286bcba99d8f6145974cb53d435882b, type: 2}
-  - {fileID: 11400000, guid: d8d810492342657489b51eed2dbbcaa3, type: 2}
-  - {fileID: 11400000, guid: af07428aa475d4742898270b87acdbcb, type: 2}
-  - {fileID: 11400000, guid: 3239eda4863f7794fb370328a634ce41, type: 2}
+  - {fileID: 11400000, guid: 995ea86e1d7a62647b8c18d7f8bf8aa2, type: 2}
+  - {fileID: 11400000, guid: 1f93025cd90993544967b6adb7cc223e, type: 2}
+  - {fileID: 11400000, guid: 6745285b737bbe047a8017c9fb55d49c, type: 2}

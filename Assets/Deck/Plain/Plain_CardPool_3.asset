@@ -13,13 +13,11 @@ MonoBehaviour:
   m_Name: Plain_CardPool_3
   m_EditorClassIdentifier: 
   cards:
-  - {fileID: 11400000, guid: 7d96b81fa328f6643bb24783e5b68563, type: 2}
-  - {fileID: 11400000, guid: 8a143f9e85f92084fae70cc0a7b0c57e, type: 2}
-  - {fileID: 11400000, guid: 958720592ed33f943bff7cf291bcf14e, type: 2}
-  amountOfCardsfromPool: 5
-  minimumOfEachCard: 0
-  maximumOfEachCard: 4
+  - {fileID: 11400000, guid: 73b2a1dff38c1604ca0c2dfb54ed32f5, type: 2}
+  - {fileID: 11400000, guid: 17d103f3032b24e479df5d821a116382, type: 2}
+  amountOfCardsfromPool: 20
+  minimumOfEachCard: 1
+  maximumOfEachCard: 3
   weightList:
-  - 10
-  - 20
-  - 70
+  - 1
+  - 1

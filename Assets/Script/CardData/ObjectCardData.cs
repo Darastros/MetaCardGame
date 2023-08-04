@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Card/Object")]
 public class ObjectCardData : CardData
 {
+    public bool isPotion = false;
     public List<EffectData> objectEffects;
 
     public override void Resolve()

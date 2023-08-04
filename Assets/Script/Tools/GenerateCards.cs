@@ -11,6 +11,7 @@ public class GenerateCards : Editor
     static readonly string deckPath = "Assets/Deck/";
     static readonly string csvPath = deckPath + "CSV/";
     static readonly string cardPath = deckPath + "Cards/";
+    static readonly string effectPath = deckPath + "Effects/";
     
     static readonly string creaturesPath = cardPath + "Creatures/";
     static readonly string objectsPath = cardPath + "Objects/";
@@ -22,9 +23,6 @@ public class GenerateCards : Editor
     [MenuItem("Editor/GenerateCards", false, -1)]
     public static void Generate()
     {
-        var info = new DirectoryInfo(csvPath);
-        var filesInfo = info.GetFiles();
-
         DeckData deck = (DeckData)AssetDatabase.LoadAssetAtPath(deckDataPath, typeof(DeckData));
         List<CardGroup> regions = deck.groups;
         
@@ -40,7 +38,17 @@ public class GenerateCards : Editor
             region.cardPools = new List<CardPool>();
             EditorUtility.SetDirty(region);
         }
+        
+        var effects = new DirectoryInfo(effectPath);
+        var filesEffects = effects.GetFiles();
+        foreach (var effect in filesEffects)
+        {
+            AssetDatabase.DeleteAsset(effectPath + effect.Name);
+        }
 
+        var info = new DirectoryInfo(csvPath);
+        var filesInfo = info.GetFiles();
+        
         int nbPool = 0;
         foreach (var file in filesInfo)
         {
@@ -156,14 +164,28 @@ public class GenerateCards : Editor
         {
             MonsterCardData monsterCard;
             bool exist = FindOrCreateCard(_pattern, _cardData, out monsterCard);
+            monsterCard.effectsOnWinBattle = new List<EffectData>();
+            monsterCard.effectsOnDeafeated = new List<EffectData>();
             
             int strengthIndex = _pattern.FindIndex( x => x == "Strength");
             if (strengthIndex < _cardData.Count) monsterCard.strength = int.Parse(_cardData[strengthIndex]);
             
-            //int damageIndex = _pattern.FindIndex( x => x == "Damage");
-            //if (damageIndex < _cardData.Count) monsterCard.damage = int.Parse(_cardData[damageIndex]);
             
-            if(!exist) AssetDatabase.CreateAsset(monsterCard, creaturesPath + monsterCard.cardName + ".asset");
+            var effectOnWinBattle = CreateInstance<AddToStatEffectData>();
+            effectOnWinBattle.affectedStat = GameManager.PlayerStat.LIFE;
+            int damageIndex = _pattern.FindIndex( x => x == "Damage");
+            if (damageIndex < _cardData.Count) effectOnWinBattle.value = -int.Parse(_cardData[damageIndex]);
+            AssetDatabase.CreateAsset(effectOnWinBattle, effectPath + monsterCard.cardName.Replace(' ', '_') + "_Win_Effect.asset");
+            monsterCard.effectsOnWinBattle.Add(effectOnWinBattle);
+            
+            var effectOnDefeated = CreateInstance<AddToStatEffectData>();
+            effectOnDefeated.affectedStat = GameManager.PlayerStat.MAGIC;
+            effectOnDefeated.value = 1;
+            AssetDatabase.CreateAsset(effectOnDefeated, effectPath + monsterCard.cardName.Replace(' ', '_') + "_Defeat_Effect.asset");
+            monsterCard.effectsOnDeafeated.Add(effectOnDefeated);
+            
+            
+            if(!exist) AssetDatabase.CreateAsset(monsterCard, creaturesPath + monsterCard.cardName.Replace(' ', '_') + ".asset");
             else EditorUtility.SetDirty(monsterCard);
 
             return monsterCard;
@@ -179,55 +201,24 @@ public class GenerateCards : Editor
         {
             ObjectCardData objectCard;
             bool exist = FindOrCreateCard(_pattern, _cardData, out objectCard);
-            
-            int value = 0;
-            int strengthIndex = _pattern.FindIndex( x => x == "Value");
-            if (strengthIndex < _cardData.Count) int.TryParse(_cardData[strengthIndex], out value);
+            objectCard.objectEffects = new List<EffectData>();
             
             int effectIndex = _pattern.FindIndex( x => x == "Effect");
             if (effectIndex < _cardData.Count)
             {
-                //switch (_cardData[effectIndex])
-                //{
-                //    case "Add strength":
-                //        objectCard.strengthAdd = value;
-                //        break;
-                //    case "Remove strength":
-                //        objectCard.strengthAdd = -value;
-                //        break;
-                //    case "Heal":
-                //        objectCard.lifeAdd = value;
-                //        break;
-                //    case "Inflict damage":
-                //        objectCard.lifeAdd = -value;
-                //        break;
-                //    case "Give gold":
-                //        objectCard.coinAdd = value;
-                //        break;
-                //    case "Steal gold":
-                //        objectCard.coinAdd = -value;
-                //        break;
-                //    case "Set strength":
-                //        objectCard.strengthSet = value;
-                //        break;
-                //}
-            }
-            
-            int durationIndex = _pattern.FindIndex( x => x == "Duration");
-            if (durationIndex < _cardData.Count)
-            {
-                //if (int.TryParse(_cardData[durationIndex], out var duration)) objectCard.duration = duration;
-                //else objectCard.duration = -1;
+                objectCard.objectEffects.Add(CreateEffect(objectCard.cardName,_cardData[effectIndex], _pattern, _cardData));
             }
 
-            if(!exist) AssetDatabase.CreateAsset(objectCard, objectsPath + objectCard.cardName + ".asset");
+            objectCard.isPotion = objectCard.cardName.ToLower().Contains("potion");
+
+            if(!exist) AssetDatabase.CreateAsset(objectCard, objectsPath + objectCard.cardName.Replace(' ', '_') + ".asset");
             else EditorUtility.SetDirty(objectCard);
             return objectCard;
         }
 
         return null;
     }
-
+    
     private static CardData CreateEvent(List<string> _pattern, List<string> _cardData)
     {
         int nameIndex = _pattern.FindIndex( x => x == "Name");
@@ -235,6 +226,7 @@ public class GenerateCards : Editor
         {
             EventCardData eventCard;
             bool exist = FindOrCreateCard(_pattern, _cardData, out eventCard);
+            eventCard.eventEffects = new List<EffectData>();
             
             int value = 0;
             int strengthIndex = _pattern.FindIndex( x => x == "Value");
@@ -243,40 +235,10 @@ public class GenerateCards : Editor
             int effectIndex = _pattern.FindIndex( x => x == "Effect");
             if (effectIndex < _cardData.Count)
             {
-                //switch (_cardData[effectIndex])
-                //{
-                //    case "Add strength":
-                //        eventCard.strengthAdd = value;
-                //        break;
-                //    case "Remove strength":
-                //        eventCard.strengthAdd = -value;
-                //        break;
-                //    case "Heal":
-                //        eventCard.lifeAdd = value;
-                //        break;
-                //    case "Inflict damage":
-                //        eventCard.lifeAdd = -value;
-                //        break;
-                //    case "Give gold":
-                //        eventCard.coinAdd = value;
-                //        break;
-                //    case "Steal gold":
-                //        eventCard.coinAdd = -value;
-                //        break;
-                //    case "Set strength":
-                //        eventCard.strengthSet = value;
-                //        break;
-                //}
-            }
-            
-            int durationIndex = _pattern.FindIndex( x => x == "Duration");
-            if (durationIndex < _cardData.Count)
-            {
-                //if (int.TryParse(_cardData[durationIndex], out var duration)) eventCard.duration = duration;
-                //else eventCard.duration = -1;
+                eventCard.eventEffects.Add(CreateEffect(eventCard.cardName, _cardData[effectIndex], _pattern, _cardData));
             }
 
-            if(!exist) AssetDatabase.CreateAsset(eventCard, eventsPath + eventCard.cardName + ".asset");
+            if(!exist) AssetDatabase.CreateAsset(eventCard, eventsPath + eventCard.cardName.Replace(' ', '_') + ".asset");
             else EditorUtility.SetDirty(eventCard);
             return eventCard;
         }
@@ -324,5 +286,81 @@ public class GenerateCards : Editor
         FillGenericCardData(_card, _pattern, _cardData);
         return exist;
     }
+
+    private static EffectData CreateEffect(string _cardName, string _effectType, List<string> _pattern, List<string> _cardData)
+    {
+        int value = 0;
+        int valueIndex = _pattern.FindIndex( x => x == "Value");
+        if (valueIndex < _cardData.Count) int.TryParse(_cardData[valueIndex], out value);
+
+        EffectData effect = null;
+        
+        switch (_effectType)
+        {
+            case "Add strength":
+                var effectAddStrength = CreateInstance<AddToStatEffectData>();
+                effectAddStrength.affectedStat = GameManager.PlayerStat.STRENGTH;
+                effectAddStrength.value = value;
+                effect = effectAddStrength;
+                break;
+            case "Remove strength":
+                var effectRemoveStrength = CreateInstance<AddToStatEffectData>();
+                effectRemoveStrength.affectedStat = GameManager.PlayerStat.STRENGTH;
+                effectRemoveStrength.value = -value;
+                effect = effectRemoveStrength;
+                break;
+            case "Heal":
+                var effectHeal = CreateInstance<AddToStatEffectData>();
+                effectHeal.affectedStat = GameManager.PlayerStat.LIFE;
+                effectHeal.value = value;
+                effect = effectHeal;
+                break;
+            case "Inflict damage":
+                var effectDamage = CreateInstance<AddToStatEffectData>();
+                effectDamage.affectedStat = GameManager.PlayerStat.LIFE;
+                effectDamage.value = -value;
+                effect = effectDamage;
+                break;
+            case "Give gold":
+                var effectGiveGold = CreateInstance<AddToStatEffectData>();
+                effectGiveGold.affectedStat = GameManager.PlayerStat.COIN;
+                effectGiveGold.value = value;
+                effect = effectGiveGold;
+                
+                break;
+            case "Steal gold":
+                var effectStealGold = CreateInstance<AddToStatEffectData>();
+                effectStealGold.affectedStat = GameManager.PlayerStat.COIN;
+                effectStealGold.value = -value;
+                effect = effectStealGold;
+                
+                break;
+            case "Set strength":
+                var effectSetStrength = CreateInstance<SetStatEffectData>();
+                effectSetStrength.affectedStat = GameManager.PlayerStat.STRENGTH;
+                effectSetStrength.value = value;
+                
+                int duration = 0;
+                int durationIndex = _pattern.FindIndex( x => x == "Duration");
+                if (durationIndex < _cardData.Count) int.TryParse(_cardData[durationIndex], out duration);
+                effectSetStrength.duration = duration;
+                
+                effect = effectSetStrength;
+                
+                break;
+            case "Reveal potion effect":
+                var effectRevealPotion = CreateInstance<RevealPotionEffectData>();
+                effect = effectRevealPotion;
+                
+                break;
+        }
+
+        if (effect)
+        {
+            AssetDatabase.CreateAsset(effect, effectPath + _cardName.Replace(' ', '_') + "_Effect.asset");
+        }
+        return effect;
+    }
+
 }
 #endif

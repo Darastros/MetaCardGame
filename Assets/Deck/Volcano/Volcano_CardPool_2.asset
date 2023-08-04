@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Volcano_CardPool_2
   m_EditorClassIdentifier: 
   cards:
-  - {fileID: 11400000, guid: 83b1f352890f84143bbc5fd0a43eed8c, type: 2}
-  - {fileID: 11400000, guid: 89305953ae7397345a0a8dda297dac94, type: 2}
-  - {fileID: 11400000, guid: 4a6870e0da06ba7449b17f7657cc84ae, type: 2}
-  - {fileID: 11400000, guid: 98faa55a2a9349c468abab22a3764b7c, type: 2}
-  - {fileID: 11400000, guid: 1cce169a620af2f429528a89a22d0c0a, type: 2}
-  - {fileID: 11400000, guid: 38fb970ec85277540b4a9a8e82420977, type: 2}
+  - {fileID: 11400000, guid: cf5392c908137ca49a648ef7a8b675ed, type: 2}
+  - {fileID: 11400000, guid: 1a43b47ce382e6f4fa289449b76de97b, type: 2}
+  - {fileID: 11400000, guid: 1da557455aaa9dd478bd0a1b4f00a908, type: 2}
+  - {fileID: 11400000, guid: ebcd34818f9d3204db613b894ece3d6a, type: 2}
+  - {fileID: 11400000, guid: a82bd59d6fd801e46b4321988c5367af, type: 2}
+  - {fileID: 11400000, guid: 4043e9b96fd0042408b7ab04bc353f37, type: 2}
   amountOfCardsfromPool: 20
   minimumOfEachCard: 1
   maximumOfEachCard: 3

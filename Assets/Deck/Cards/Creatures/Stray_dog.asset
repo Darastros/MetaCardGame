@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03402d845702df24f8d1c1d623890e46, type: 3}
+  m_Name: Stray_dog
+  m_EditorClassIdentifier: 
+  cardName: Stray dog
+  cardImage: {fileID: 0}
+  cardText: 
+  strength: 2
+  effectsOnRevealed: []
+  effectsOnWinBattle:
+  - {fileID: 11400000, guid: 737b5da5f35bd0d49bab821f49661142, type: 2}
+  effectsOnDeafeated:
+  - {fileID: 11400000, guid: 92e9c351fa60bd345a0210e2d121f6eb, type: 2}

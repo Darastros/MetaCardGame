@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     public uint cardsSeenInScry = 5;
     public uint cardsSeenInDiscard = 3;
     ///////////////////////
-
+    public CardData mysteriousPotionData;
     public GameObject cardPrefab;
     public GameObject objectCardPrefab;
     public GameObject monsterCardPrefab;
@@ -90,6 +90,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
 
     //gameState
     bool canRevealNextCard = true;
+    public bool haveGrimoire = false;
 
     public GameObject lifeText;
     public GameObject strengthText;

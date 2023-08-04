@@ -16,4 +16,8 @@ MonoBehaviour:
   cardImage: {fileID: 0}
   cardText: 
   strength: 8
-  damage: 2
+  effectsOnRevealed: []
+  effectsOnWinBattle:
+  - {fileID: 11400000, guid: 37530bb87bdf8fe46ad45d1cff57eda9, type: 2}
+  effectsOnDeafeated:
+  - {fileID: 11400000, guid: 1462409a180a9e74384916e8108c3d61, type: 2}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mountain_CardPool_3
   m_EditorClassIdentifier: 
   cards:
-  - {fileID: 11400000, guid: b51079cc47c17f046b6eeaee3177ed91, type: 2}
+  - {fileID: 11400000, guid: 58ef420d5b9f8d549b530bb6354d092d, type: 2}
   amountOfCardsfromPool: 20
   minimumOfEachCard: 1
   maximumOfEachCard: 3

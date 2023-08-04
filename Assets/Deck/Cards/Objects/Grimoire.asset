@@ -15,8 +15,6 @@ MonoBehaviour:
   cardName: Grimoire
   cardImage: {fileID: 0}
   cardText: 
-  lifeAdd: 0
-  strengthAdd: 0
-  strengthSet: 0
-  coinAdd: 0
-  duration: -1
+  isPotion: 0
+  objectEffects:
+  - {fileID: 11400000, guid: 961db787c29fa8c4791bf5aec5ebcf25, type: 2}

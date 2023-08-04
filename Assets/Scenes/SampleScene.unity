@@ -285,6 +285,7 @@ MonoBehaviour:
   skipStone: {fileID: 1377368817}
   cardsSeenInScry: 5
   cardsSeenInDiscard: 3
+  mysteriousPotionData: {fileID: 11400000, guid: fe7c0aceffc83f14fa55c34b6140a5f9, type: 2}
   cardPrefab: {fileID: 6130042529618441140, guid: c358615e2bb612c489a3e399721c23fa, type: 3}
   objectCardPrefab: {fileID: 6130042529618441140, guid: 0bce555f58c537247a904a7a21beebd0, type: 3}
   monsterCardPrefab: {fileID: 6130042529618441140, guid: b38c69e2ecc1ed04d92d278a5c18252b, type: 3}
@@ -305,6 +306,7 @@ MonoBehaviour:
   notePadHighlight: {fileID: 1162868677}
   discardHighlight: {fileID: 1636916624}
   selectedCardTranslation: {x: 0, y: 0.1, z: 0.5}
+  haveGrimoire: 0
   lifeText: {fileID: 1377688863}
   strengthText: {fileID: 1440537805}
   coinText: {fileID: 1682795622}
@@ -21080,7 +21082,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 11.470032, y: -1.6000366}
+  m_AnchoredPosition: {x: 11.470093, y: -1.6000366}
   m_SizeDelta: {x: 280, y: 100}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1015728590

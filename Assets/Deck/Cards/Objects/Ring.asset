@@ -15,8 +15,6 @@ MonoBehaviour:
   cardName: Ring
   cardImage: {fileID: 0}
   cardText: 
-  lifeAdd: 0
-  strengthAdd: 0
-  strengthSet: 1
-  coinAdd: 0
-  duration: 5
+  isPotion: 0
+  objectEffects:
+  - {fileID: 11400000, guid: ea219d5927e06864783749d34f546ac6, type: 2}

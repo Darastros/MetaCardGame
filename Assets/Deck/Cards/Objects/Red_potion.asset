@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 530c1a8d8f72cc842b51c02c55ccc67d, type: 3}
+  m_Name: Red_potion
+  m_EditorClassIdentifier: 
+  cardName: Red potion
+  cardImage: {fileID: 0}
+  cardText: 
+  isPotion: 1
+  objectEffects:
+  - {fileID: 11400000, guid: 0df2cbd828558024493f9a5b819472d0, type: 2}

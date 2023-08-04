@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Forest_CardPool_2
   m_EditorClassIdentifier: 
   cards:
-  - {fileID: 11400000, guid: 2fd71b0ddd82b8b48831fe980afb9245, type: 2}
-  - {fileID: 11400000, guid: 83b1f352890f84143bbc5fd0a43eed8c, type: 2}
-  - {fileID: 11400000, guid: a7af32cf053aa2944b0915f1fc945612, type: 2}
+  - {fileID: 11400000, guid: 007b3c6e18b17fe4f931752b523ce751, type: 2}
+  - {fileID: 11400000, guid: cf5392c908137ca49a648ef7a8b675ed, type: 2}
+  - {fileID: 11400000, guid: 79b3051f8b4dd4f418737e26bc6460a7, type: 2}
   - {fileID: 11400000, guid: 1c05971884d01ff489be5b79ccec146e, type: 2}
   - {fileID: 11400000, guid: 4de264a656c7ef04bb7faf2b98d0c83b, type: 2}
-  - {fileID: 11400000, guid: 466871ba0ea2cb34db1da40436ea3ca0, type: 2}
-  - {fileID: 11400000, guid: 89305953ae7397345a0a8dda297dac94, type: 2}
+  - {fileID: 11400000, guid: f95efdae77694454785cbddb2f3fd0dc, type: 2}
+  - {fileID: 11400000, guid: 1a43b47ce382e6f4fa289449b76de97b, type: 2}
   amountOfCardsfromPool: 20
   minimumOfEachCard: 1
   maximumOfEachCard: 3

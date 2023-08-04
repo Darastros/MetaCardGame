@@ -15,11 +15,22 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
 
     public virtual void ApplyCardData(CardInstance data)
     {
+        var manager = GameManager.Instance;
         this.data = data;
-        nameText.GetComponent<TMP_Text>().text = data.dataInstance.cardName;
-        descriptionText.GetComponent<TMP_Text>().text = data.dataInstance.cardText;
-        if (data.dataInstance.cardImage)
-            GetComponent<MeshRenderer>().material = data.dataInstance.cardImage;
+        if (manager.haveGrimoire || data.dataInstance is not ObjectCardData || !((ObjectCardData)data.dataInstance).isPotion)
+        {
+            nameText.GetComponent<TMP_Text>().text = data.dataInstance.cardName;
+            descriptionText.GetComponent<TMP_Text>().text = data.dataInstance.cardText;
+            if (data.dataInstance.cardImage)
+                GetComponent<MeshRenderer>().material = data.dataInstance.cardImage;
+        }
+        else
+        {
+            nameText.GetComponent<TMP_Text>().text = manager.mysteriousPotionData.cardName;
+            descriptionText.GetComponent<TMP_Text>().text = manager.mysteriousPotionData.cardText;
+            if (data.dataInstance.cardImage)
+                GetComponent<MeshRenderer>().material = manager.mysteriousPotionData.cardImage;
+        }
     }
 
     public virtual void Resolve()
