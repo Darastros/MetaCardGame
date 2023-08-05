@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Ring
   cardImage: {fileID: 0}
-  cardText: 
+  cardText: Set strength to 1 for 5 turn, Add 3 strength.
   isPotion: 0
   objectEffects:
-  - {fileID: 11400000, guid: ea219d5927e06864783749d34f546ac6, type: 2}
+  - {fileID: 11400000, guid: b87640e6baf7b4f4f88df3b9145be6cb, type: 2}
+  - {fileID: 11400000, guid: f65e63e862c49eb4bae189f7d701191e, type: 2}

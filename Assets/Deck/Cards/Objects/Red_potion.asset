@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Red potion
   cardImage: {fileID: 0}
-  cardText: 
+  cardText: Heal 1 point.
   isPotion: 1
   objectEffects:
-  - {fileID: 11400000, guid: 0df2cbd828558024493f9a5b819472d0, type: 2}
+  - {fileID: 11400000, guid: 36fbb814bd91e284d837286c45fe0306, type: 2}

@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: The fairy blessing
   cardImage: {fileID: 0}
-  cardText: 
+  cardText: Add 3 strength.
   eventEffects:
-  - {fileID: 11400000, guid: d01b8434b37a24848a773b92f6268c5c, type: 2}
+  - {fileID: 11400000, guid: 93793d13f7ffa4b42bbd865bcd543f16, type: 2}

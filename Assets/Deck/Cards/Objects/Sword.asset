@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Sword
   cardImage: {fileID: 0}
-  cardText: 
+  cardText: Add 1 strength.
   isPotion: 0
   objectEffects:
-  - {fileID: 11400000, guid: d5ae0a05ded17da498654ea805092c77, type: 2}
+  - {fileID: 11400000, guid: 9c81903278cf4dd4a85fc24ed6df4ecc, type: 2}

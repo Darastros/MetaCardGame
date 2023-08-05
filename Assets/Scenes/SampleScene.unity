@@ -317,10 +317,10 @@ MonoBehaviour:
   coinText: {fileID: 1682795622}
   magicText: {fileID: 1015728588}
   deathIcon: {fileID: 792482651}
-  playerStartingLife: 3
+  playerStartingLife: 10
   playerStartingStrength: 3
-  playerStartingCoin: 5
-  playerStartingMagic: 12
+  playerStartingCoin: 0
+  playerStartingMagic: 3
 --- !u!4 &61052541
 Transform:
   m_ObjectHideFlags: 0

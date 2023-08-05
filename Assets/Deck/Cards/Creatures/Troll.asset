@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Troll
   cardImage: {fileID: 0}
-  cardText: 
+  cardText: 12 strength, -1 life, +1 mana
   strength: 12
   effectsOnRevealed: []
   effectsOnWinBattle:
-  - {fileID: 11400000, guid: e5638d51f7dc47c449c1198fb7078c84, type: 2}
+  - {fileID: 11400000, guid: 82edf774183b03c4fb741d0f4546db7e, type: 2}
   effectsOnDeafeated:
-  - {fileID: 11400000, guid: 53353ef5482127d43aabc94722051d74, type: 2}
+  - {fileID: 11400000, guid: 421423d9d70331e448ba9f76be656501, type: 2}

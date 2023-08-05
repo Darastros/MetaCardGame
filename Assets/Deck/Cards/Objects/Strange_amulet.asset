@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Strange amulet
   cardImage: {fileID: 0}
-  cardText: 
+  cardText: Add 3 strength.
   isPotion: 0
   objectEffects:
-  - {fileID: 11400000, guid: b1ebe74df6c83464ba66d8f94f20b4a8, type: 2}
+  - {fileID: 11400000, guid: 02edf39b0ea15294e81073559b2ebd9c, type: 2}

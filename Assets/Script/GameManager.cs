@@ -107,10 +107,17 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         MAGIC
     }
 
+    [Header("Life")]
     public int playerStartingLife = 3;
+    public int playerMaxLife = 10;
+    [Header("Strength")]
     public int playerStartingStrength = 0;
+    public int playerMinStrength = 3;
+    [Header("Coin")]
     public int playerStartingCoin = 5;
+    [Header("Magic")]
     public int playerStartingMagic = 3;
+    public int playerMaxMagic = 10;
 
     //setModifiers
     private class ActiveStatModifier
@@ -456,6 +463,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     public void AddLife(int value)
     {
         playerLife += value;
+        playerLife = Mathf.Clamp(playerLife, 0, playerMaxLife);
         if (playerLife <= 0)
         {
             playerLife = 0;
@@ -469,6 +477,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     public void AddStrength(int value)
     {
         playerStrength += value;
+        playerStrength = Mathf.Max(playerStrength, playerMinStrength);
         if (playerStrength < 0) playerStrength = 0;
     }
 
@@ -481,7 +490,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     public void AddMagic(int value)
     {
         playerMagic += value;
-        if (playerMagic < 0) playerMagic = 0;
+        playerMagic = Mathf.Clamp(playerMagic, 0, playerMaxMagic);
 
         rerollStone.GetComponent<MetaPowerStone>().NotifyMagicAmountChanged();
         discardStone.GetComponent<MetaPowerStone>().NotifyMagicAmountChanged();
@@ -682,10 +691,10 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
 
     private void UpdateStatUI()
     {
-        lifeText.GetComponent<TMP_Text>().text = GetStatCurrentValue(PlayerStat.LIFE).ToString();
+        lifeText.GetComponent<TMP_Text>().text = GetStatCurrentValue(PlayerStat.LIFE) + " / " + playerMaxLife;
         strengthText.GetComponent<TMP_Text>().text = GetStatCurrentValue(PlayerStat.STRENGTH).ToString();
         coinText.GetComponent<TMP_Text>().text = GetStatCurrentValue(PlayerStat.COIN).ToString();
-        magicText.GetComponent<TMP_Text>().text = GetStatCurrentValue(PlayerStat.MAGIC).ToString();
+        magicText.GetComponent<TMP_Text>().text = GetStatCurrentValue(PlayerStat.MAGIC) + " / " + playerMaxMagic;
     }
 
     private void DecreaseStatModifiersDuration()

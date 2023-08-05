@@ -18,7 +18,7 @@ public class GenerateCards : Editor
     static readonly string eventsPath = cardPath + "Events/";
     
     static readonly string deckDataPath = deckPath + "official.asset";
-    static readonly List<string> regionsName = new (){"Plain", "Forest", "Mountain", "Volcano"};
+    static readonly List<string> regionsName = new (){"Plain", "PlainToForest", "Forest", "Mountain", "Volcano"};
     
     [MenuItem("Editor/GenerateCards", false, -1)]
     public static void Generate()
@@ -52,8 +52,8 @@ public class GenerateCards : Editor
         int nbPool = 0;
         foreach (var file in filesInfo)
         {
-            if (file.Extension != ".csv") continue;
-            Debug.Log(file.FullName);
+            if (file.Extension != ".tsv") continue;
+            //Debug.Log(file.FullName);
             
             string fileData = File.ReadAllText(file.FullName);
             string[] lines = fileData.Split("\n"[0]);
@@ -65,7 +65,7 @@ public class GenerateCards : Editor
                 int i = 0;
                 for (int y = Y; y < lines.Length; ++y)
                 {
-                    string[] lineElements = lines[y].Trim().Split(",");
+                    string[] lineElements = lines[y].Trim().Split("\t");
                     
                     if (lineElements[0] == "IGNORE" || lineElements[0] == "END") break;
                     if (lineElements[0] == "CUT") return;
@@ -91,20 +91,27 @@ public class GenerateCards : Editor
                     var pool = CreateInstance<WeightedCardPoolWithRules>();
                     pool.cards = new List<CardData>();
                     pool.weightList = new List<float>();
-                    pool.amountOfCardsfromPool = 20;
-                    pool.minimumOfEachCard = 1;
-                    pool.maximumOfEachCard = 3;
                     pools.Add(pool);
                 }
 
-                foreach (List<string> cardData in cardsData.Skip(1))
+                CardData card = null;
+                int numberOfEffect = 0;
+                foreach (List<string> cardData in cardsData.Skip(2))
                 {
-                    var card = CreateCard(cardsData[0], cardData);
+                    if (cardData[0] == "\\")
+                    {
+                        ++numberOfEffect;
+                        AddEffect(card, cardsData[1], cardData, numberOfEffect);
+                        continue;
+                    }
+
+                    numberOfEffect = 0;
+                    card = CreateCard(cardsData[1], cardData);
                     if (card)
                     {
                         for(int regionId = 0; regionId < regionsName.Count; regionId++)
                         {
-                            int regionIndex = cardsData[0].FindIndex( x => x == regionsName[regionId]);
+                            int regionIndex = cardsData[1].FindIndex( x => x == regionsName[regionId]);
                             if (regionIndex < cardData.Count && regionIndex >= 0)
                             {
                                 if (float.TryParse(cardData[regionIndex], out var value) && value > 0.0f)
@@ -120,6 +127,18 @@ public class GenerateCards : Editor
                 for(int regionId = 0; regionId < regionsName.Count; regionId++)
                 {
                     if (pools[regionId].cards.Count == 0) continue;
+                    
+                    int dataIndex = cardsData[1].FindIndex( x => x == regionsName[regionId]);
+                    
+                    if (dataIndex < cardsData[0].Count && dataIndex >= 0)
+                    {
+                        string poolDataStr = cardsData[0][dataIndex];
+                        string[] poolData = poolDataStr.Trim('(').Trim(')').Split(' ');
+                        pools[regionId].amountOfCardsfromPool = int.Parse(poolData[0]);
+                        pools[regionId].minimumOfEachCard = int.Parse(poolData[1]);
+                        pools[regionId].maximumOfEachCard = int.Parse(poolData[2]);
+                    }
+
                     regions[regionId].cardPools.Add(pools[regionId]);
                     AssetDatabase.CreateAsset(pools[regionId], deckPath + regionsName[regionId]  + "/" + regionsName[regionId] + "_CardPool_" + nbPool + ".asset");
                     EditorUtility.SetDirty(regions[regionId]);
@@ -166,24 +185,19 @@ public class GenerateCards : Editor
             bool exist = FindOrCreateCard(_pattern, _cardData, out monsterCard);
             monsterCard.effectsOnWinBattle = new List<EffectData>();
             monsterCard.effectsOnDeafeated = new List<EffectData>();
+            monsterCard.effectsOnRevealed = new List<EffectData>();
             
             int strengthIndex = _pattern.FindIndex( x => x == "Strength");
             if (strengthIndex < _cardData.Count) monsterCard.strength = int.Parse(_cardData[strengthIndex]);
+
+            var effectOnWin = CreateEffect(monsterCard.cardName, "Defeat Effect", "Defeat Value", _pattern, _cardData, -1, 0);
+            if(effectOnWin) monsterCard.effectsOnWinBattle.Add(effectOnWin);
+
+            var effectOnDefeat = CreateEffect(monsterCard.cardName, "Win Effect", "Win Value", _pattern, _cardData, -1, 1);
+            if(effectOnDefeat) monsterCard.effectsOnDeafeated.Add(effectOnDefeat);
             
-            
-            var effectOnWinBattle = CreateInstance<AddToStatEffectData>();
-            effectOnWinBattle.affectedStat = GameManager.PlayerStat.LIFE;
-            int damageIndex = _pattern.FindIndex( x => x == "Damage");
-            if (damageIndex < _cardData.Count) effectOnWinBattle.value = -int.Parse(_cardData[damageIndex]);
-            AssetDatabase.CreateAsset(effectOnWinBattle, effectPath + monsterCard.cardName.Replace(' ', '_') + "_Win_Effect.asset");
-            monsterCard.effectsOnWinBattle.Add(effectOnWinBattle);
-            
-            var effectOnDefeated = CreateInstance<AddToStatEffectData>();
-            effectOnDefeated.affectedStat = GameManager.PlayerStat.MAGIC;
-            effectOnDefeated.value = 1;
-            AssetDatabase.CreateAsset(effectOnDefeated, effectPath + monsterCard.cardName.Replace(' ', '_') + "_Defeat_Effect.asset");
-            monsterCard.effectsOnDeafeated.Add(effectOnDefeated);
-            
+            var effectOnRevealed = CreateEffect(monsterCard.cardName, "Reveal Effect", "Reveal Value",_pattern, _cardData, 1, 2);
+            if(effectOnRevealed) monsterCard.effectsOnRevealed.Add(effectOnRevealed);
             
             if(!exist) AssetDatabase.CreateAsset(monsterCard, creaturesPath + monsterCard.cardName.Replace(' ', '_') + ".asset");
             else EditorUtility.SetDirty(monsterCard);
@@ -206,7 +220,8 @@ public class GenerateCards : Editor
             int effectIndex = _pattern.FindIndex( x => x == "Effect");
             if (effectIndex < _cardData.Count)
             {
-                objectCard.objectEffects.Add(CreateEffect(objectCard.cardName,_cardData[effectIndex], _pattern, _cardData));
+                var effect = CreateEffect(objectCard.cardName, _pattern, _cardData, 0);
+                if(effect) objectCard.objectEffects.Add(effect);
             }
 
             objectCard.isPotion = objectCard.cardName.ToLower().Contains("potion");
@@ -235,7 +250,7 @@ public class GenerateCards : Editor
             int effectIndex = _pattern.FindIndex( x => x == "Effect");
             if (effectIndex < _cardData.Count)
             {
-                eventCard.eventEffects.Add(CreateEffect(eventCard.cardName, _cardData[effectIndex], _pattern, _cardData));
+                eventCard.eventEffects.Add(CreateEffect(eventCard.cardName, _pattern, _cardData, 0));
             }
 
             if(!exist) AssetDatabase.CreateAsset(eventCard, eventsPath + eventCard.cardName.Replace(' ', '_') + ".asset");
@@ -245,7 +260,27 @@ public class GenerateCards : Editor
 
         return null;
     }
-    
+
+    private static void AddEffect(CardData _card, List<string> _pattern, List<string> _cardData, int _numberOfEfect)
+    {
+        if (!_card) return;
+
+        int effectIndex = _pattern.FindIndex(x => x == "Effect");
+
+        if (effectIndex < _cardData.Count)
+        {
+            if (_card is EventCardData)
+            {
+                ((EventCardData)_card).eventEffects.Add(CreateEffect(_cardData[effectIndex], _pattern, _cardData, _numberOfEfect));
+            }
+
+            else if (_card is ObjectCardData)
+            {
+                ((ObjectCardData)_card).objectEffects.Add(CreateEffect(_cardData[effectIndex], _pattern, _cardData, _numberOfEfect));
+            }
+        }
+    }
+
     private static void FillGenericCardData(CardData _card, List<string> _pattern, List<string> _itemData)
     {
         int nameIndex = _pattern.FindIndex( x => x == "Name");
@@ -287,12 +322,35 @@ public class GenerateCards : Editor
         return exist;
     }
 
-    private static EffectData CreateEffect(string _cardName, string _effectType, List<string> _pattern, List<string> _cardData)
+    private static EffectData CreateEffect(string _cardName, List<string> _pattern, List<string> _cardData, int _numberOfEffect)
     {
+        string effectType = "";
+        int effectIndex = _pattern.FindIndex( x => x == "Effect");
+        if (effectIndex < _cardData.Count) effectType = _cardData[effectIndex];
+        
         int value = 0;
         int valueIndex = _pattern.FindIndex( x => x == "Value");
         if (valueIndex < _cardData.Count) int.TryParse(_cardData[valueIndex], out value);
 
+        int duration = -1;
+        int durationIndex = _pattern.FindIndex( x => x == "Duration");
+        if (durationIndex < _cardData.Count) int.TryParse(_cardData[durationIndex], out duration);
+        
+        return CreateEffect(_cardName, effectType, value, duration, _numberOfEffect);
+    }
+
+    private static EffectData CreateEffect(string _cardName, string _effectName, string _valueName, List<string> _pattern, List<string> _cardData, int _duration, int _numberOfEffect)
+    {
+        string effectType = "";
+        int effectIndex = _pattern.FindIndex( x => x == _effectName);
+        if (effectIndex < _cardData.Count) effectType = _cardData[effectIndex];
+        int value = 0;
+        int valueIndex = _pattern.FindIndex( x => x == _valueName);
+        if (valueIndex < _cardData.Count) int.TryParse(_cardData[valueIndex], out value);
+        return CreateEffect(_cardName, effectType, value, _duration, _numberOfEffect);
+    }
+    private static EffectData CreateEffect(string _cardName, string _effectType, int _value, int _duration, int _numberOfEffect)
+    {
         EffectData effect = null;
         
         switch (_effectType)
@@ -300,50 +358,46 @@ public class GenerateCards : Editor
             case "Add strength":
                 var effectAddStrength = CreateInstance<AddToStatEffectData>();
                 effectAddStrength.affectedStat = GameManager.PlayerStat.STRENGTH;
-                effectAddStrength.value = value;
+                effectAddStrength.value = _value;
                 effect = effectAddStrength;
                 break;
             case "Remove strength":
                 var effectRemoveStrength = CreateInstance<AddToStatEffectData>();
                 effectRemoveStrength.affectedStat = GameManager.PlayerStat.STRENGTH;
-                effectRemoveStrength.value = -value;
+                effectRemoveStrength.value = -_value;
                 effect = effectRemoveStrength;
                 break;
             case "Heal":
                 var effectHeal = CreateInstance<AddToStatEffectData>();
                 effectHeal.affectedStat = GameManager.PlayerStat.LIFE;
-                effectHeal.value = value;
+                effectHeal.value = _value;
                 effect = effectHeal;
                 break;
             case "Inflict damage":
                 var effectDamage = CreateInstance<AddToStatEffectData>();
                 effectDamage.affectedStat = GameManager.PlayerStat.LIFE;
-                effectDamage.value = -value;
+                effectDamage.value = -_value;
                 effect = effectDamage;
                 break;
             case "Give gold":
                 var effectGiveGold = CreateInstance<AddToStatEffectData>();
                 effectGiveGold.affectedStat = GameManager.PlayerStat.COIN;
-                effectGiveGold.value = value;
+                effectGiveGold.value = _value;
                 effect = effectGiveGold;
                 
                 break;
             case "Steal gold":
                 var effectStealGold = CreateInstance<AddToStatEffectData>();
                 effectStealGold.affectedStat = GameManager.PlayerStat.COIN;
-                effectStealGold.value = -value;
+                effectStealGold.value = -_value;
                 effect = effectStealGold;
                 
                 break;
             case "Set strength":
                 var effectSetStrength = CreateInstance<SetStatEffectData>();
                 effectSetStrength.affectedStat = GameManager.PlayerStat.STRENGTH;
-                effectSetStrength.value = value;
-                
-                int duration = 0;
-                int durationIndex = _pattern.FindIndex( x => x == "Duration");
-                if (durationIndex < _cardData.Count) int.TryParse(_cardData[durationIndex], out duration);
-                effectSetStrength.duration = duration;
+                effectSetStrength.value = _value;
+                effectSetStrength.duration = _duration;
                 
                 effect = effectSetStrength;
                 
@@ -353,11 +407,23 @@ public class GenerateCards : Editor
                 effect = effectRevealPotion;
                 
                 break;
+            case "Full mana":
+                var effectFullMana = CreateInstance<SetStatEffectData>();
+                effectFullMana.affectedStat = GameManager.PlayerStat.MAGIC;
+                effectFullMana.value = 10;
+                effect = effectFullMana;
+                break;
+            case "Add mana":
+                var effectAddMana = CreateInstance<AddToStatEffectData>();
+                effectAddMana.affectedStat = GameManager.PlayerStat.MAGIC;
+                effectAddMana.value = _value;
+                effect = effectAddMana;
+                break;
         }
 
         if (effect)
         {
-            AssetDatabase.CreateAsset(effect, effectPath + _cardName.Replace(' ', '_') + "_Effect.asset");
+            AssetDatabase.CreateAsset(effect, effectPath + _cardName.Replace(' ', '_') + "_Effect" + _numberOfEffect + ".asset");
         }
         return effect;
     }

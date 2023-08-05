@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Bandit
   cardImage: {fileID: 0}
-  cardText: 
+  cardText: 3 strength, -1 life, +1 mana
   strength: 3
   effectsOnRevealed: []
   effectsOnWinBattle:
-  - {fileID: 11400000, guid: 22f616f682fc89e45b102fb2bb0304a4, type: 2}
+  - {fileID: 11400000, guid: 9f6e5103feec2f048ae854ddac6253db, type: 2}
   effectsOnDeafeated:
-  - {fileID: 11400000, guid: 3bc76c1bbd92f6444a40429275ba10ec, type: 2}
+  - {fileID: 11400000, guid: fb3c1d50045edc748b2e3653cfbe3f9c, type: 2}

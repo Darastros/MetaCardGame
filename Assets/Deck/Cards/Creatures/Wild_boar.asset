@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Wild boar
   cardImage: {fileID: 0}
-  cardText: 
+  cardText: 4 strength, -1 life, +1 mana
   strength: 4
   effectsOnRevealed: []
   effectsOnWinBattle:
-  - {fileID: 11400000, guid: 105bfebce3134f941a938692dc89a062, type: 2}
+  - {fileID: 11400000, guid: 36cd3a49de2eb7a44a6ed6a50c87bee5, type: 2}
   effectsOnDeafeated:
-  - {fileID: 11400000, guid: eb3bb36ea3b99ee4d80946749e626451, type: 2}
+  - {fileID: 11400000, guid: a016d7c8bcfbda34ba9f5d15db0f21f9, type: 2}
