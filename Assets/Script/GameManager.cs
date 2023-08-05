@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     public GameObject monsterCardPrefab;
     public GameObject eventCardPrefab;
     public GameObject currentCard;
+    public Transform cardTransform;
 
     public GameObject whiteDicePrefab;
     public GameObject redDicePrefab;
@@ -167,19 +168,19 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         GameObject cardObject;
         if (data is ObjectCardData)
         {
-            cardObject = Instantiate(objectCardPrefab);
+            cardObject = Instantiate(objectCardPrefab, cardTransform);
         }
         else if(data is MonsterCardData)
         {
-            cardObject = Instantiate(monsterCardPrefab);
+            cardObject = Instantiate(monsterCardPrefab, cardTransform);
         }
         else if (data is EventCardData)
         {
-            cardObject = Instantiate(eventCardPrefab);
+            cardObject = Instantiate(eventCardPrefab, cardTransform);
         }
         else
         {
-            cardObject = Instantiate(cardPrefab);
+            cardObject = Instantiate(cardPrefab, cardTransform);
         }
 
         cardObject.GetComponent<Card>().ApplyCardData(cardInstance);
@@ -362,7 +363,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
 
     public void OnDeckRightClicked()
     {
-        RestartGame();
+        //RestartGame();
     }
 
     public int GetStatCurrentValue(PlayerStat stat)
@@ -576,7 +577,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
             }
             else
             {
-                currentCard.transform.position = cardPrefab.transform.position;
+                currentCard.transform.localPosition = Vector3.zero;
             }
 
             notePadInteractionText.SetActive(false);
@@ -651,7 +652,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
             CompleteBattle();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         Plane planeUsed = new Plane(Vector3.up, -2.5f);
         if (currentGameState == GameState.METAPOWER)
@@ -666,16 +667,16 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
             {
                 targetPosition = ray.GetPoint(distance);
             }
-            holdedCard.transform.position = targetPosition;
+            holdedCard.transform.position = Vector3.Lerp(holdedCard.transform.position, targetPosition, 0.2f);
 
             //TEMP TRESSS MOCHE
-            if (targetPosition.x > 5.5f)
+            if (targetPosition.x > 6.5f)
             {
                 notePadInteractionText.transform.localScale = new Vector3(1.6f, 2.1f, 1);
                 discardInteractionText.transform.localScale = new Vector3(3.5f, 4.5f, 1);
 
             }
-            else if (targetPosition.x < -5.7f)
+            else if (targetPosition.x < -6.7f)
             {
                 notePadInteractionText.transform.localScale = new Vector3(2.8f, 3.7f, 1);
                 discardInteractionText.transform.localScale = new Vector3(2, 2.5f, 1);
