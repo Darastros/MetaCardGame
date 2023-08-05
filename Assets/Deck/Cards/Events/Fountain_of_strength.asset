@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Fountain of strength
   cardImage: {fileID: 0}
-  cardText: Add 2 strength.
+  cardText: Add 1 strength.
   eventEffects:
   - {fileID: 11400000, guid: 3a7bb2073e00a6541b1bf94eb501f04e, type: 2}

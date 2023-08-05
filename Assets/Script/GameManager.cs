@@ -112,14 +112,17 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     [Header("Life")]
     public int playerStartingLife = 3;
     public int playerMaxLife = 10;
+    public TextMeshProUGUI addLifeText;
     [Header("Strength")]
     public int playerStartingStrength = 0;
     public int playerMinStrength = 3;
+    public TextMeshProUGUI addStrengthText;
     [Header("Coin")]
     public int playerStartingCoin = 5;
     [Header("Magic")]
     public int playerStartingMagic = 3;
     public int playerMaxMagic = 10;
+    public TextMeshProUGUI addMagicText;
 
     //setModifiers
     private class ActiveStatModifier
@@ -143,10 +146,10 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         playerStrength = 0;
         playerCoin = 0;
         playerMagic = 0;
-        AddLife(playerStartingLife);
-        AddStrength(playerStartingStrength);
+        AddLife(playerStartingLife, true);
+        AddStrength(playerStartingStrength, true);
         AddCoin(playerStartingCoin);
-        AddMagic(playerStartingMagic);
+        AddMagic(playerStartingMagic, true);
         lifeModifier = null;
         strengthModifier = null;
         UpdateStatUI();
@@ -294,6 +297,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
             foreach (CardInstance card in topCards)
             {
                 GameObject cardObject = CreateCardObject(card);
+                cardObject.GetComponent<Card>().Activate();
                 Vector3 prefabScale = cardPrefab.transform.localScale;
                 cardObject.transform.localScale = new Vector3(prefabScale.x * cardListScaleMultiplier, prefabScale.y, prefabScale.z * cardListScaleMultiplier);
                 cardListComponent.AddCardToList(cardObject);
@@ -327,6 +331,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
             foreach (CardInstance card in topCards)
             {
                 GameObject cardObject = CreateCardObject(card);
+                cardObject.GetComponent<Card>().Activate();
                 Vector3 prefabScale = cardPrefab.transform.localScale;
                 cardObject.transform.localScale = new Vector3(prefabScale.x * cardListScaleMultiplier, prefabScale.y, prefabScale.z * cardListScaleMultiplier);
                 cardListComponent.AddCardToList(cardObject);
@@ -464,9 +469,15 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         UpdateStatUI();
     }
 
-    public void AddLife(int value)
+    public void AddLife(int value, bool ignoreAnim = false)
     {
         playerLife += value;
+        if (!ignoreAnim)
+        {
+            addLifeText.text = value < 0 ? ""+value : "+"+value;
+            animator.SetTrigger("AddLife");
+        }
+        
         playerLife = Mathf.Clamp(playerLife, 0, playerMaxLife);
         if (playerLife <= 0)
         {
@@ -478,9 +489,15 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         }
     }
 
-    public void AddStrength(int value)
+    public void AddStrength(int value, bool ignoreAnim = false)
     {
         playerStrength += value;
+        if (!ignoreAnim)
+        {
+            addStrengthText.text = value < 0 ? ""+value : "+"+value;
+            animator.SetTrigger("AddStrength");
+        }
+
         playerStrength = Mathf.Max(playerStrength, playerMinStrength);
         if (playerStrength < 0) playerStrength = 0;
     }
@@ -491,9 +508,14 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         if (playerCoin < 0) playerCoin = 0;
     }
 
-    public void AddMagic(int value)
+    public void AddMagic(int value, bool ignoreAnim = false)
     {
         playerMagic += value;
+        if (!ignoreAnim)
+        {
+            addMagicText.text = value < 0 ? ""+value : "+"+value;
+            animator.SetTrigger("AddMagic");
+        }
         playerMagic = Mathf.Clamp(playerMagic, 0, playerMaxMagic);
 
         rerollStone.GetComponent<MetaPowerStone>().NotifyMagicAmountChanged();
