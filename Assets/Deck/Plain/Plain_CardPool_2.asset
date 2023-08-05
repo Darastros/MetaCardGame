@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cards:
   - {fileID: 11400000, guid: f3fd338ee74e5fc47abd7c8164e9c23b, type: 2}
-  amountOfCardsfromPool: 2
+  amountOfCardsfromPool: 50
   minimumOfEachCard: 1
-  maximumOfEachCard: 2
+  maximumOfEachCard: 50
   weightList:
   - 5

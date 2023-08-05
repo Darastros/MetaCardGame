@@ -13,6 +13,12 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
 
     public ICardInteractionHandler interactionHandler;
 
+    private bool active = false;
+
+    public void Activate()
+    {
+        active = true;
+    }
     public virtual void ApplyCardData(CardInstance data)
     {
         var manager = GameManager.Instance;
@@ -42,27 +48,27 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
     ////////////Interaction Implementation////////////////
     public void OnPointerDown(PointerEventData eventData)
     {
-        interactionHandler.OnCardPressed(gameObject);
+        if(active) interactionHandler.OnCardPressed(gameObject);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        interactionHandler.OnCardReleased(gameObject);
+        if(active) interactionHandler.OnCardReleased(gameObject);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        interactionHandler.OnCardClicked(gameObject);
+        if(active) interactionHandler.OnCardClicked(gameObject);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        interactionHandler.OnCardEntered(gameObject);
+        if(active) interactionHandler.OnCardEntered(gameObject);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        interactionHandler.OnCardExited(gameObject);
+        if(active) interactionHandler.OnCardExited(gameObject);
     }
 
     ////////////////////////////////////////////////////////////////

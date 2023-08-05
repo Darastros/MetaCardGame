@@ -199,8 +199,9 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
                 {
                     animator.SetTrigger("RevealedCard");
                     currentCard = CreateCardObject(revealedCard);
-                    currentCard.GetComponent<Card>().interactionHandler = this;
-                    if (revealedCard.dataInstance is MonsterCardData)
+                    Card card = currentCard.GetComponent<Card>();
+                    card.interactionHandler = this;
+                    if (card.data.dataInstance is MonsterCardData)
                         currentCard.GetComponent<MonsterCard>().OnRevealed();
                     canRevealNextCard = false;
                 }
@@ -608,19 +609,18 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     private void CompleteBattle()
     {
         MonsterCardData monsterData = (MonsterCardData)currentCard.GetComponent<Card>().data.dataInstance;
+        
+        Destroy(whiteDice);
+        Destroy(redDice);
         if(monsterData.strength + redDiceResult > GetStatCurrentValue(PlayerStat.STRENGTH) + whiteDiceResult)
         {
-            monsterData.OnWinBattle();
-            deck.GetComponent<Deck>().ShuffleCardInGroup(currentCard.GetComponent<Card>().data, 0);
+            animator.SetTrigger("LooseBattle");
         }
         else
         {
-            monsterData.OnDefeated();
+            animator.SetTrigger("WinBattle");
+            animator.SetTrigger("DestroyCard");
         }
-        Destroy(currentCard);
-        Destroy(whiteDice);
-        Destroy(redDice);
-        currentGameState = GameState.MAIN;
     }
 
     private void RollDice()
@@ -771,5 +771,33 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
 
     }
     ///////////////////////////////////////////////////////////////////
+
+    public void RevealCard()
+    {
+        currentCard.GetComponent<Card>().Activate();
+    }
+    public void WinBattleApplyEffect()
+    {
+        MonsterCardData monsterData = (MonsterCardData)currentCard.GetComponent<Card>().data.dataInstance;
+        monsterData.OnDefeated();
+    }
+    
+    public void LooseBattleApplyEffect()
+    {
+        MonsterCardData monsterData = (MonsterCardData)currentCard.GetComponent<Card>().data.dataInstance;
+        monsterData.OnWinBattle();
+    }
+    public void ShuffleCard()
+    {
+        deck.GetComponent<Deck>().ShuffleCardInGroup(currentCard.GetComponent<Card>().data, 0);
+        Destroy(currentCard);
+        currentGameState = GameState.MAIN;
+    }
+
+    public void DestroyCard()
+    {
+        Destroy(currentCard);
+        currentGameState = GameState.MAIN;
+    }
 
 }
