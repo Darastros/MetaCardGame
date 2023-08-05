@@ -108,6 +108,11 @@ public class Deck : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
     private Vector3 initPos;
     private int initSize;
 
+    public Material MonsterCardBack;
+    public Material ObjectCardBack;
+    public Material EventCardBack;
+    public GameObject TopcardDisplayer;
+
     private void Awake()
     {
         deck = new List<CardGroupInstance>();
@@ -118,6 +123,7 @@ public class Deck : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
         int cardCount = 0;
         foreach (CardGroupInstance cardGroup in deck) { cardCount += cardGroup.cards.Count; }
         initSize = cardCount;
+        UpdateDeckScale();
     }
 
     private void CreateDeckFromData()
@@ -198,6 +204,7 @@ public class Deck : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
         {
             deck[0].PutCardOnTopOfGroup(card);
         }
+        UpdateDeckScale();
     }
 
     public void PutCardsOnTopOfDeck(List<CardInstance> cardsInDrawOrder)
@@ -206,6 +213,7 @@ public class Deck : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
         {
             deck[0].PutCardsOnTopOfGroup(cardsInDrawOrder);
         }
+        UpdateDeckScale();
     }
 
     public void ShuffleCardInDeck(CardInstance card, int beginRange = 0, int endRange = -1)
@@ -253,10 +261,34 @@ public class Deck : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
             transform.localScale = new Vector3(initScale.x, initScale.y / initSize * cardCount, initScale.z);
             transform.position = new Vector3(initPos.x, initPos.y - ((initSize - cardCount) *  0.5f / initSize * initScale.y), initPos.z);
             GetComponent<MeshRenderer>().enabled = true;
+            TopcardDisplayer.GetComponent<MeshRenderer>().enabled = true;
         }
         else
         {
             GetComponent<MeshRenderer>().enabled = false;
+            TopcardDisplayer.GetComponent<MeshRenderer>().enabled = false;
+        }
+        //temp, à mettre ailleurs probablement
+        CardData topCardData = null;
+        if(deck.Count > 0)
+        {
+            if(deck[0].cards.Count > 0)
+            {
+                topCardData = deck[0].cards[0].dataInstance;
+            }
+            else if(deck.Count > 1 && deck[1].cards.Count > 0)
+            {
+                topCardData = deck[1].cards[0].dataInstance;
+            }
+        }
+        if(topCardData != null)
+        {
+            if(topCardData is MonsterCardData)
+                TopcardDisplayer.GetComponent<MeshRenderer>().material = MonsterCardBack;
+            if (topCardData is ObjectCardData)
+                TopcardDisplayer.GetComponent<MeshRenderer>().material = ObjectCardBack;
+            if (topCardData is EventCardData)
+                TopcardDisplayer.GetComponent<MeshRenderer>().material = EventCardBack;
         }
     }
 

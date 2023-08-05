@@ -216,6 +216,8 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
                     currentGameState = GameState.METAPOWER;
                     sceneVFX.GetComponent<SceneVFX>().SwitchMode(SceneVFX.Mode.SCRY);
                     currentlyUsedPower = MetaPower.DISCARD;
+                    discardStone.GetComponent<MetaPowerStone>().Activate();
+                    NotifyStonePowerStart(MetaPower.DISCARD);
                     break;
 
                 case MetaPower.SCRY:
@@ -224,15 +226,18 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
                     currentGameState = GameState.METAPOWER;
                     sceneVFX.GetComponent<SceneVFX>().SwitchMode(SceneVFX.Mode.SCRY);
                     currentlyUsedPower = MetaPower.SCRY;
+                    scryStone.GetComponent<MetaPowerStone>().Activate();
+                    NotifyStonePowerStart(MetaPower.SCRY);
                     break;
 
                 case MetaPower.SKIP:
                     if (!ExecuteMetaPowerSkip())
                         return;
+                    skipStone.GetComponent<MetaPowerStone>().Activate();
+                    skipStone.GetComponent<MetaPowerStone>().Deactivate();
                     break;
             }
 
-            scryStone.GetComponent<MetaPowerStone>().Activate();
         }
         else if (currentGameState == GameState.METAPOWER && powerType == currentlyUsedPower)
         {
@@ -247,7 +252,25 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
             {
                 StopMetaPowerDiscard();
             }
+
+            NotifyStonePowerStop();
         }
+    }
+
+    private void NotifyStonePowerStart(GameManager.MetaPower power)
+    {
+        rerollStone.GetComponent<MetaPowerStone>().NotifyMetaPowerStart(power);
+        discardStone.GetComponent<MetaPowerStone>().NotifyMetaPowerStart(power);
+        scryStone.GetComponent<MetaPowerStone>().NotifyMetaPowerStart(power);
+        skipStone.GetComponent<MetaPowerStone>().NotifyMetaPowerStart(power);
+    }
+
+    private void NotifyStonePowerStop()
+    {
+        rerollStone.GetComponent<MetaPowerStone>().NotifyMetaPowerStop();
+        discardStone.GetComponent<MetaPowerStone>().NotifyMetaPowerStop();
+        scryStone.GetComponent<MetaPowerStone>().NotifyMetaPowerStop();
+        skipStone.GetComponent<MetaPowerStone>().NotifyMetaPowerStop();
     }
 
     public bool StartMetaPowerDiscard(uint cardsSeen)
@@ -280,6 +303,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         }
 
         Destroy(metaPowerCardList);
+        discardStone.GetComponent<MetaPowerStone>().Deactivate();
     }
 
     public bool StartMetaPowerScry(uint cardsSeen)
@@ -313,6 +337,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         }
         deck.GetComponent<Deck>().PutCardsOnTopOfDeck(cardsToPutBackOnTop);
         Destroy(metaPowerCardList);
+        scryStone.GetComponent<MetaPowerStone>().Deactivate();
     }
 
     public bool ExecuteMetaPowerSkip()
@@ -458,10 +483,10 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         playerMagic += value;
         if (playerMagic < 0) playerMagic = 0;
 
-        rerollStone.GetComponent<MetaPowerStone>().NotifyMagicAmountChanged(playerMagic);
-        discardStone.GetComponent<MetaPowerStone>().NotifyMagicAmountChanged(playerMagic);
-        scryStone.GetComponent<MetaPowerStone>().NotifyMagicAmountChanged(playerMagic);
-        skipStone.GetComponent<MetaPowerStone>().NotifyMagicAmountChanged(playerMagic);
+        rerollStone.GetComponent<MetaPowerStone>().NotifyMagicAmountChanged();
+        discardStone.GetComponent<MetaPowerStone>().NotifyMagicAmountChanged();
+        scryStone.GetComponent<MetaPowerStone>().NotifyMagicAmountChanged();
+        skipStone.GetComponent<MetaPowerStone>().NotifyMagicAmountChanged();
     }
 
     public void ApplyLifeModifier(bool isSet, int value, int duration)
@@ -571,7 +596,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     private void CompleteBattle()
     {
         MonsterCardData monsterData = (MonsterCardData)currentCard.GetComponent<Card>().data.dataInstance;
-        if(monsterData.strength + redDiceResult > playerStrength + whiteDiceResult)
+        if(monsterData.strength + redDiceResult > GetStatCurrentValue(PlayerStat.STRENGTH) + whiteDiceResult)
         {
             monsterData.OnWinBattle();
             deck.GetComponent<Deck>().ShuffleCardInGroup(currentCard.GetComponent<Card>().data, 0);
