@@ -619,7 +619,6 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         else
         {
             animator.SetTrigger("WinBattle");
-            animator.SetTrigger("DestroyCard");
         }
     }
 
