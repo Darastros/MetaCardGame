@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     public uint cardsSeenInScry = 5;
     public uint cardsSeenInDiscard = 3;
     ///////////////////////
+    public Animator animator;
     public CardData mysteriousPotionData;
     public GameObject cardPrefab;
     public GameObject objectCardPrefab;
@@ -196,6 +197,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
                 CardInstance revealedCard = deck.GetComponent<Deck>().GetTopCard();
                 if(revealedCard != null)
                 {
+                    animator.SetTrigger("RevealedCard");
                     currentCard = CreateCardObject(revealedCard);
                     currentCard.GetComponent<Card>().interactionHandler = this;
                     if (revealedCard.dataInstance is MonsterCardData)
