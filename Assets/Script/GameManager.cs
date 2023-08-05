@@ -691,10 +691,10 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
 
     private void UpdateStatUI()
     {
-        lifeText.GetComponent<TMP_Text>().text = GetStatCurrentValue(PlayerStat.LIFE) + " / " + playerMaxLife;
+        lifeText.GetComponent<TMP_Text>().text = GetStatCurrentValue(PlayerStat.LIFE) + "/" + playerMaxLife;
         strengthText.GetComponent<TMP_Text>().text = GetStatCurrentValue(PlayerStat.STRENGTH).ToString();
         coinText.GetComponent<TMP_Text>().text = GetStatCurrentValue(PlayerStat.COIN).ToString();
-        magicText.GetComponent<TMP_Text>().text = GetStatCurrentValue(PlayerStat.MAGIC) + " / " + playerMaxMagic;
+        magicText.GetComponent<TMP_Text>().text = GetStatCurrentValue(PlayerStat.MAGIC) + "/" + playerMaxMagic;
     }
 
     private void DecreaseStatModifiersDuration()

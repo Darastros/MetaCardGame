@@ -318,9 +318,12 @@ MonoBehaviour:
   magicText: {fileID: 1015728588}
   deathIcon: {fileID: 792482651}
   playerStartingLife: 10
+  playerMaxLife: 10
   playerStartingStrength: 3
+  playerMinStrength: 3
   playerStartingCoin: 0
   playerStartingMagic: 3
+  playerMaxMagic: 10
 --- !u!4 &61052541
 Transform:
   m_ObjectHideFlags: 0
@@ -958,8 +961,8 @@ Light:
   m_Color: {r: 0.2216981, g: 0.6633125, b: 1, a: 1}
   m_Intensity: 0
   m_Range: 43.6
-  m_SpotAngle: 71
-  m_InnerSpotAngle: 21.80208
+  m_SpotAngle: 85
+  m_InnerSpotAngle: 8
   m_CookieSize: 10
   m_Shadows:
     m_Type: 1
@@ -21965,7 +21968,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 10
+  m_text: 3/10
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
@@ -21992,8 +21995,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70
-  m_fontSizeBase: 70
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -22439,7 +22442,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   candleTargetIntensity: 12
   candleFlickerNoise: 6
-  scryTargetIntensity: 11.3
+  scryTargetIntensity: 9
   scryParticlesTargetRate: 70
   scryParticlesTargetLifeTime: 3
   scryBackgroundTargetOpacity: 0.42
@@ -42468,7 +42471,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 3
+  m_text: 10/10
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
@@ -42495,8 +42498,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70
-  m_fontSizeBase: 70
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -42677,7 +42680,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: 3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}

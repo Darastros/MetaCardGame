@@ -69,7 +69,7 @@ public class SceneVFX : MonoBehaviour
                     break;
 
                 case Mode.SCRY:
-                    ScryLight.GetComponent<Light>().intensity = candleTargetIntensity * (1 - advancement);
+                    ScryLight.GetComponent<Light>().intensity = scryTargetIntensity * (1 - advancement);
                     Color currentBGColor = ScryBackground.GetComponent<RawImage>().color;
                     currentBGColor.a = scryBackgroundTargetOpacity * (1 - advancement);
                     ScryBackground.GetComponent<RawImage>().color = currentBGColor;
@@ -83,7 +83,7 @@ public class SceneVFX : MonoBehaviour
                     break;
 
                 case Mode.SCRY:
-                    ScryLight.GetComponent<Light>().intensity = candleTargetIntensity * advancement;
+                    ScryLight.GetComponent<Light>().intensity = scryTargetIntensity * advancement;
                     Color currentBGColor = ScryBackground.GetComponent<RawImage>().color;
                     currentBGColor.a = scryBackgroundTargetOpacity * advancement;
                     ScryBackground.GetComponent<RawImage>().color = currentBGColor;
