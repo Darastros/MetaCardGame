@@ -372,6 +372,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
 
     public void OnDeckRightClicked()
     {
+        RollDice();
         //RestartGame();
     }
 
@@ -636,8 +637,6 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     {
         MonsterCardData monsterData = (MonsterCardData)currentCard.GetComponent<Card>().data.dataInstance;
         
-        Destroy(whiteDice);
-        Destroy(redDice);
         if(monsterData.strength + redDiceResult > GetStatCurrentValue(PlayerStat.STRENGTH) + whiteDiceResult)
         {
             animator.SetTrigger("LooseBattle");
@@ -669,13 +668,15 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         if(dice == whiteDice)
         {
             whiteDiceResult = result;
+            strengthText.GetComponent<TMP_Text>().text = (GetStatCurrentValue(PlayerStat.STRENGTH) + result).ToString();
         }
         else if(dice == redDice)
         {
             redDiceResult = result;
+            currentCard.GetComponent<MonsterCard>().strengthAttributeText.GetComponent<TMP_Text>().text = (((MonsterCardData)currentCard.GetComponent<Card>().data.dataInstance).strength + result).ToString();
         }
 
-        if(whiteDiceResult > 0 && redDiceResult > 0)
+        if (whiteDiceResult > 0 && redDiceResult > 0)
             CompleteBattle();
     }
 
