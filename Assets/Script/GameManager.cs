@@ -364,6 +364,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
             //Destroy(currentCard);
             //canRevealNextCard = true;
             animator.SetTrigger("Shuffle");
+            currentGameState = GameState.NOINTERACTION;
             return true;
         }
         return false;
