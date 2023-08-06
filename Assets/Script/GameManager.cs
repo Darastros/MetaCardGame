@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         {
             instance = this;
         }
-        DontDestroyOnLoad(this.gameObject);
+        //DontDestroyOnLoad(this.gameObject);
         InitGame();
     }
     ///////////////////////////////////////////////////////

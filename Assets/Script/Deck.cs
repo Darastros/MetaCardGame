@@ -348,6 +348,7 @@ public class Deck : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
 
     public void DebugDraw()
     {
+        return;
         foreach (CardGroupInstance cardGroup in deck)
         {
             Debug.Log("----New region----");
