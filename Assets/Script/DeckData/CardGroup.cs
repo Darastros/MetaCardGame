@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "DeckData/CardGroup")]
 public class CardGroup : ScriptableObject
 {
+    public string groupName;
     public List<CardPool> cardPools;
 
     public List<CardInstance> GetCards()

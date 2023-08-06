@@ -7,11 +7,22 @@ public class Deck : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
 {
     public class CardGroupInstance
     {
+        public string name;
+        public bool isDicovered;
         public List<CardInstance> cards;
 
         public CardGroupInstance(CardGroup data)
         {
+            name = data.groupName;
             cards = data.GetCards();
+            isDicovered = false;
+        }
+
+        public CardGroupInstance()
+        {
+            name = "";
+            cards = new List<CardInstance>();
+            isDicovered = false;
         }
 
         public void Shuffle()
@@ -27,7 +38,7 @@ public class Deck : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
             cards = newCardInstances;
         }
 
-        public CardInstance GetTopCard()
+        public CardInstance DrawTopCard()
         {
             CardInstance topCard;
             if (cards.Count > 0)
@@ -43,22 +54,10 @@ public class Deck : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
             return topCard;
         }
 
-        public List<CardInstance> GetTopCards(uint amount)
+        public List<CardInstance> LookAtTopCards(int amount)
         {
-            List<CardInstance> topCards = new List<CardInstance>();
-            for (int i = 0; i < amount; i++)
-            {
-                if (cards.Count > 0)
-                {
-                    topCards.Add(cards[0]);
-                    cards.RemoveAt(0);
-                }
-                else
-                {
-                    Debug.Log("group is empty");
-                    break;
-                }
-            }
+            int maxAmount = Mathf.Min(amount, cards.Count);
+            List<CardInstance> topCards = cards.GetRange(0, maxAmount);
             return topCards;
         }
 
@@ -67,9 +66,13 @@ public class Deck : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
             cards.Insert(0, card);
         }
 
-        public void PutCardsOnTopOfGroup(List<CardInstance> cardsInDrawOrder)
+        public void PutBackCardsOnTopOfGroup(List<CardInstance> cardsInDrawOrder)
         {
-            cards.InsertRange(0, cardsInDrawOrder);
+            if(cardsInDrawOrder.Count <= cards.Count)
+            {
+                cards.RemoveRange(0, cardsInDrawOrder.Count);
+                cards.InsertRange(0, cardsInDrawOrder);
+            }
         }
 
         public void ShuffleCardInGoup(CardInstance card, int beginRange = 0, int endRange = -1)
@@ -118,21 +121,14 @@ public class Deck : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
         deck = new List<CardGroupInstance>();
         CreateDeckFromData();
         Shuffle();
-        
-        foreach(CardGroupInstance cardGroup in deck)
-        {
-            Debug.Log("----New region----");
-            foreach (var card in cardGroup.cards)
-            {
-                Debug.Log(card.dataInstance.cardName);
-            }
-        }
+        DebugDraw();
+
         initScale = transform.localScale;
         initPos = transform.position;
         int cardCount = 0;
         foreach (CardGroupInstance cardGroup in deck) { cardCount += cardGroup.cards.Count; }
         initSize = cardCount;
-        UpdateDeckScale();
+        UpdateDeckVisual();
     }
 
     private void CreateDeckFromData()
@@ -143,18 +139,25 @@ public class Deck : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
         }
     }
 
-    public CardInstance GetTopCard()
+    public CardInstance DrawTopCard()
     {
         CardInstance topCard;
         if(deck.Count > 0)
         {
+            if (!deck[0].isDicovered)
+            {
+                GameManager.Instance.animator.SetInteger("Zone", deck.Count); //temp value is deck.count -> decremental
+                Debug.Log(deck[0].name);
+                deck[0].isDicovered = true;
+            }
+
             CardGroupInstance topGroup = deck[0];
-            topCard = topGroup.GetTopCard();
+            topCard = topGroup.DrawTopCard();
 
             if (topCard == null)
             {
                 deck.RemoveAt(0);
-                return GetTopCard();
+                return DrawTopCard();
             }
         }
         else
@@ -162,31 +165,20 @@ public class Deck : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
             Debug.Log("deck is empty");
             topCard = null;
         }
-        UpdateDeckScale();
+        UpdateDeckVisual();
         return topCard;
     }
 
-    public List<CardInstance> GetTopCards(uint amount)
+    public List<CardInstance> LookAtTopCards(int amount)
     {
         List<CardInstance> topCards = new List<CardInstance>();
-        if (amount > 0)
+        int i = 0;
+        while (i < deck.Count && topCards.Count < amount)
         {
-            if (deck.Count > 0)
-            {
-                CardGroupInstance topGroup = deck[0];
-                topCards = topGroup.GetTopCards(amount);
-                if (topCards.Count <= 0)
-                {
-                    deck.RemoveAt(0);
-                    return GetTopCards(amount);
-                }
-            }
-            else
-            {
-                Debug.Log("deck is empty");
-            }
+            CardGroupInstance groupToLookFrom = deck[i];
+            topCards.AddRange(groupToLookFrom.LookAtTopCards(amount - topCards.Count));
+            i++;
         }
-        UpdateDeckScale();
         return topCards;
     }
 
@@ -204,16 +196,8 @@ public class Deck : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
         deck.Clear();
         CreateDeckFromData();
         Shuffle();
-        UpdateDeckScale();
-        
-        foreach(CardGroupInstance cardGroup in deck)
-        {
-            Debug.Log("----New region----");
-            foreach (var card in cardGroup.cards)
-            {
-                Debug.Log(card.dataInstance.cardName);
-            }
-        }
+        UpdateDeckVisual();
+        DebugDraw();
     }
 
     public void PutCardOnTopOfDeck(CardInstance card)
@@ -222,16 +206,68 @@ public class Deck : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
         {
             deck[0].PutCardOnTopOfGroup(card);
         }
-        UpdateDeckScale();
+        else
+        {
+            deck.Add(new CardGroupInstance());
+            deck[0].PutCardOnTopOfGroup(card);
+        }
+        UpdateDeckVisual();
     }
 
-    public void PutCardsOnTopOfDeck(List<CardInstance> cardsInDrawOrder)
+    public void PutBackCardsOnTopOfDeck(List<CardInstance> cardsInDrawOrder)
     {
-        if (deck.Count > 0)
+        int amountOfCardsPutBack = 0;
+        int i = 0;
+        while (i < deck.Count && amountOfCardsPutBack < cardsInDrawOrder.Count)
         {
-            deck[0].PutCardsOnTopOfGroup(cardsInDrawOrder);
+            CardGroupInstance groupToPutCardsTo = deck[i];
+            int amountOfCardsToPutBack = Mathf.Min(cardsInDrawOrder.Count - amountOfCardsPutBack, groupToPutCardsTo.cards.Count);
+            groupToPutCardsTo.PutBackCardsOnTopOfGroup(cardsInDrawOrder.GetRange(amountOfCardsPutBack, amountOfCardsToPutBack));
+            amountOfCardsPutBack += amountOfCardsToPutBack;
+            i++;
         }
-        UpdateDeckScale();
+        UpdateDeckVisual();
+    }
+
+    public void KeepOneCardFromTopCards(int indexCardToKeep, int amountOfCardsFromTop)
+    {
+        int currentIndex = indexCardToKeep;
+        int amountOfCardsRemaining = amountOfCardsFromTop;
+        int groupIndex = 0;
+        while(amountOfCardsRemaining > 0 && groupIndex < deck.Count)
+        {
+            CardGroupInstance currentGroup = deck[groupIndex];
+            if(currentGroup.cards.Count <= currentIndex)
+            {
+                deck.RemoveAt(0);
+                currentIndex -= currentGroup.cards.Count;
+                amountOfCardsRemaining -= currentGroup.cards.Count;
+            }
+            else if(currentIndex >= 0)
+            {
+                currentGroup.cards.RemoveRange(0, currentIndex);
+                amountOfCardsRemaining -= currentIndex + 1;
+                currentIndex = -1;
+                int amountToRemoveAfterIndex = Mathf.Min(currentGroup.cards.Count - 1, amountOfCardsRemaining);
+                currentGroup.cards.RemoveRange(1, amountToRemoveAfterIndex);
+                amountOfCardsRemaining -= amountToRemoveAfterIndex;
+                groupIndex++;
+            }
+            else
+            {
+                if(currentGroup.cards.Count <= amountOfCardsRemaining)
+                {
+                    deck.RemoveAt(groupIndex);
+                    amountOfCardsRemaining -= currentGroup.cards.Count;
+                }
+                else
+                {
+                    currentGroup.cards.RemoveRange(0, amountOfCardsRemaining);
+                    amountOfCardsRemaining = 0;
+                }
+            }
+        }
+        UpdateDeckVisual();
     }
 
     public void ShuffleCardInDeck(CardInstance card, int beginRange = 0, int endRange = -1)
@@ -254,7 +290,7 @@ public class Deck : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
                 }
                 randomIndex -= cardGroup.cards.Count;
             }
-            UpdateDeckScale();
+            UpdateDeckVisual();
         }
     }
 
@@ -265,11 +301,11 @@ public class Deck : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
             groupIndex = groupIndex == -1 ? deck.Count - 1 : groupIndex;
             groupIndex = Mathf.Clamp(groupIndex, 0, deck.Count - 1);
             deck[groupIndex].ShuffleCardInGoup(card, beginRange, endRange);
-            UpdateDeckScale();
+            UpdateDeckVisual();
         }
     }
 
-    private void UpdateDeckScale()
+    private void UpdateDeckVisual()
     {
         int cardCount = 0;
         foreach(CardGroupInstance cardGroup in deck) { cardCount += cardGroup.cards.Count; }
@@ -312,9 +348,10 @@ public class Deck : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
 
     public void DebugDraw()
     {
-        foreach(CardGroupInstance group in deck)
+        foreach (CardGroupInstance cardGroup in deck)
         {
-            group.DebugDraw();
+            Debug.Log("----New region----");
+            cardGroup.DebugDraw();
         }
     }
 

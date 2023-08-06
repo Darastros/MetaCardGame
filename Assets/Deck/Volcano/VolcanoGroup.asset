@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22e98f5e8d27d394298b09be541707dc, type: 3}
   m_Name: VolcanoGroup
   m_EditorClassIdentifier: 
+  groupName: Volcano
   cardPools:
   - {fileID: 11400000, guid: 995ea86e1d7a62647b8c18d7f8bf8aa2, type: 2}
   - {fileID: 11400000, guid: 1f93025cd90993544967b6adb7cc223e, type: 2}

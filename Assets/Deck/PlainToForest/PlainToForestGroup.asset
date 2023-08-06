@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22e98f5e8d27d394298b09be541707dc, type: 3}
   m_Name: PlainToForestGroup
   m_EditorClassIdentifier: 
+  groupName: A Forgotten Relic
   cardPools:
   - {fileID: 11400000, guid: f27c1f0449d5b6a4c8ec14845991f757, type: 2}

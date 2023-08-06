@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22e98f5e8d27d394298b09be541707dc, type: 3}
   m_Name: MountainGroup
   m_EditorClassIdentifier: 
+  groupName: Mountain
   cardPools:
   - {fileID: 11400000, guid: 486e56f09f790c7409899e01f555cea1, type: 2}
   - {fileID: 11400000, guid: 52cf017f26b6b964aac52071f625419b, type: 2}
