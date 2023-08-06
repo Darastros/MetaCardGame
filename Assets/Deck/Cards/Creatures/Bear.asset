@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bear
   m_EditorClassIdentifier: 
   cardName: Bear
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 2100000, guid: 969541a34a33df349b28b7e1a747febe, type: 2}
   cardText: 8 strength, -2 life, +5 mana
   strength: 8
   effectsOnRevealed: []

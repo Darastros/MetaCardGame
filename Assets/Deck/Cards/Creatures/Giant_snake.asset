@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Giant_snake
   m_EditorClassIdentifier: 
   cardName: Giant snake
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 2100000, guid: 4172f2a42019fba47af8bf7b8a41ee50, type: 2}
   cardText: 10 strength, -2 life, +5 mana
   strength: 10
   effectsOnRevealed: []

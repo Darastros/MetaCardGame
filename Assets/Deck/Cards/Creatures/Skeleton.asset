@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Skeleton
   m_EditorClassIdentifier: 
   cardName: Skeleton
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 2100000, guid: 44fe1fb67be014e408cdee7bf584aead, type: 2}
   cardText: 6 strength, -1 life, +1 mana
   strength: 6
   effectsOnRevealed: []

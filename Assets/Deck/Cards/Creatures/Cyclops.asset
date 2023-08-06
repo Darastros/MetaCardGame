@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cyclops
   m_EditorClassIdentifier: 
   cardName: Cyclops
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 2100000, guid: 76e8cc10ae9afc64c89f5f36839cb7e5, type: 2}
   cardText: 16 strength, -2 life, +5 mana
   strength: 16
   effectsOnRevealed: []

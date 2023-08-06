@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wolf
   m_EditorClassIdentifier: 
   cardName: Wolf
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 2100000, guid: 230ff1d9c93fcd4469d2a97db7054c33, type: 2}
   cardText: 4 strength, -1 life, +1 mana
   strength: 4
   effectsOnRevealed: []

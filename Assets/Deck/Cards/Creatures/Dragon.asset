@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dragon
   m_EditorClassIdentifier: 
   cardName: Dragon
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 2100000, guid: 77b803884c4bc7249a51de77523a1ea4, type: 2}
   cardText: 20 strength, -999 life, +10 mana
   strength: 20
   effectsOnRevealed: []

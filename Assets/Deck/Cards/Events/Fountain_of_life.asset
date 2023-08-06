@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fountain_of_life
   m_EditorClassIdentifier: 
   cardName: Fountain of life
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 2100000, guid: 0a487401805d79b40b667dd05f99fac7, type: 2}
   cardText: Heal 1 point.
   eventEffects:
   - {fileID: 11400000, guid: eb7380b37ffd86d4398538a4e17f4c20, type: 2}
