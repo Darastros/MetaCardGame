@@ -14,4 +14,9 @@ public class LoadScene : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+    
+    public void StartGame()
+    {
+        GameManager.Instance.animator.SetTrigger("OnStart");
+    }
 }
