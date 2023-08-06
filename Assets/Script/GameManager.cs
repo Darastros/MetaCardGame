@@ -843,15 +843,21 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     private void OnLoose()
     {
         animator.SetTrigger("OnLoose");
+        var sound = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_fight/sfx_fight_defeat");
+        sound.start();
     }
     private void OnWin()
     {
         animator.SetTrigger("OnWin");
-        
+        var sound = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_fight/sfx_fight_victory");
+        sound.start();
+
     }
     private void OnPetitFilou()
     {
         animator.SetTrigger("OnPetitFilou");
+        var sound = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_feedbacks/sfx_feedbacks_powers_activation");
+        sound.start();
     }
     
     ///////////////////////////////////////////////////////////////////
@@ -874,6 +880,8 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     }
     public void ShuffleCard()
     {
+        var revealCard = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_back_card_return\sfx_back_card_return_to_deck");
+        revealCard.start();
         deck.GetComponent<Deck>().ShuffleCardInGroup(currentCard.GetComponent<Card>().data, 0);
         Destroy(currentCard);
         currentGameState = GameState.MAIN;

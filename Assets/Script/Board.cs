@@ -28,4 +28,10 @@ public class Board : MonoBehaviour
     {
         GameManager.Instance.ShuffleCard();
     }
+
+    public void PlaySound(string soundKey)
+    {
+        var sound = FMODUnity.RuntimeManager.CreateInstance(soundKey);
+        sound.start();
+    }
 }

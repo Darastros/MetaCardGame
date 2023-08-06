@@ -1303,6 +1303,13 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
+  - time: 0
+    functionName: PlaySound
+    data: event:/sfx/sfx_back_card_return/sfx_back_card_up
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.41666666
     functionName: WinBattleApplyEffect
     data: 
@@ -1310,9 +1317,23 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.41666666
+    functionName: PlaySound
+    data: event:/sfx/sfx_back_card_return/sfx_back_card_attack_impact
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.6666667
     functionName: DestroyCard
     data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.75
+    functionName: PlaySound
+    data: event:/sfx/sfx_back_card_return/sfx_back_card_up
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
