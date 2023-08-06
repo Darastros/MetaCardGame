@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 using TMPro;
+using FMODUnity;
 using Plane = UnityEngine.Plane;
 using Vector3 = UnityEngine.Vector3;
 
@@ -158,6 +159,8 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         canRevealNextCard = true;
         currentGameState = GameState.MAIN;
         holdCardPlane = new Plane(Vector3.up, -holdCardPlaneHeight);
+        var startSound = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_fight/sfx_fight_start");
+        startSound.start();
     }
     public void RestartGame()
     {
@@ -203,6 +206,8 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
                 if(revealedCard != null)
                 {
                     animator.SetTrigger("RevealedCard");
+                    var revealCard = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_card/sfx_card_take");
+                    revealCard.start();
                     currentCard = CreateCardObject(revealedCard);
                     currentCard.transform.parent = cardTransform;
                     currentCard.transform.localPosition = Vector3.zero;
@@ -372,7 +377,8 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
 
     public void OnDeckRightClicked()
     {
-        RollDice();
+        var playerIntro = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_back_card_return/sfx_back_card_attack_impact");
+        playerIntro.start();
         //RestartGame();
     }
 
@@ -593,10 +599,22 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
             if(targetPosition.x > 5.5f)
             {
                 Destroy(currentCard);
+                var sound = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_int/sfx_int_item_leave");
+                sound.start();
                 canRevealNextCard = true;
             }
             else if(targetPosition.x < -5.7f)
             {
+                if(currentCard.GetComponent<Card>().data.dataInstance.cardName.ToLower().Contains("potion"))
+                {
+                    var sound = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_int/sfx_int_potion_drink");
+                    sound.start();
+                }
+                else
+                {
+                    var sound = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_int/sfx_int_item_pickup");
+                    sound.start();
+                }
                 currentCard.GetComponent<Card>().Resolve();
                 canRevealNextCard = true;
             }
@@ -621,6 +639,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
 
     public void StartBattleAgainstMonster()
     {
+
         currentGameState = GameState.NOINTERACTION;
         MonsterCardData monsterData = (MonsterCardData)currentCard.GetComponent<Card>().data.dataInstance;
         if(monsterData.strength > GetStatCurrentValue(PlayerStat.STRENGTH) + 5)
@@ -650,6 +669,8 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
 
     private void RollDice()
     {
+        var sound = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_dice/sfx_dice_roll_launch");
+        sound.start();
         whiteDiceResult = -1;
         redDiceResult = -1;
 
@@ -839,6 +860,8 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
 
     public void DestroyCard()
     {
+        var revealCard = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_card/sfx_card_destroy");
+        revealCard.start();
         Destroy(currentCard);
         currentGameState = GameState.MAIN;
     }

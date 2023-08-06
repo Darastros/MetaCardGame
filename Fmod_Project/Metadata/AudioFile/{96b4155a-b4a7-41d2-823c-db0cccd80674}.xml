@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{96b4155a-b4a7-41d2-823c-db0cccd80674}">
+		<property name="assetPath">
+			<value>sfx_blue_stone_activation_loop.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>96</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>9.7701458333333342</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{cb229bb6-cd9d-4678-9b87-184e71f6eb6d}</destination>
+		</relationship>
+	</object>
+</objects>

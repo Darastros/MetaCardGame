@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{7f10b83f-f51b-4ddf-bbb2-a974409bbfd1}">
+		<property name="assetPath">
+			<value>sfx_take_card_deplacement_woosh_03.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>96</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.3858333333333333</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{cb229bb6-cd9d-4678-9b87-184e71f6eb6d}</destination>
+		</relationship>
+	</object>
+</objects>

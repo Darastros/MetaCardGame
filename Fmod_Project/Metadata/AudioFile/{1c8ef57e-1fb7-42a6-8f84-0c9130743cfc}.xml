@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{1c8ef57e-1fb7-42a6-8f84-0c9130743cfc}">
+		<property name="assetPath">
+			<value>sfx_int_weapon_pickup.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>96</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.91310416666666672</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{cb229bb6-cd9d-4678-9b87-184e71f6eb6d}</destination>
+		</relationship>
+	</object>
+</objects>
