@@ -318,6 +318,8 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         {
             if (cardList[i] == selectedCard)
                 deck.GetComponent<Deck>().KeepOneCardFromTopCards(i, metaPowerCardList.GetComponent<InteractibleCardList>().cardList.Count);
+            
+            if(cardList[i].GetComponent<Card>().data.dataInstance.cardName =="Dragon") OnPetitFilou();
             Destroy(cardList[i]);
         }
 
