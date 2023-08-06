@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wild_boar
   m_EditorClassIdentifier: 
   cardName: Wild boar
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 2100000, guid: ce837c052c8d67142b3005cded38b714, type: 2}
   cardText: 4 strength, -1 life, +1 mana
   strength: 4
   effectsOnRevealed: []

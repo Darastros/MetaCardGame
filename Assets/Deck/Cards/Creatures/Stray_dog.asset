@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Stray_dog
   m_EditorClassIdentifier: 
   cardName: Stray dog
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 2100000, guid: b3bc366deb94a3a4182b72c5546d5529, type: 2}
   cardText: 2 strength, -1 life, +1 mana
   strength: 2
   effectsOnRevealed: []
