@@ -13,16 +13,23 @@ public class MetaPowerStone : MonoBehaviour, IPointerClickHandler, IPointerEnter
     public GameObject descriptionText;
     public GameObject interactionText;
 
+    public GameObject stoneMesh;
+
     public int magicCost = 3;
     public GameManager.MetaPower powerType;
 
     public bool isBeingUsed = false;
     public bool isInteractible = true;
-    public bool isDisplayingInterraction = true;
+    public bool isDisplayingInterraction = false;
+
+    public Vector3 positionWhenUsed;
+
+    private Vector3 initPosition;
 
     private void Awake()
     {
         interactionText.GetComponent<TMP_Text>().color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+        initPosition = transform.position;
     }
 
     public void Activate()
@@ -52,6 +59,7 @@ public class MetaPowerStone : MonoBehaviour, IPointerClickHandler, IPointerEnter
             isInteractible = true;
             interactionText.GetComponent<TMP_Text>().text = "Confirm";
             interactionText.GetComponent<TMP_Text>().fontSize = 32;
+            transform.position = positionWhenUsed;
         }
         else
         {
@@ -65,18 +73,19 @@ public class MetaPowerStone : MonoBehaviour, IPointerClickHandler, IPointerEnter
         isInteractible = true;
         interactionText.GetComponent<TMP_Text>().text = "cost " + magicCost.ToString() + " magic";
         interactionText.GetComponent<TMP_Text>().fontSize = 16;
+        transform.position = initPosition;
         UpdateDisplay();
     }
 
     private void UpdateDisplay()
     {
-        if (isInteractible && GameManager.Instance.GetStatCurrentValue(GameManager.PlayerStat.MAGIC) >= magicCost)
+        if (isInteractible && (GameManager.Instance.GetStatCurrentValue(GameManager.PlayerStat.MAGIC) >= magicCost || isBeingUsed))
         {
             ParticleSystem.EmissionModule particleSpreadEmission = particleSpread.GetComponent<ParticleSystem>().emission;
             ParticleSystem.EmissionModule particleGlowEmission = particleGlow.GetComponent<ParticleSystem>().emission;
             particleSpreadEmission.enabled = true;
             particleGlowEmission.enabled = true;
-            Material scryStoneMat = GetComponent<MeshRenderer>().material;
+            Material scryStoneMat = stoneMesh.GetComponent<MeshRenderer>().material;
             scryStoneMat.color = new Color(1.0f, 1.0f, 1.0f);
             descriptionText.GetComponent<TMP_Text>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         }
@@ -86,7 +95,7 @@ public class MetaPowerStone : MonoBehaviour, IPointerClickHandler, IPointerEnter
             ParticleSystem.EmissionModule particleGlowEmission = particleGlow.GetComponent<ParticleSystem>().emission;
             particleSpreadEmission.enabled = false;
             particleGlowEmission.enabled = false;
-            Material scryStoneMat = GetComponent<MeshRenderer>().material;
+            Material scryStoneMat = stoneMesh.GetComponent<MeshRenderer>().material;
             scryStoneMat.color = new Color(0.5f, 0.5f, 0.5f);
             descriptionText.GetComponent<TMP_Text>().color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
         }
@@ -105,7 +114,7 @@ public class MetaPowerStone : MonoBehaviour, IPointerClickHandler, IPointerEnter
         else
         {
             if(isBeingUsed)
-                interactionText.GetComponent<TMP_Text>().color = new Color(0.5f, 0.5f, 0.5f, 1.0f);
+                interactionText.GetComponent<TMP_Text>().color = new Color(0.7f, 0.7f, 0.7f, 1.0f);
             else
                 interactionText.GetComponent<TMP_Text>().color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
         }

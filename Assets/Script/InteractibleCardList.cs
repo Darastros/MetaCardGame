@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InteractibleCardList : MonoBehaviour, ICardInteractionHandler
 {
+    public GameObject instructionText;
     public List<GameObject> cardList;
     public float maxInterval = 3;
     public float maxSize = 15;

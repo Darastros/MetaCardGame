@@ -45,14 +45,12 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     public enum MetaPower
     {
         NONE,
-        REROLL,
         DISCARD,
         SCRY,
         SKIP
     }
     private MetaPower currentlyUsedPower;
 
-    public GameObject rerollStone;
     public GameObject discardStone;
     public GameObject scryStone;
     public GameObject skipStone;
@@ -225,12 +223,6 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         {
             switch(powerType)
             {
-                case MetaPower.REROLL:
-                    //temp call Debug Draw deck
-                    deck.GetComponent<Deck>().DebugDraw();
-                    return;
-                    //break;
-
                 case MetaPower.DISCARD:
                     if (!StartMetaPowerDiscard(cardsSeenInDiscard))
                         return;
@@ -280,7 +272,6 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
 
     private void NotifyStonePowerStart(GameManager.MetaPower power)
     {
-        rerollStone.GetComponent<MetaPowerStone>().NotifyMetaPowerStart(power);
         discardStone.GetComponent<MetaPowerStone>().NotifyMetaPowerStart(power);
         scryStone.GetComponent<MetaPowerStone>().NotifyMetaPowerStart(power);
         skipStone.GetComponent<MetaPowerStone>().NotifyMetaPowerStart(power);
@@ -288,7 +279,6 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
 
     private void NotifyStonePowerStop()
     {
-        rerollStone.GetComponent<MetaPowerStone>().NotifyMetaPowerStop();
         discardStone.GetComponent<MetaPowerStone>().NotifyMetaPowerStop();
         scryStone.GetComponent<MetaPowerStone>().NotifyMetaPowerStop();
         skipStone.GetComponent<MetaPowerStone>().NotifyMetaPowerStop();
@@ -300,6 +290,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         {
             metaPowerCardList = Instantiate(cardListPrefab);
             InteractibleCardList cardListComponent = metaPowerCardList.GetComponent<InteractibleCardList>();
+            cardListComponent.instructionText.GetComponent<TMP_Text>().text = "Select a path, avoid the rest";
             List<CardInstance> topCards = deck.GetComponent<Deck>().LookAtTopCards(cardsSeen);
             foreach (CardInstance card in topCards)
             {
@@ -335,6 +326,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         {
             metaPowerCardList = Instantiate(cardListPrefab);
             InteractibleCardList cardListComponent = metaPowerCardList.GetComponent<InteractibleCardList>();
+            cardListComponent.instructionText.GetComponent<TMP_Text>().text = "Order the events of your fate";
             List<CardInstance> topCards = deck.GetComponent<Deck>().LookAtTopCards(cardsSeen);
             foreach (CardInstance card in topCards)
             {
@@ -526,7 +518,6 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         }
         playerMagic = Mathf.Clamp(playerMagic, 0, playerMaxMagic);
 
-        rerollStone.GetComponent<MetaPowerStone>().NotifyMagicAmountChanged();
         discardStone.GetComponent<MetaPowerStone>().NotifyMagicAmountChanged();
         scryStone.GetComponent<MetaPowerStone>().NotifyMagicAmountChanged();
         skipStone.GetComponent<MetaPowerStone>().NotifyMagicAmountChanged();
