@@ -360,10 +360,11 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     {
         if(currentCard)
         {
-            deck.GetComponent<Deck>().ShuffleCardInGroup(currentCard.GetComponent<Card>().data, 0);
-            Destroy(currentCard);
-            canRevealNextCard = true;
-            OnDeckClicked(deck.GetComponent<Deck>().deck.Count);
+            //deck.GetComponent<Deck>().ShuffleCardInGroup(currentCard.GetComponent<Card>().data, 0);
+            //Destroy(currentCard);
+            //canRevealNextCard = true;
+            animator.SetTrigger("Shuffle");
+            currentGameState = GameState.NOINTERACTION;
             return true;
         }
         return false;
@@ -561,12 +562,6 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
 
     public void OnCartHoldStop(GameObject card)
     {
-        if (holdedCard)
-        {
-            var cardAnimator = holdedCard.GetComponent<Animator>();
-            cardAnimator.SetFloat("vertical", 0.0f);
-            cardAnimator.SetFloat("horizontal", 0.0f);
-        }
         holdedCard = null;
 
         if (currentGameState == GameState.METAPOWER)
@@ -606,7 +601,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
             }
             else
             {
-                currentCard.transform.localPosition = Vector3.zero;
+                currentCard.GetComponent<Card>().GoTo(currentCard.transform.parent.position, false);
             }
 
             notePadInteractionText.SetActive(false);
@@ -620,13 +615,22 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     {
         metaPowerCardList.GetComponent<InteractibleCardList>().MoveCardsToDefaultPosition();
         selectedCard = card;
-        selectedCard.transform.position = selectedCard.transform.position + selectedCardTranslation;
+        selectedCard.GetComponent<Card>().GoTo(selectedCard.transform.position + selectedCardTranslation);
     }
 
     public void StartBattleAgainstMonster()
     {
         currentGameState = GameState.NOINTERACTION;
-        RollDice();
+        MonsterCardData monsterData = (MonsterCardData)currentCard.GetComponent<Card>().data.dataInstance;
+        if(monsterData.strength > GetStatCurrentValue(PlayerStat.STRENGTH) + 5)
+        {
+            animator.SetTrigger("LooseBattle");
+        }
+        else if(monsterData.strength + 5 <= GetStatCurrentValue(PlayerStat.STRENGTH))
+        {
+            animator.SetTrigger("WinBattle");
+        }
+        else RollDice();
     }
 
     private void CompleteBattle()
@@ -691,15 +695,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
             {
                 targetPosition = ray.GetPoint(distance);
             }
-
-            Vector3 desiredPosition = Vector3.Lerp(holdedCard.transform.position, targetPosition, 0.2f);
-            Vector3 velocity = (desiredPosition - holdedCard.transform.position)/Time.deltaTime;
-            
-            var cardAnimator = holdedCard.GetComponent<Animator>();
-            
-            cardAnimator.SetFloat("vertical", Mathf.Lerp(cardAnimator.GetFloat("vertical"), -velocity.z / 10.0f, 0.2f));
-            cardAnimator.SetFloat("horizontal", Mathf.Lerp(cardAnimator.GetFloat("horizontal"), velocity.x / 10.0f, 0.2f));
-            holdedCard.transform.position = desiredPosition;
+            holdedCard.GetComponent<Card>().GoTo(targetPosition);
 
             //TEMP TRESSS MOCHE
             if (targetPosition.x > 6.5f)
@@ -752,7 +748,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     {
         if (currentGameState == GameState.MAIN)
         {
-            if (currentCard.GetComponent<Card>() is ObjectCard)
+            if (currentCard && currentCard.GetComponent<Card>() is ObjectCard)
             {
                 OnCartHoldStart(card);
             }
@@ -821,6 +817,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         deck.GetComponent<Deck>().ShuffleCardInGroup(currentCard.GetComponent<Card>().data, 0);
         Destroy(currentCard);
         currentGameState = GameState.MAIN;
+        canRevealNextCard = true;
     }
 
     public void DestroyCard()
