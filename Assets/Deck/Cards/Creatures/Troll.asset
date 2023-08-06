@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Troll
   m_EditorClassIdentifier: 
   cardName: Troll
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 2100000, guid: f1c627e6899ba0140bd0b075ab869eb8, type: 2}
   cardText: 12 strength, -1 life, +1 mana
   strength: 12
   effectsOnRevealed: []

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bramble_forest
   m_EditorClassIdentifier: 
   cardName: Bramble forest
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 2100000, guid: 2a8dcd4cbbeb66044bf46f3ef19bb1e2, type: 2}
   cardText: Inflict 1 damage.
   eventEffects:
   - {fileID: 11400000, guid: 4c244650f1dce3346a560c36e5237edd, type: 2}

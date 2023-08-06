@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Curse_of_spriggan
   m_EditorClassIdentifier: 
   cardName: Curse of spriggan
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 2100000, guid: cdb742ea000aed84799bffa02ed364a0, type: 2}
   cardText: Remove 1 strength.
   eventEffects:
   - {fileID: 11400000, guid: 686d4d9f07066e74aba5b1a26fda8a83, type: 2}
