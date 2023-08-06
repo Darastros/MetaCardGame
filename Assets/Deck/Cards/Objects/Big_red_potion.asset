@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Big_red_potion
   m_EditorClassIdentifier: 
   cardName: Big red potion
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 2100000, guid: a3d232b5238fabf478c96e5483c0f248, type: 2}
   cardText: Heal 3 point.
   isPotion: 1
   objectEffects:

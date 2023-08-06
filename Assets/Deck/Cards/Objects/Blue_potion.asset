@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Blue_potion
   m_EditorClassIdentifier: 
   cardName: Blue potion
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 2100000, guid: 09b3cf7d0cafc3b4ca246ab18cd9ea45, type: 2}
   cardText: Remove 1 strength.
   isPotion: 1
   objectEffects:

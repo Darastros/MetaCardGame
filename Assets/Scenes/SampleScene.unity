@@ -293,9 +293,9 @@ MonoBehaviour:
   animator: {fileID: 548042341}
   mysteriousPotionData: {fileID: 11400000, guid: fe7c0aceffc83f14fa55c34b6140a5f9, type: 2}
   cardPrefab: {fileID: 6130042529618441140, guid: c358615e2bb612c489a3e399721c23fa, type: 3}
-  objectCardPrefab: {fileID: 6130042529618441140, guid: 0bce555f58c537247a904a7a21beebd0, type: 3}
-  monsterCardPrefab: {fileID: 6130042529618441140, guid: b38c69e2ecc1ed04d92d278a5c18252b, type: 3}
-  eventCardPrefab: {fileID: 6130042529618441140, guid: 38e3d754c248e2741b2722e6eab62cae, type: 3}
+  objectCardPrefab: {fileID: 8989063222185878867, guid: 5f24c0c32d216a54daf94183ea7749a5, type: 3}
+  monsterCardPrefab: {fileID: 1919864137067399144, guid: 038427aaeef5cdc4d8b39ed5f0b91ce7, type: 3}
+  eventCardPrefab: {fileID: 4611567893629315308, guid: 365282f7ec3ca7349ac7d72bac0407f7, type: 3}
   currentCard: {fileID: 0}
   cardTransform: {fileID: 485767673}
   whiteDicePrefab: {fileID: 594864404253669910, guid: 2d0240fa862f0b84686690cdf9f1c03e, type: 3}

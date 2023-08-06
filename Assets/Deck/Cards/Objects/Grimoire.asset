@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Grimoire
   m_EditorClassIdentifier: 
   cardName: Grimoire
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 2100000, guid: 0277f797b39c81c45a1d8369b744083d, type: 2}
   cardText: Inflict 5 damage. Reveal effect of potion.
   isPotion: 0
   objectEffects:

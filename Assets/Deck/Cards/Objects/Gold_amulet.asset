@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Gold_amulet
   m_EditorClassIdentifier: 
   cardName: Gold amulet
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 2100000, guid: 8a6cc125e1498944fa2e27ba234cdcea, type: 2}
   cardText: Add 2 strength.
   isPotion: 0
   objectEffects:
