@@ -143,6 +143,9 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     public int playerCoin { get; private set; }
     public int playerMagic { get; private set; }
 
+    //Sound
+    FMOD.Studio.EventInstance activationSoundLoop;
+
     private void InitGame()
     {
         playerLife = 0 ;
@@ -161,6 +164,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         holdCardPlane = new Plane(Vector3.up, -holdCardPlaneHeight);
         var startSound = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_fight/sfx_fight_start");
         startSound.start();
+        activationSoundLoop = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_stone/sfx_blue_stone_activation_loop");
     }
     public void RestartGame()
     {
@@ -306,6 +310,12 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
                 cardListComponent.AddCardToList(cardObject);
             }
             selectedCard = cardListComponent.cardList[0];
+
+            var sound = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_stone/sfx_blue_stone_click");
+            sound.start();
+            var sound3 = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_stone/sfx_blue_stone_activation");
+            sound3.start();
+            activationSoundLoop.start();
             return true;
         }
         return false;
@@ -325,6 +335,8 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
 
         Destroy(metaPowerCardList);
         discardStone.GetComponent<MetaPowerStone>().Deactivate();
+        activationSoundLoop.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+
     }
 
     public bool StartMetaPowerScry(int cardsSeen)
@@ -343,6 +355,11 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
                 cardObject.transform.localScale = new Vector3(prefabScale.x * cardListScaleMultiplier, prefabScale.y * cardListScaleMultiplier, prefabScale.z);
                 cardListComponent.AddCardToList(cardObject);
             }
+            var sound = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_stone/sfx_blue_stone_click");
+            sound.start();
+            activationSoundLoop.start();
+            var sound3 = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_stone/sfx_blue_stone_activation");
+            sound3.start();
             return true;
         }
         return false;
@@ -361,6 +378,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         deck.GetComponent<Deck>().PutBackCardsOnTopOfDeck(cardsToPutBackOnTop);
         Destroy(metaPowerCardList);
         scryStone.GetComponent<MetaPowerStone>().Deactivate();
+        activationSoundLoop.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
     public bool ExecuteMetaPowerSkip()
@@ -370,6 +388,8 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
             //deck.GetComponent<Deck>().ShuffleCardInGroup(currentCard.GetComponent<Card>().data, 0);
             //Destroy(currentCard);
             //canRevealNextCard = true;
+            var sound = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_stone/sfx_green_stone_click");
+            sound.start();
             animator.SetTrigger("Shuffle");
             currentGameState = GameState.NOINTERACTION;
             return true;
