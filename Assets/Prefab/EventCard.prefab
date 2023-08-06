@@ -250,6 +250,7 @@ GameObject:
   - component: {fileID: 4428092070518442957}
   - component: {fileID: 5458306578755507582}
   - component: {fileID: 6056564803415952527}
+  - component: {fileID: 1182451093977731644}
   m_Layer: 0
   m_Name: EventCard
   m_TagString: Untagged
@@ -360,6 +361,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameText: {fileID: 3662867210101647127}
   descriptionText: {fileID: 5086105637119309681}
+--- !u!95 &1182451093977731644
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4611567893629315308}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f37335a061019d84b9034e77cb48de81, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5086105637119309681
 GameObject:
   m_ObjectHideFlags: 0

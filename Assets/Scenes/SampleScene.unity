@@ -326,7 +326,7 @@ MonoBehaviour:
   playerMinStrength: 3
   addStrengthText: {fileID: 1174323323}
   playerStartingCoin: 0
-  playerStartingMagic: 3
+  playerStartingMagic: 10
   playerMaxMagic: 10
   addMagicText: {fileID: 1828851698}
 --- !u!4 &61052541
