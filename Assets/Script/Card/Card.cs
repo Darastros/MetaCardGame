@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,10 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
     public CardInstance data;
 
     public ICardInteractionHandler interactionHandler;
+
+    private Vector3 targetPosition;
+    private bool gotoPosition = false;
+    private bool isAnimated = false;
 
     private bool active = false;
 
@@ -44,6 +49,35 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
         data.dataInstance.Resolve();
         Destroy(gameObject);
     }
+
+    public void GoTo(Vector3 position, bool animated = true)
+    {
+        targetPosition = position;
+        gotoPosition = true;
+        isAnimated = animated;
+    }
+
+    private void FixedUpdate()
+    {
+        if (!gotoPosition) return;
+        
+        Vector3 desiredPosition = Vector3.Lerp(transform.position, targetPosition, 0.2f);
+        Vector3 velocity = (desiredPosition - transform.position)/Time.deltaTime;
+            
+        var cardAnimator = GetComponent<Animator>();
+
+        cardAnimator.SetFloat("vertical", Mathf.Lerp(cardAnimator.GetFloat("vertical"), isAnimated ? -velocity.z / 10.0f : 0.0f, 0.2f));
+        cardAnimator.SetFloat("horizontal", Mathf.Lerp(cardAnimator.GetFloat("horizontal"), isAnimated ? velocity.x / 10.0f : 0.0f, 0.2f));
+        if ((targetPosition - desiredPosition).magnitude < 0.01f)
+        {
+            gotoPosition = false;
+            transform.position = targetPosition;
+            cardAnimator.SetFloat("vertical", 0.0f);
+            cardAnimator.SetFloat("horizontal", 0.0f);
+        }
+        else transform.position = desiredPosition;
+    }
+
 
     ////////////Interaction Implementation////////////////
     public void OnPointerDown(PointerEventData eventData)

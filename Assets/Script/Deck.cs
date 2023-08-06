@@ -322,7 +322,7 @@ public class Deck : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
             GetComponent<MeshRenderer>().enabled = false;
             TopcardDisplayer.GetComponent<MeshRenderer>().enabled = false;
         }
-        //temp, à mettre ailleurs probablement
+        //temp, Ã  mettre ailleurs probablement
         CardData topCardData = null;
         if(deck.Count > 0)
         {

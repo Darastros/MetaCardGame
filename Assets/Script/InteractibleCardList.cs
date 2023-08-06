@@ -82,7 +82,7 @@ public class InteractibleCardList : MonoBehaviour, ICardInteractionHandler
         Vector3 startPosition = gameObject.transform.position - new Vector3(cumulatedIntervals * 0.5f, 0, 0);
         for(int i = 0; i < cardList.Count; i++)
         {
-            cardList[i].transform.position = startPosition + new Vector3(i * interval, -i * 0.025f, 0);
+            cardList[i].GetComponent<Card>().GoTo(startPosition + new Vector3(i * interval, -i * 0.025f, 0));
         }
     }
 
