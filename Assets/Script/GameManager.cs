@@ -328,6 +328,8 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         {
             if (cardList[i] == selectedCard)
                 deck.GetComponent<Deck>().KeepOneCardFromTopCards(i, metaPowerCardList.GetComponent<InteractibleCardList>().cardList.Count);
+            
+            if(cardList[i].GetComponent<Card>().data.dataInstance.cardName =="Dragon") OnPetitFilou();
             Destroy(cardList[i]);
         }
 
@@ -510,9 +512,10 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         if (playerLife <= 0)
         {
             playerLife = 0;
-            deathIcon.SetActive(true);
-            deathIcon.GetComponent<BasicAnimation>().PlayAnimation();
-            Invoke("RestartGame", deathIcon.GetComponent<BasicAnimation>().duration);
+            //deathIcon.SetActive(true);
+            //deathIcon.GetComponent<BasicAnimation>().PlayAnimation();
+            OnLoose();
+            //Invoke("RestartGame", deathIcon.GetComponent<BasicAnimation>().duration);
             currentGameState = GameState.NOINTERACTION;
         }
     }
@@ -836,6 +839,21 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     {
 
     }
+
+    private void OnLoose()
+    {
+        animator.SetTrigger("OnLoose");
+    }
+    private void OnWin()
+    {
+        animator.SetTrigger("OnWin");
+        
+    }
+    private void OnPetitFilou()
+    {
+        animator.SetTrigger("OnPetitFilou");
+    }
+    
     ///////////////////////////////////////////////////////////////////
 
     public void RevealCard()
@@ -846,8 +864,9 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     {
         MonsterCardData monsterData = (MonsterCardData)currentCard.GetComponent<Card>().data.dataInstance;
         monsterData.OnDefeated();
+        if(monsterData.cardName == "Dragon") OnWin();
     }
-    
+
     public void LooseBattleApplyEffect()
     {
         MonsterCardData monsterData = (MonsterCardData)currentCard.GetComponent<Card>().data.dataInstance;
