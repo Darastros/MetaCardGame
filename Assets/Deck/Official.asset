@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Official
   m_EditorClassIdentifier: 
   groups:
-  - {fileID: 11400000, guid: eacf7a5abfdecd14e9bdc2aacb65a7c4, type: 2}
   - {fileID: 11400000, guid: 4b857412e4d1b884d990d264d84d3aaf, type: 2}
   - {fileID: 11400000, guid: c2a6b2a23ef3e764cba4682219b0cf8b, type: 2}
   - {fileID: 11400000, guid: f232467b6d644774a96020f8e9c17838, type: 2}
   - {fileID: 11400000, guid: c2e585d3a611f55428b3c6595882d6ac, type: 2}
+  - {fileID: 11400000, guid: eacf7a5abfdecd14e9bdc2aacb65a7c4, type: 2}
