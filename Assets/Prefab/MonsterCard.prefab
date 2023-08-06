@@ -281,6 +281,7 @@ GameObject:
   - component: {fileID: 642578857030036899}
   - component: {fileID: 6263477589473736327}
   - component: {fileID: 2322596334135047731}
+  - component: {fileID: 8054769289511403337}
   m_Layer: 0
   m_Name: MonsterCard
   m_TagString: Untagged
@@ -390,6 +391,27 @@ MonoBehaviour:
   nameText: {fileID: 3887157343032639185}
   descriptionText: {fileID: 3432670143065624473}
   strengthAttributeText: {fileID: 7712100171489971721}
+--- !u!95 &8054769289511403337
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6130042529618441140}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f37335a061019d84b9034e77cb48de81, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7712100171489971721
 GameObject:
   m_ObjectHideFlags: 0

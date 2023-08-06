@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -561,6 +562,12 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
 
     public void OnCartHoldStop(GameObject card)
     {
+        if (holdedCard)
+        {
+            var cardAnimator = holdedCard.GetComponent<Animator>();
+            cardAnimator.SetFloat("vertical", 0.0f);
+            cardAnimator.SetFloat("horizontal", 0.0f);
+        }
         holdedCard = null;
 
         if (currentGameState == GameState.METAPOWER)
@@ -690,7 +697,15 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
             {
                 targetPosition = ray.GetPoint(distance);
             }
-            holdedCard.transform.position = Vector3.Lerp(holdedCard.transform.position, targetPosition, 0.2f);
+
+            Vector3 desiredPosition = Vector3.Lerp(holdedCard.transform.position, targetPosition, 0.2f);
+            Vector3 velocity = (desiredPosition - holdedCard.transform.position)/Time.deltaTime;
+            
+            var cardAnimator = holdedCard.GetComponent<Animator>();
+            
+            cardAnimator.SetFloat("vertical", Mathf.Lerp(cardAnimator.GetFloat("vertical"), -velocity.z / 10.0f, 0.2f));
+            cardAnimator.SetFloat("horizontal", Mathf.Lerp(cardAnimator.GetFloat("horizontal"), velocity.x / 10.0f, 0.2f));
+            holdedCard.transform.position = desiredPosition;
 
             //TEMP TRESSS MOCHE
             if (targetPosition.x > 6.5f)
