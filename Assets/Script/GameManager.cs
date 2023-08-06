@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 using TMPro;
+using Plane = UnityEngine.Plane;
+using Vector3 = UnityEngine.Vector3;
 
 public class GameManager : MonoBehaviour, ICardInteractionHandler
 {
@@ -173,19 +176,19 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         GameObject cardObject;
         if (data is ObjectCardData)
         {
-            cardObject = Instantiate(objectCardPrefab, cardTransform);
+            cardObject = Instantiate(objectCardPrefab);
         }
         else if(data is MonsterCardData)
         {
-            cardObject = Instantiate(monsterCardPrefab, cardTransform);
+            cardObject = Instantiate(monsterCardPrefab);
         }
         else if (data is EventCardData)
         {
-            cardObject = Instantiate(eventCardPrefab, cardTransform);
+            cardObject = Instantiate(eventCardPrefab);
         }
         else
         {
-            cardObject = Instantiate(cardPrefab, cardTransform);
+            cardObject = Instantiate(cardPrefab);
         }
 
         cardObject.GetComponent<Card>().ApplyCardData(cardInstance);
@@ -203,6 +206,8 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
                 {
                     animator.SetTrigger("RevealedCard");
                     currentCard = CreateCardObject(revealedCard);
+                    currentCard.transform.parent = cardTransform;
+                    currentCard.transform.localPosition = Vector3.zero;
                     Card card = currentCard.GetComponent<Card>();
                     card.interactionHandler = this;
                     if (card.data.dataInstance is MonsterCardData)
