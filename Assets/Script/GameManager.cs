@@ -620,7 +620,16 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     public void StartBattleAgainstMonster()
     {
         currentGameState = GameState.NOINTERACTION;
-        RollDice();
+        MonsterCardData monsterData = (MonsterCardData)currentCard.GetComponent<Card>().data.dataInstance;
+        if(monsterData.strength > GetStatCurrentValue(PlayerStat.STRENGTH) + 5)
+        {
+            animator.SetTrigger("LooseBattle");
+        }
+        else if(monsterData.strength + 5 <= GetStatCurrentValue(PlayerStat.STRENGTH))
+        {
+            animator.SetTrigger("WinBattle");
+        }
+        else RollDice();
     }
 
     private void CompleteBattle()
