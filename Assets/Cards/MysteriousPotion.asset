@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MysteriousPotion
   m_EditorClassIdentifier: 
   cardName: Mysterious potion
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 2100000, guid: f0fa4bd20674f96489daa9f5264912a6, type: 2}
   cardText: 
   isPotion: 0
   objectEffects: []

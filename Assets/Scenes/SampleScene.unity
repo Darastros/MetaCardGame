@@ -292,10 +292,10 @@ MonoBehaviour:
   cardsSeenInDiscard: 3
   animator: {fileID: 548042341}
   mysteriousPotionData: {fileID: 11400000, guid: fe7c0aceffc83f14fa55c34b6140a5f9, type: 2}
-  cardPrefab: {fileID: 6130042529618441140, guid: c358615e2bb612c489a3e399721c23fa, type: 3}
-  objectCardPrefab: {fileID: 6130042529618441140, guid: 0bce555f58c537247a904a7a21beebd0, type: 3}
-  monsterCardPrefab: {fileID: 6130042529618441140, guid: b38c69e2ecc1ed04d92d278a5c18252b, type: 3}
-  eventCardPrefab: {fileID: 6130042529618441140, guid: 38e3d754c248e2741b2722e6eab62cae, type: 3}
+  cardPrefab: {fileID: 4611567893629315308, guid: 52ead01f411720646a4096ffe228b0d0, type: 3}
+  objectCardPrefab: {fileID: 8989063222185878867, guid: 5f24c0c32d216a54daf94183ea7749a5, type: 3}
+  monsterCardPrefab: {fileID: 1919864137067399144, guid: 038427aaeef5cdc4d8b39ed5f0b91ce7, type: 3}
+  eventCardPrefab: {fileID: 4611567893629315308, guid: 365282f7ec3ca7349ac7d72bac0407f7, type: 3}
   currentCard: {fileID: 0}
   cardTransform: {fileID: 485767673}
   whiteDicePrefab: {fileID: 594864404253669910, guid: 2d0240fa862f0b84686690cdf9f1c03e, type: 3}
@@ -11061,7 +11061,7 @@ Transform:
   m_GameObject: {fileID: 485767672}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.05, y: 0.0025, z: -3}
+  m_LocalPosition: {x: 0, y: 0, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16588,7 +16588,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 74.9}
+  m_AnchoredPosition: {x: 0, y: 76.7}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &776617355
@@ -16638,8 +16638,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -16674,7 +16674,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 14.474396, y: 6.224375, z: 13.220184, w: 12.915782}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -32732,7 +32732,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 14f40249093b95f4d8ebde79cda5d995, type: 2}
+  - {fileID: 2100000, guid: eab22b9d56be9024dbdd7e425d58fc0d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

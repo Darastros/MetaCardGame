@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Slime
   m_EditorClassIdentifier: 
   cardName: Slime
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 2100000, guid: 45df94f60e775ab4aba629292aacb937, type: 2}
   cardText: 2 strength, -1 life, +1 mana
   strength: 2
   effectsOnRevealed: []

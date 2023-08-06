@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Strength_ring
   m_EditorClassIdentifier: 
   cardName: Strength ring
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 2100000, guid: b776bd7ec4dedb54cb85543d8eece5f8, type: 2}
   cardText: Add 2 strength.
   isPotion: 0
   objectEffects:

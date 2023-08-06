@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Yellow_potion
   m_EditorClassIdentifier: 
   cardName: Yellow potion
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 2100000, guid: 76b819086a0fb94429549a5af1fa5561, type: 2}
   cardText: Inflict 2 damage.
   isPotion: 1
   objectEffects:
