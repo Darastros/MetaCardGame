@@ -880,7 +880,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     }
     public void ShuffleCard()
     {
-        var revealCard = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_back_card_return\sfx_back_card_return_to_deck");
+        var revealCard = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_back_card_return/sfx_back_card_return_to_deck");
         revealCard.start();
         deck.GetComponent<Deck>().ShuffleCardInGroup(currentCard.GetComponent<Card>().data, 0);
         Destroy(currentCard);
