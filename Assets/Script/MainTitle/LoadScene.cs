@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class LoadScene : MonoBehaviour
 {
+    public bool started = false;
+    public bool tryToStart = false;
     public void LoadMainScene()
     {
         SceneManager.LoadScene(0);
@@ -17,6 +19,16 @@ public class LoadScene : MonoBehaviour
     
     public void StartGame()
     {
-        GameManager.Instance.animator.SetTrigger("OnStart");
+        tryToStart = true;
+    }
+
+    public void Update()
+    {
+        if (tryToStart && !started && FMODUnity.RuntimeManager.HasBankLoaded("Master"))
+        {
+            GameManager.Instance.animator.SetTrigger("OnStart");
+            GameManager.Instance.PlayStartFightSFX();
+            started = true;
+        }
     }
 }

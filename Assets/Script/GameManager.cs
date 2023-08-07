@@ -15,16 +15,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     public static GameManager Instance => instance;
     private void Awake()
     {
-        if (instance != null && instance != this)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-        else
-        {
-            instance = this;
-        }
-        //DontDestroyOnLoad(this.gameObject);
+        instance = this;
         InitGame();
     }
     ///////////////////////////////////////////////////////
@@ -52,6 +43,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
     }
     private MetaPower currentlyUsedPower;
 
+    public GameObject music;
     public GameObject discardStone;
     public GameObject scryStone;
     public GameObject skipStone;
@@ -162,10 +154,19 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         canRevealNextCard = true;
         currentGameState = GameState.MAIN;
         holdCardPlane = new Plane(Vector3.up, -holdCardPlaneHeight);
-        var startSound = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_fight/sfx_fight_start");
-        startSound.start();
-        activationSoundLoop = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_stone/sfx_blue_stone_activation_loop");
+        
     }
+    
+    public void OnDisable()
+    {
+        Debug.LogError("Disable Game manager");
+    }
+
+    public void OnDestroy()
+    {
+        Debug.LogError("Destroy Game manager");
+    }
+
     public void RestartGame()
     {
         if (currentCard)
@@ -724,7 +725,7 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
             CompleteBattle();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         Plane planeUsed = new Plane(Vector3.up, -2.5f);
         if (currentGameState == GameState.METAPOWER)
@@ -896,4 +897,14 @@ public class GameManager : MonoBehaviour, ICardInteractionHandler
         currentGameState = GameState.MAIN;
     }
 
+    public void PlayStartFightSFX()
+    {
+        activationSoundLoop = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_stone/sfx_blue_stone_activation_loop");
+        foreach (var eventEmitter in music.GetComponents<StudioEventEmitter>())
+        {
+            eventEmitter.Play();
+        }
+        var startSound = FMODUnity.RuntimeManager.CreateInstance("event:/sfx/sfx_fight/sfx_fight_start");
+        startSound.start();
+    }
 }

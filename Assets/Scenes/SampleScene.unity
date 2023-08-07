@@ -240,6 +240,7 @@ GameObject:
   m_Component:
   - component: {fileID: 61052541}
   - component: {fileID: 61052540}
+  - component: {fileID: 61052542}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -261,6 +262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneVFX: {fileID: 1160090308}
   deck: {fileID: 1030020578}
+  music: {fileID: 963194225}
   discardStone: {fileID: 85187366}
   scryStone: {fileID: 215198977}
   skipStone: {fileID: 1377368817}
@@ -320,6 +322,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &61052542
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61052539}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &85187366
 GameObject:
   m_ObjectHideFlags: 0
@@ -12282,7 +12311,7 @@ MonoBehaviour:
       Data4: -1372452877
     Path: event:/music/music_tueurdeslime_loop
   Event: 
-  PlayEvent: 1
+  PlayEvent: 0
   StopEvent: 0
   AllowFadeout: 1
   TriggerOnce: 0
@@ -12344,7 +12373,7 @@ MonoBehaviour:
       Data4: -295146139
     Path: event:/amb/amb_house
   Event: 
-  PlayEvent: 1
+  PlayEvent: 0
   StopEvent: 0
   AllowFadeout: 1
   TriggerOnce: 0
@@ -33060,6 +33089,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1393955683}
   m_CullTransparentMesh: 1
+--- !u!1 &1419240238 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3685263956584397779, guid: df0401d816e56ec4682c54bb7b4bbf33, type: 3}
+  m_PrefabInstance: {fileID: 1751421663}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &1419240244
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419240238}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1440537805
 GameObject:
   m_ObjectHideFlags: 0
@@ -53666,7 +53712,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3685263956584397779, guid: df0401d816e56ec4682c54bb7b4bbf33, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1419240244}
   m_SourcePrefab: {fileID: 100100000, guid: df0401d816e56ec4682c54bb7b4bbf33, type: 3}
 --- !u!1 &1798856225
 GameObject:
